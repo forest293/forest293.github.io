@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://forest293.github.io/1.fundamentals-of-linear-variable-analysis/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://forest293.github.io/1.fundamentals-of-linear-variable-analysis/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
             <loc>https://forest293.github.io/theme-documentation-basics/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
@@ -111,7 +111,7 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/theme-documentation-typeit-shortcode/"
                     /></url><url>
-            <loc>https://forest293.github.io/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://forest293.github.io/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/"
@@ -120,7 +120,7 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/"
                     /></url><url>
-            <loc>https://forest293.github.io/categories/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://forest293.github.io/categories/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/categories/"
@@ -129,8 +129,9 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/categories/"
                     /></url><url>
-            <loc>https://forest293.github.io/tags/linear-regression/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://forest293.github.io/posts/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://forest293.github.io/tags/continuous-predictors/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/categories/interpreting-and-visualizing-regression-models-using-stata/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/posts/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/posts/"
@@ -139,9 +140,8 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/posts/"
                     /></url><url>
-            <loc>https://forest293.github.io/tags/stata/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://forest293.github.io/categories/stata-linear-regression/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://forest293.github.io/tags/</loc><lastmod>2023-05-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
+            <loc>https://forest293.github.io/tags/stata/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/tags/</loc><lastmod>2023-12-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/tags/"

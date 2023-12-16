@@ -4,15 +4,18 @@
         <link>https://forest293.github.io/</link>
         <description>Hugo theme - LoveIt</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 13 May 2023 23:45:40 &#43;0800</lastBuildDate>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 07 Dec 2023 16:29:41 &#43;0800</lastBuildDate>
             <atom:link href="https://forest293.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>fundamental of linear variable</title>
+    <title>Continuous predictors:Linear</title>
     <link>https://forest293.github.io/1.fundamentals-of-linear-variable-analysis/</link>
-    <pubDate>Sat, 13 May 2023 23:45:40 &#43;0800</pubDate>
+    <pubDate>Thu, 07 Dec 2023 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
     <guid>https://forest293.github.io/1.fundamentals-of-linear-variable-analysis/</guid>
-    <description><![CDATA[这篇文章讲解了线性变量分析的基础]]></description>
+    <description><![CDATA[This Chapter focuses on how to interpret the coefficient of a continuous predictor in a linear regression model.
+1 Simple linear regression This section illustrates the use of a continuous predictor for predicting a continuous outcome using ordinary least-squares regression.
+Terminology: Continuous and categorical variables
+When I use the termcontinuous variable, I am referring to a variable that is measured on an interval or ratio scale. By contrast, when I speak of a categorical variable,I am referring to either a nominal variable or an ordinal/interval/ratio variable that we wish to treat as though it were a nominal variable.]]></description>
 </item>
 <item>
     <title>主题文档 - 基本概念</title>
