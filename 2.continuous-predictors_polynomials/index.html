@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter3 ：Continuous predictors: Polynomials - Alex_Wang</title><meta name="Description" content="This chapter focuses on the use of polynomial terms to account for nonlinearity in the relationship between a continuous predictor and a continuous outcome.  "><meta property="og:title" content="Chapter3 ：Continuous predictors: Polynomials" />
+<meta property="og:description" content="This chapter focuses on the use of polynomial terms to account for nonlinearity in the relationship between a continuous predictor and a continuous outcome.  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/2.continuous-predictors_polynomials/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-12-28T16:29:41+08:00" />
+<meta property="article:modified_time" content="2023-12-29T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter3 ：Continuous predictors: Polynomials"/>
+<meta name="twitter:description" content="This chapter focuses on the use of polynomial terms to account for nonlinearity in the relationship between a continuous predictor and a continuous outcome.  "/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/2.continuous-predictors_polynomials/" /><link rel="prev" href="https://forest293.github.io/1.continuous-predictors_linear/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter3 ：Continuous predictors: Polynomials",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/2.continuous-predictors_polynomials\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Continuous predictors, stata","wordcount":  3146 ,
+        "url": "https:\/\/forest293.github.io\/2.continuous-predictors_polynomials\/","datePublished": "2023-12-28T16:29:41+08:00","dateModified": "2023-12-29T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter focuses on the use of polynomial terms to account for nonlinearity in the relationship between a continuous predictor and a continuous outcome.  "
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/2.continuous-predictors_polynomials/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/2.continuous-predictors_polynomials/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter3 ：Continuous predictors: Polynomials</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-28">2023-12-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3146 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 15 分钟&nbsp;<span id="/2.continuous-predictors_polynomials/" class="leancloud_visitors" data-flag-title="Chapter3 ：Continuous predictors: Polynomials">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-quadratic-squared-terms">1 Quadratic (squared) terms</a>
+      <ul>
+        <li><a href="#11-examples">1.1 Examples</a>
+          <ul>
+            <li><a href="#111-interpreting-the-relationship-between-age-and-income">1.1.1 Interpreting the relationship between age and income</a></li>
+            <li><a href="#112-graphing-adjusted-means-with-confidence-intervals">1.1.2 Graphing adjusted means with confidence intervals</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#2-cubic-third-powerterms">2 Cubic (third power)terms</a>
+      <ul>
+        <li><a href="#21-fractional-polynomial-regression">2.1 Fractional polynomial regression</a>
+          <ul>
+            <li><a href="#211-example-using-fractional-polynomial-regression">2.1.1 Example using fractional polynomial regression</a></li>
+          </ul>
+        </li>
+        <li><a href="#22-main-effects-with-polynomial-terms">2.2 Main effects with polynomial terms</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><em><strong>This Chapter focuses on how to interpret the coefficient of a continuous predictor in a linear regression model.</strong></em></p>
+<h2 id="1-quadratic-squared-terms">1 Quadratic (squared) terms</h2>
+<p>A quadratic (<strong>squared</strong>) term can be used to model curved relationships, accounting for <strong>one bend</strong> in the relationship between the predictor and outcome.</p>
+<p>Let’s relate the nature of the curve to the regression equation predicting income (realrinc) from age (age), shown below.</p>
+<p>$$ \widehat{realrinc}=-30000 + 2500age + (-25age^{2}) $$
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/ushape.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/ushape.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/ushape.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/ushape.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/ushape.png"
+        title="Quadratic regression with quadratic coefficient of -25" /></p>
+<p>For an inverted U-shaped curve, we can compute the value of x that corresponds to the <strong>maximum value of y</strong>.</p>
+<p>If we call the linear coefficient of age and the quadratic coefficient of age b2 , then the value of age that yields the maximum income is given by -b1/(2×b2). Substituting 2,500 for b1 and -25 for b2 yields a value of 50;therefore,the maximum income occurs when someone is 50 years old.</p>
+<blockquote>
+<p>The degree of curvature (U-shape) would increase as the quadratic coefficient increases. The linear coefficient would still determine the slope when the predictor is at zero. Because the curve is <strong>U-shaped</strong>, the minimum of that curve would be represented by <strong>-b1/(2×b2)</strong>, where is the linear coefficient and is the quadratic coefficient.</p>
+</blockquote>
+<h3 id="11-examples">1.1 Examples</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">      use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">      keep if (age&lt;=80)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Before fitting a quadratic model relating income to age, let’s assess the shape of the relationship between these variables using a <strong>locally weighted smoother</strong>. The lowess command is used to create the variable yhatlowess, which is the <strong>predicted value based on the locally weighted regression predicting income from age</strong>.</p>
+<p>Checking for nonlinearity</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">      lowess realrinc age,nograph gen(yhatlowess)
+</span></span><span class="line"><span class="cl">      line yhatlowess age,sort
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/lowess.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/lowess.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/lowess.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/lowess.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/lowess.png"
+        title=" Lowess-smoothed values of income by age" /></p>
+<p>Let’s fit a model with a quadratic (squared) term to account for the bend in the relationship between age and income.
+We do this using the interaction operator ## (as shown below), which creates a term that multiplies age by age. Specifying c.age indicates to Stata that age should be treated as a <strong>continuous variable</strong> (instead of treating it as factor variable).</p>
+<h4 id="111-interpreting-the-relationship-between-age-and-income">1.1.1 Interpreting the relationship between age and income</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg realrinc c.age##c.age female,vce(robust)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Note! Why not square age?</p>
+<blockquote>
+<p>You might be wondering why we do not instead use the generate command to create a new variable, say, age2, that contains the age squared. If we do this, the results of the regress command would be the same, but this would <strong>confuse the margins command</strong>. The margins command would think that age and age2 <strong>are two completely different variables</strong>.</p>
+</blockquote>
+</blockquote>
+<pre><code> Linear regression                              Number of obs     =     32,100
+                                                F(3, 32096)       =    1252.67
+                                                Prob &gt; F          =     0.0000
+                                                R-squared         =     0.1089
+                                                Root MSE          =      25407
+</code></pre>
+<hr>
+<pre><code>             |               Robust
+    realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+ 
+         age |   2412.339     58.058    41.55   0.000     2298.544    2526.135
+             |
+ c.age#c.age |    -24.202      0.696   -34.78   0.000      -25.566     -22.838
+             |
+      female |  -1.24e+04    280.475   -44.28   0.000    -1.30e+04   -1.19e+04
+       _cons |  -2.57e+04   1038.412   -24.73   0.000    -2.77e+04   -2.36e+04
+</code></pre>
+<hr>
+<p>We can use the formula -b1/(2×b2) to compute the age at which income is at its maximum. This yields -2412.34/(2×-24.20) , which equals 49.84. The adjusted mean of income is highest for those who are 49.84 years old.</p>
+<p>Suppose we wanted to estimate the age slope for any given value of age. We can do so using the margins command combined with the <strong>dydx(age)</strong> option.Below,we obtain the age slope for ages ranging from 30 to 70 in 10-year increments.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,at(age=(30(10)70))dydx(age)vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Average marginal effects                                Number of obs = 32,100
+Model VCE: Robust
+
+Expression: Linear prediction, predict()
+dy/dx wrt:  age
+1._at: age = 30
+2._at: age = 40
+3._at: age = 50
+4._at: age = 60
+5._at: age = 70
+</code></pre>
+<hr>
+<pre><code>              |            Delta-method
+              |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+                                                                          
+ age          |
+          _at |
+           1  |    960.222     18.274    52.55   0.000      924.404     996.039
+           2  |    476.183      9.823    48.47   0.000      456.928     495.437
+           3  |     -7.856     15.700    -0.50   0.617      -38.628      22.915
+           4  |   -491.896     27.998   -17.57   0.000     -546.772    -437.019
+           5  |   -975.935     41.336   -23.61   0.000    -1056.955    -894.915
+</code></pre>
+<hr>
+<h4 id="112-graphing-adjusted-means-with-confidence-intervals">1.1.2 Graphing adjusted means with confidence intervals</h4>
+<p>The marginsplot command can be used to create a graph of the adjusted means with a shaded region showing the confidence interval for the adjusted means.
+We can then run the marginsplot command, adding the recast(line) and recastci(rarea) options to display the adjusted means as a line and the confidence interval as a shaded region. The resulting graph is shown in below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">     margins,at(age=(18(1)80))  
+</span></span><span class="line"><span class="cl">     marginsplot,recast(line) recastci(rarea)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/quaduatic.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/quaduatic.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/quaduatic.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/quaduatic.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/quaduatic.png"
+        title="Adjusted means with shaded confidence region from quadratic regression" /></p>
+<h2 id="2-cubic-third-powerterms">2 Cubic (third power)terms</h2>
+<p>Let’s examine the relationship between the year of birth and number of children a woman has using the gss_ivrm.dta dataset, focusing on women aged 45 to 55 born between 1920 and 1960.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">      use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">      keep if (age&gt;=45 &amp; age&lt;=55) &amp; (yrborn&gt;=1920 &amp; yrborn&lt;=1960) &amp; female==1
+</span></span><span class="line"><span class="cl">      lowess children yrborn,gen(yhatlowess) nograph
+</span></span><span class="line"><span class="cl">      graph twoway line yhatlowess yrborn,sort
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic.png"
+        title=" Lowess-smoothed fit of number of children by year of birth" /></p>
+<p>Below,we fit a model predicting children from yrborn fit using a cubic term.The model specifies c.yrborn##c.yrborn##c.yrborn, which includes the cubic term for yrborn, the quadratic term for yrborn, and the linear term for yrborn.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    reg children c.yrborn##c.yrborn##c.yrborn,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>note: c.yrborn#c.yrborn#c.yrborn omitted because of collinearity.</p>
+<pre><code>  Source |       SS           df       MS      Number of obs   =     5,049
+                                               F(2, 5046)      =    193.19
+   Model |  1163.13728         2   581.56864   Prob &gt; F        =    0.0000
+Residual |   15189.893     5,046  3.01028399   R-squared       =    0.0711
+                                               Adj R-squared   =    0.0708
+   Total |  16353.0303     5,048   3.2395068   Root MSE        =     1.735
+</code></pre>
+<hr>
+<pre><code>                   children | Coefficient  Std. err.      t    P&gt;|t|
+                                                             
+                     yrborn |      1.431      0.816     1.75   0.079
+                            |
+          c.yrborn#c.yrborn |     -0.000      0.000    -1.81   0.071
+                            |
+ c.yrborn#c.yrborn#c.yrborn |      0.000  (omitted)
+                            |
+                      _cons |  -1344.881    791.474    -1.70   0.089
+</code></pre>
+<hr>
+<p>There was a problem running this model. There is a note saying that the cubic term was omitted because of <strong>collinearity.</strong> This is a common problem when entering cubic terms, which can be solved by <strong>centering yrborn.</strong></p>
+<p>The dataset includes a variable called yrborn40, which is the variable yrborn centered around the year 1940 (that is, <strong>1940 is subtracted from each value of yrborn</strong>). Let’s try fitting the above model again but instead using the variable yrborn40.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">      reg children c.yrborn40##c.yrborn40##c.yrborn40,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>.   reg children c.yrborn40##c.yrborn40##c.yrborn40,noci</p>
+<pre><code>  Source |       SS           df       MS      Number of obs   =     5,049
+                                               F(3, 5045)      =    166.84
+   Model |  1475.96126         3  491.987087   Prob &gt; F        =    0.0000
+Residual |   14877.069     5,045  2.94887394   R-squared       =    0.0903
+                                               Adj R-squared   =    0.0897
+   Total |  16353.0303     5,048   3.2395068   Root MSE        =    1.7172
+</code></pre>
+<hr>
+<pre><code>                         children | Coefficient  Std. err.      t    P&gt;|t|
+                                                                     
+                         yrborn40 |     -0.091      0.005   -17.34   0.000
+                                  |
+            c.yrborn40#c.yrborn40 |     -0.001      0.000    -3.66   0.000
+                                  |
+ c.yrborn40#c.yrborn40#c.yrborn40 |      0.000      0.000    10.30   0.000
+                                  |
+                            _cons |      2.741      0.037    73.67   0.000
+</code></pre>
+<hr>
+<blockquote>
+<p>Note! Including linear, quadratic, and cubic terms</p>
+<blockquote>
+<p>When fitting this kind of a cubic model, you might find that the linear or quadratic coefficients are not significant. For the sake of parsimony, you might be tempted to omit those variables because they are not significant. However, <strong>it is essential that these terms be included in the model (even if not significant) to preserve the interpretation of the cubic term.</strong></p>
+</blockquote>
+</blockquote>
+<p>Specifying at(yrborn40=(-20(1)20)) yields predicted means for years of birth ranging from 1920 to 1960 in one-year increments.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">      reg children c.yrborn40##c.yrborn40##c.yrborn40,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The marginsplot command is then used to create the graph shown in figure. The recast(line) and recastci(rarea) options display the predicted means as a <strong>solid line</strong> and <strong>the confidence interval</strong> as a shaded area.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic2.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic2.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic2.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic2.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/cubic2.png"
+        title="Predicted means from cubic regression with shaded confidence" /></p>
+<p>You can further explore how the yrborn40 slope varies as a function of year of birth by specifying multiple values within the at() option, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">      margins,at(yrborn40=(-20(5)20)) dydx(yrborn40) vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Conditional marginal effects                             Number of obs = 5,049
+ Model VCE: OLS
+
+ Expression: Linear prediction, predict()
+ dy/dx wrt:  yrborn40
+ 1._at: yrborn40 = -20
+ 2._at: yrborn40 = -15
+ 3._at: yrborn40 = -10
+ 4._at: yrborn40 =  -5
+ 5._at: yrborn40 =   0
+ 6._at: yrborn40 =   5
+ 7._at: yrborn40 =  10
+ 8._at: yrborn40 =  15
+ 9._at: yrborn40 =  20
+</code></pre>
+<hr>
+<pre><code>              |            Delta-method
+              |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+
+ yrborn40     |
+          _at |
+           1  |      0.191      0.023     8.34   0.000        0.146       0.236
+           2  |      0.074      0.012     6.02   0.000        0.050       0.097
+           3  |     -0.013      0.005    -2.35   0.019       -0.023      -0.002
+           4  |     -0.067      0.004   -15.70   0.000       -0.076      -0.059
+           5  |     -0.091      0.005   -17.34   0.000       -0.101      -0.081
+           6  |     -0.083      0.005   -18.12   0.000       -0.092      -0.074
+           7  |     -0.044      0.004    -9.82   0.000       -0.052      -0.035
+           8  |      0.027      0.010     2.70   0.007        0.007       0.047
+           9  |      0.129      0.020     6.50   0.000        0.090       0.168
+</code></pre>
+<hr>
+<h3 id="21-fractional-polynomial-regression">2.1 Fractional polynomial regression</h3>
+<p>Fractional polynomial regression is more <strong>flexible</strong> by considering other kinds of power terms as well, including negative powers and fractional powers.
+The <strong>fp</strong> prefix automates the process of selecting the best fitting fractional
+polynomial model.It fits a variety of polynomial terms (and combinations of polynomial terms) and shows you the best fitting model. The default set of power terms the fp prefix will try includes -2,-1,-0.5, 0, 0.5, 1, 2, and 3 (where 0 indicates that the natural log of the predictor is used).</p>
+<p>Let’s look at this canvas of shapes, beginning with the negative powers (-2,-1,and -0.5).
+These models take the form of y=b*Xpower, where could be positive or negative, and could be -2,-1, or -0.5.</p>
+<p>Figure  shows some possible shapes of these models, showing the powers -2,-1,-0.5 and in columns 1, 2, and 3.</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction.png"
+        title=" Fractional polynomials, powers =-2,-1, and -0.5(columns) for b= 0.3(top row) and b=-0.3 (bottom row)" /></p>
+<p>The graphs in the first row (with the positive coefficients) are all typified by a steep descent and then reaching a floor. <strong>The more strongly negative the power term, the stronger the descent.</strong> The second row is a vertical mirror image of the first. When the coefficient is negative, there is a sharp ascent and then a ceiling is reached. <strong>The more negative power terms are associated with a sharper ascent.</strong></p>
+<p>The shapes of the relationship between and for the powers 1, 2, and 3 are shown in figure
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction2.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction2.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction2.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction2.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction2.png"
+        title="Fractional polynomials, powers = 1, 2, and 3 (columns) for b=0.3 (top row) and b=-0.3 (bottom row)" /></p>
+<p>The first column shows a linear relationship between and . The second and third columns show the second and third power, with the top row showing a U-shaped bend and the bottom row showing an inverted U-shaped bend. <strong>The higher power terms are associated with a more rapid change in the outcome for a unit change in the predictor.</strong></p>
+<p>the fp prefix (by default) will not only fit each of these eight powers alone, but also includes <strong>all two-way combinations of these powers.</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction3.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction3.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction3.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction3.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction3.png"
+        title="Combined fractional polynomials" /></p>
+<p>The right panel shows the formula combining these two curves, Note how this curve combines the rapid rise of the left panel with the gradual inverted U-shape of the middle panel. As you can imagine, being able to combine two different fractional polynomials can yield a flexible set of possible curve shapes for modeling your data.</p>
+<h4 id="211-example-using-fractional-polynomial-regression">2.1.1 Example using fractional polynomial regression</h4>
+<p>First, we will run a regression predicting educ fromage, treating age as a categorical variable</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if (age&lt;=80)
+</span></span><span class="line"><span class="cl">  reg educ i.age
+</span></span><span class="line"><span class="cl">  predict yhatmean
+</span></span><span class="line"><span class="cl">  graph twoway line yhatmean age,sort xlabel(20(5)80)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatmean.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatmean.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatmean.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatmean.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatmean.png"
+        title="Average education at each level of age" /></p>
+<p>Note how there is a curvilinear aspect to the relationship between age and education, suggesting that we might try including a quadratic term for educ.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> reg educ c.age##c.age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>  Source |       SS           df       MS      Number of obs   =    53,070
+                                               F(2, 53067)     =   1616.60
+   Model |  29981.1031         2  14990.5515   Prob &gt; F        =    0.0000
+Residual |  492083.501    53,067  9.27287205   R-squared       =    0.0574
+                                               Adj R-squared   =    0.0574
+   Total |  522064.604    53,069  9.83746828   Root MSE        =    3.0451
+</code></pre>
+<hr>
+<pre><code>         educ | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+                                                                         
+          age |      0.138      0.005    28.22   0.000        0.129       0.148
+              |
+  c.age#c.age |     -0.002      0.000   -36.02   0.000       -0.002      -0.002
+              |
+        _cons |     10.763      0.107   100.14   0.000       10.553      10.974
+</code></pre>
+<hr>
+<p>Let’s use the predict command to compute the fitted values from the quadratic model, naming the variable yhatq. Then, let’s graph the fitted values from the quadratic model and the mean of education by age, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  predict yhatq
+</span></span><span class="line"><span class="cl">  graph twoway line yhatmean yhatq age,sort xlabel(20(5)80)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatq.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatq.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatq.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatq.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/yhatq.png"
+        title="Fitted values of quadratic model compared with observed means" /></p>
+<p>Note how the quadratic fit line yields predicted values that are <strong>too high in the younger years</strong> and <strong>too low in the older years.</strong> Another way of putting this is that the quadratic line does not account for the rapid rise in education in the late teens and early 20s, nor does it account for the slow decline of education in later years.</p>
+<p><strong>A fractional polynomial model, with its increased flexibility, could provide a more appropriate fit.</strong> We fit such a model <strong>by adding the fp prefix to the regress command</strong>, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  fp &lt;age&gt;:reg educ &lt;age&gt;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Fractional polynomial comparisons:
+</code></pre>
+<hr>
+<pre><code>         | Test              Residual   Deviance
+     age |   df   Deviance   std. dev.      diff.       P   Powers
+                                                                          
+ omitted |    4  271933.68      3.136   3507.042    0.000               
+  linear |    3  270076.53      3.082   1649.885    0.000   1           
+   m = 1 |    2  269297.58      3.060    870.937    0.000   3           
+   m = 2 |    0  268426.64      3.035      0.000       --   -2 1        
+</code></pre>
+<hr>
+<pre><code>   Note: Test df is degrees of freedom, and P = P &gt; F is sig. level for tests
+   comparing models vs. model with m = 2 based on deviance difference,
+   F(df, 53065).
+
+  Source |       SS           df       MS      Number of obs   =    53,070
+                                               F(2, 53067)     =   1812.66
+   Model |  33384.5311         2  16692.2655   Prob &gt; F        =    0.0000
+Residual |  488680.073    53,067   9.2087375   R-squared       =    0.0639
+                                               Adj R-squared   =    0.0639
+   Total |  522064.604    53,069  9.83746828   Root MSE        =    3.0346
+</code></pre>
+<hr>
+<pre><code>    educ | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+                                                                          
+   age_1 |  -1655.009     40.430   -40.94   0.000    -1734.252   -1575.766
+   age_2 |     -0.090      0.002   -57.93   0.000       -0.093      -0.087
+   _cons |     18.090      0.098   183.82   0.000       17.897      18.282
+</code></pre>
+<hr>
+<p>The fp prefix tried 44 different models involving the polynomials -2,-1,-0.5, 0, 0.5, 1, 2, and 3 selected alone and in pairs (where 0 indicates that the natural log of the predictor). <strong>The fp results show that it selected the model using the powers -2 and 1 as the best fitting combination of polynomials.</strong></p>
+<p>The variable age_1 reflects the term associated with age , and the coefficient for this variable is negative. As X increases, there is a sharp rise in Y followed by a plateau.</p>
+<p>The variable age_2 reflects the term associated with age, and the coefficient for this variable is negative. This shows a linear decrease in Y with increasing values of X.</p>
+<p>Let’s generate the predicted values based on this model and see if they conform to these expectations. The predict command is used to create the predicted values from the fractional polynomial model, calling the variable yhatfp.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  predict yhatfp
+</span></span><span class="line"><span class="cl">  graph twoway line yhatmean yhatq yhatfp age,sort xlabel(20(5)85) ///
+</span></span><span class="line"><span class="cl">  legend(label(1 &#34;mean at each age&#34;) label(2 &#34;Quadratic fit&#34;)) ///
+</span></span><span class="line"><span class="cl">  legend(label(3 &#34;Fractional polynomial fit&#34;))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction4.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction4.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction4.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction4.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction4.png"
+        title="Fitted values of quadratic and fractional polynomial models compared with observed means" /></p>
+<p>Suppose that we wanted to compute the adjusted mean for multiple ages, say, for the ages 20 to 80 in 10-year increments. We can use the forvalues command to loop across such a range of ages, as shown below. Within the loop, the local command is used to compute the local macros age1 and age2, using the powers associated with age_1 and age_2. The margins command is then used to compute the adjusted mean based on the values of age1 and age2. The matrix and local commands extract the adjusted mean, resulting in the local macro named adjmean. Finally, the display command displays the adjusted mean.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  forvalues age = 20(10)80 {
+</span></span><span class="line"><span class="cl">  local age1 = `age&#39;^-2
+</span></span><span class="line"><span class="cl">  local age2 = `age&#39;
+</span></span><span class="line"><span class="cl">  margins, at(age_1=`age1&#39; age_2=`age2&#39;)
+</span></span><span class="line"><span class="cl">  matrix am = r(b)
+</span></span><span class="line"><span class="cl">  local adjmean = am[1,1]
+</span></span><span class="line"><span class="cl">  display &#34;Adjsted mean for age = `age&#39; is &#34; `adjmean&#39;  
+</span></span><span class="line"><span class="cl">  }
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>Adjsted mean for age = 20 is 12.147077</li>
+<li>Adjsted mean for age = 30 is 13.543231</li>
+<li>Adjsted mean for age = 40 is 13.44528</li>
+<li>Adjsted mean for age = 50 is 12.915188</li>
+<li>Adjsted mean for age = 60 is 12.214998</li>
+<li>Adjsted mean for age = 70 is 11.434496</li>
+<li>Adjsted mean for age = 80 is 10.611189</li>
+</ul>
+<p>This forvalues loop helps to <strong>automate the process of computing the adjusted means as a function of age.</strong></p>
+<p>To avoid the process of typing the values into a dataset, we can automate the process of saving the adjusted means to a dataset using the postfile and post commands, as illustrated below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  *New: open up a postfile named -adjmeans- that will contain the variables age and yhat
+</span></span><span class="line"><span class="cl">  postutil clear  //Close any open postfiles
+</span></span><span class="line"><span class="cl">  postfile adjmeans age yhat using adjmeans,replace
+</span></span><span class="line"><span class="cl">  forvalues age = 18(1)80 {
+</span></span><span class="line"><span class="cl">     local age1 = `age&#39;^-2
+</span></span><span class="line"><span class="cl">     local age2 = `age&#39;
+</span></span><span class="line"><span class="cl">     margins, at(age_1=`age1&#39; age_2=`age2&#39;)
+</span></span><span class="line"><span class="cl">     matrix mm = r(b)
+</span></span><span class="line"><span class="cl">     local yhat = mm[1,1]
+</span></span><span class="line"><span class="cl">  *New save local macros `age&#39; and `yhat&#39; to the postfile named adjmeans post adjmeans (`age&#39;)(`yhat&#39;)
+</span></span><span class="line"><span class="cl">  *New close the postfile named -adjmeans-
+</span></span><span class="line"><span class="cl">     post adjmeans (`age&#39;) (`yhat&#39;)
+</span></span><span class="line"><span class="cl">  }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  postclose adjmeans
+</span></span><span class="line"><span class="cl">  use &#34;D:\1\Stata\ado\personal\adjmeans.dta&#34;,clear
+</span></span><span class="line"><span class="cl">  list in 1/10
+</span></span><span class="line"><span class="cl">  graph twoway line yhat age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>         | age       yhat |
+   1.    |  18   11.35704 |
+   2.    |  19   11.79033 |
+   3.    |  20   12.14708 |
+   4.    |  21    12.4415 |
+   5.    |  22   12.68467 |
+   6.    |  23    12.8853 |
+   7.    |  24   13.05033 |
+   8.    |  25   13.18535 |
+   9.    |  26   13.29488 |
+   10.   |  27   13.38263 |
+</code></pre>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction5.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction5.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction5.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction5.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/fraction5.png"
+        title="Adjusted means from fractional polynomial model, ages 18 to 80 incrementing by 1" /></p>
+<h3 id="22-main-effects-with-polynomial-terms">2.2 Main effects with polynomial terms</h3>
+<p><strong>The meaning of main effects changes when polynomial terms are included in the model.</strong> In fact, the inclusion of polynomial terms can substantially change the coefficient for the main effect when compared with the main effect–only model.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if (age&lt;=80)
+</span></span><span class="line"><span class="cl">  reg realrinc age female,vce(robust) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>  Linear regression                               Number of obs     =     32,100
+                                                  F(2, 32097)       =    1170.51
+                                                  Prob &gt; F          =     0.0000
+                                                  R-squared         =     0.0787
+                                                  Root MSE          =      25833
+</code></pre>
+<hr>
+<pre><code>         |               Robust
+realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+                                                                          
+     age |     320.07      10.70    29.93   0.000       299.10      341.03
+  female |  -12373.25     285.03   -43.41   0.000    -12931.91   -11814.59
+   _cons |   15106.17     403.04    37.48   0.000     14316.19    15896.16
+</code></pre>
+<hr>
+<p>However, there is a problem. As we saw in section 1.1, the relationship between income and age is <strong>not linear.</strong> As we did in that section, let’s add a quadratic term for age, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg realrinc c.age##c.age female,vce(robust)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Linear regression                               Number of obs     =     32,100
+                                                 F(3, 32096)       =    1252.67
+                                                 Prob &gt; F          =     0.0000
+                                                 R-squared         =     0.1089
+                                                 Root MSE          =      25407
+</code></pre>
+<hr>
+<pre><code>             |               Robust
+    realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+                                                                          
+         age |    2412.34      58.06    41.55   0.000      2298.54     2526.13
+             |
+ c.age#c.age |     -24.20       0.70   -34.78   0.000       -25.57      -22.84
+             |
+      female |  -12419.24     280.47   -44.28   0.000    -12968.98   -11869.49
+       _cons |  -25679.77    1038.41   -24.73   0.000    -27715.10   -23644.44
+</code></pre>
+<hr>
+<p>The quadratic term is significant, but we might suddenly become concerned that the main effect of age has skyrocketed from 320.07 in the linear model to 2,412.34 in the quadratic model. Why did the main effect change so much? Did we do something wrong? <strong>The key is that the term “main effect” is really a misnomer, because we expect this term to describe the general trend of the relationship between income and age.</strong></p>
+<p>This value is meaningless for two reasons. First, <strong>nobody has income when they are zero years old.</strong> Second, <strong>this term no longer reflects the general trend.</strong> As we saw in section 1.1, the age slope changes for every level of age, so there is no such thing as a measure of general trend in this kind of model.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2023-12-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2.continuous-predictors_polynomials/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/continuous-predictors/">Continuous predictors</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/1.continuous-predictors_linear/" class="prev" rel="prev" title="Chapter2 ：Continuous predictors:Linear"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter2 ：Continuous predictors:Linear</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

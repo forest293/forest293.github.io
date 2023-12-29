@@ -4,14 +4,25 @@
         <link>https://forest293.github.io/</link>
         <description>Hugo theme - LoveIt</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 07 Dec 2023 16:29:41 &#43;0800</lastBuildDate>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 28 Dec 2023 16:29:41 &#43;0800</lastBuildDate>
             <atom:link href="https://forest293.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Continuous predictors:Linear</title>
-    <link>https://forest293.github.io/1.fundamentals-of-linear-variable-analysis/</link>
-    <pubDate>Thu, 07 Dec 2023 16:29:41 &#43;0800</pubDate>
+    <title>Chapter3 ：Continuous predictors: Polynomials</title>
+    <link>https://forest293.github.io/2.continuous-predictors_polynomials/</link>
+    <pubDate>Thu, 28 Dec 2023 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/1.fundamentals-of-linear-variable-analysis/</guid>
+    <guid>https://forest293.github.io/2.continuous-predictors_polynomials/</guid>
+    <description><![CDATA[This Chapter focuses on how to interpret the coefficient of a continuous predictor in a linear regression model.
+1 Quadratic (squared) terms A quadratic (squared) term can be used to model curved relationships, accounting for one bend in the relationship between the predictor and outcome.
+Let’s relate the nature of the curve to the regression equation predicting income (realrinc) from age (age), shown below.
+$$ \widehat{realrinc}=-30000 + 2500age + (-25age^{2}) $$ For an inverted U-shaped curve, we can compute the value of x that corresponds to the maximum value of y.]]></description>
+</item>
+<item>
+    <title>Chapter2 ：Continuous predictors:Linear</title>
+    <link>https://forest293.github.io/1.continuous-predictors_linear/</link>
+    <pubDate>Sat, 09 Dec 2023 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/1.continuous-predictors_linear/</guid>
     <description><![CDATA[This Chapter focuses on how to interpret the coefficient of a continuous predictor in a linear regression model.
 1 Simple linear regression This section illustrates the use of a continuous predictor for predicting a continuous outcome using ordinary least-squares regression.
 Terminology: Continuous and categorical variables
@@ -81,15 +92,6 @@ When I use the termcontinuous variable, I am referring to a variable that is mea
     <author>Dillon</author>
     <guid>https://forest293.github.io/theme-documentation-echarts-shortcode/</guid>
     <description><![CDATA[<p><code>echarts</code> shortcode 使用 <a href="https://echarts.apache.org/" target="_blank" rel="noopener noreffer ">ECharts</a> 库提供数据可视化的功能.</p>]]></description>
-</item>
-<item>
-    <title>主题文档 - mapbox Shortcode</title>
-    <link>https://forest293.github.io/theme-documentation-mapbox-shortcode/</link>
-    <pubDate>Tue, 03 Mar 2020 13:29:59 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://forest293.github.io/theme-documentation-mapbox-shortcode/</guid>
-    <description><![CDATA[<a href="https://github.com/dillonzq/LoveIt/releases/tag/v0.2.0" rel="noopener noreffer" target="_blank"></a>
-<p><code>mapbox</code> shortcode 使用 <a href="https://docs.mapbox.com/mapbox-gl-js" target="_blank" rel="noopener noreffer ">Mapbox GL JS</a> 库提供互动式地图的功能.</p>]]></description>
 </item>
 </channel>
 </rss>
