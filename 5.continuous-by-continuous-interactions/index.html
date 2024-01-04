@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter5 ：Continuous by continuous interactions - Alex_Wang</title><meta name="Description" content="This chapter illustrates how to interpret interactions of two continuous predictors. "><meta property="og:title" content="Chapter5 ：Continuous by continuous interactions" />
+<meta property="og:description" content="This chapter illustrates how to interpret interactions of two continuous predictors. " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/5.continuous-by-continuous-interactions/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-01T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-01T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter5 ：Continuous by continuous interactions"/>
+<meta name="twitter:description" content="This chapter illustrates how to interpret interactions of two continuous predictors. "/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/5.continuous-by-continuous-interactions/" /><link rel="prev" href="https://forest293.github.io/3.continuous-predictors_piecewise-models/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter5 ：Continuous by continuous interactions",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/5.continuous-by-continuous-interactions\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Interaction, stata","wordcount":  2391 ,
+        "url": "https:\/\/forest293.github.io\/5.continuous-by-continuous-interactions\/","datePublished": "2024-01-01T16:29:41+08:00","dateModified": "2024-01-01T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter illustrates how to interpret interactions of two continuous predictors. "
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/5.continuous-by-continuous-interactions/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/5.continuous-by-continuous-interactions/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter5 ：Continuous by continuous interactions</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-01">2024-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2391 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/5.continuous-by-continuous-interactions/" class="leancloud_visitors" data-flag-title="Chapter5 ：Continuous by continuous interactions">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-linear-by-linear-interactions">1 Linear by linear interactions</a>
+      <ul>
+        <li><a href="#11-example-using-gss-data">1.1 Example using GSS data</a></li>
+        <li><a href="#12-interpreting-the-interaction-in-terms-of-age">1.2 Interpreting the interaction in terms of age</a></li>
+        <li><a href="#13-interpreting-the-interaction-in-terms-of-education">1.3 Interpreting the interaction in terms of education</a></li>
+        <li><a href="#14-interpreting-the-interaction-in-terms-of-age-slope">1.4 Interpreting the interaction in terms of age slope</a></li>
+        <li><a href="#15-interpreting-the-interaction-in-terms-of-the-educ-slope">1.5 Interpreting the interaction in terms of the educ slope</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-linear-by-quadratic-interactions">2 Linear by quadratic interactions</a>
+      <ul>
+        <li><a href="#21-example-using-gss-data">2.1 Example using GSS data</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><strong>This chapter illustrates how to interpret interactions of two continuous predictors.</strong></p>
+<h2 id="1-linear-by-linear-interactions">1 Linear by linear interactions</h2>
+<p><strong>A linear by linear interaction implies that the slope of the relationship between one of the predictors and the outcome changes as a linear function of the other predictor.</strong></p>
+<p>Let’s begin with a hypothetical example in which we predict income (realrinc) from age (age) and education (educ) without an interaction.</p>
+<p>$$ \widehat{realrin}=-41300 + 600age + 3000educ $$</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/linear%20interaciton.png" style="width:450px;height:350px;"alt="图片描述">
+  <figcaption><strong>Three-dimensional graph of fitted values from model without aninteraction</strong></figcaption>
+</figure>
+<p>Let’s now consider a second hypothetical regression model that contains an interaction of age (age) and education (educ).</p>
+<p>$$ \widehat{realrin}=2400 + -1100age - 1600educ + 120age*educ $$</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/three-demensional%20graph.png" style="width:450px;height:350px;"alt="图片描述">
+  <figcaption><strong>Three-dimensional graph of fitted values from model with an interaction</strong></figcaption>
+</figure>
+<p>Let’s transition to the use of two-dimensional graphs for illustrating the precise role of linear by linear interactions.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two-dimensional%20graph.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Two-dimensional graph of fitted values from model without an interaction (left panel) and with an interaction (right panel)</strong></figcaption>
+</figure>
+<p>The left panel shows a two-dimensional representation of the model without an interaction, and the right panel shows a two-dimensional representation of the model with an interaction.</p>
+<h3 id="11-example-using-gss-data">1.1 Example using GSS data</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if (age&gt;=22 &amp; age &lt;=55) &amp; (educ&gt;=12)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let’s fit a model where we predict realrinc from educ, age, and the interaction of these two variables.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   reg realrinc c.educ##c.age female, vce(robust)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Linear regression                               Number of obs     =     22,367
+                                                 F(4, 22362)       =     664.04
+                                                 Prob &gt; F          =     0.0000
+                                                 R-squared         =     0.1712
+                                                 Root MSE          =      24677
+</code></pre>
+<hr>
+<pre><code>              |               Robust
+     realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+
+         educ |   -1487.58     339.60    -4.38   0.000     -2153.21     -821.94
+          age |   -1036.79     126.23    -8.21   0.000     -1284.21     -789.38
+              |
+ c.educ#c.age |     114.91       9.38    12.25   0.000        96.52      133.30
+              |
+       female |  -12553.79     328.28   -38.24   0.000    -13197.25   -11910.33
+        _cons |   28738.43    4550.48     6.32   0.000     19819.18    37657.69
+</code></pre>
+<hr>
+<h3 id="12-interpreting-the-interaction-in-terms-of-age">1.2 Interpreting the interaction in terms of age</h3>
+<p>We can use the margins and marginsplot commands to visualize this interaction. Let’s visualize this interaction by graphing the adjusted means with age on the X axis and with separate lines for each level of educ. The margins command is used with the <strong>at()</strong> option to compute the adjusted means for ages 22 and 55 and educations ranging from 12 to 20 in two-year increments.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins, at(age=(22 55) educ=(12(2)20))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then, the marginsplot command is used to graph the adjusted means with age on the axis and with separate lines for each level of educ.<strong>The legend() option is included to customize the display of the graph legend.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   marginsplot,noci legend(rows(3) title(Education))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two-demensional%20graph%20of%20an%20interaction1.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Adjusted means for a linear by linear interaction with age on the X axis</strong></figcaption>
+</figure>
+<p>we can use the margins command combined with the <strong>dydx(age) option</strong> to estimate the slope for each of the lines displayed in figure</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins, at(educ=(12(2)20)) dydx(age) vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Average marginal effects                                Number of obs = 22,367
+ Model VCE: Robust
+
+ Expression: Linear prediction, predict()
+ dy/dx wrt:  age
+ 1._at: educ = 12
+ 2._at: educ = 14
+ 3._at: educ = 16
+ 4._at: educ = 18
+ 5._at: educ = 20
+</code></pre>
+<hr>
+<pre><code>         |            Delta-method
+         |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+
+ age          |
+     _at |
+      1  |     342.16      19.78    17.30   0.000       303.39      380.93
+      2  |     571.99      16.30    35.09   0.000       540.03      603.94
+      3  |     801.81      29.06    27.59   0.000       744.85      858.77
+      4  |    1031.64      46.12    22.37   0.000       941.23     1122.04
+      5  |    1261.46      64.14    19.67   0.000      1135.73     1387.19
+</code></pre>
+<hr>
+<p>The estimates of the age slope increase as a function of educ. For example, at 12 years of education, the age slope is 342.16, and at 14 years of education, the age slope is 571.99. For a two-unit increase in education, the age slope increases by 229.83 ($571.99-342.16$). <strong>We can relate this to the coefficient for the c.educ#c.age interaction, which is the amount by which the age slope changes for every one-year increase in educ.</strong> For every one-year increase in educ, the age slope increases by 114.91($229.83÷2=114.91$).</p>
+<h3 id="13-interpreting-the-interaction-in-terms-of-education">1.3 Interpreting the interaction in terms of education</h3>
+<p>Now, let’s explore the meaning of the interaction by focusing on the educ slope. Let’s visualize this by creating a graph of the adjusted means showing educ on the $x$ axis and separate lines for age.</p>
+<p>First, the margins command is used to create adjusted means for 12 and 20 years of education and ages ranging from 25 to 55 in 10-year increments.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins, at(educ=(12(2)20)) dydx(age) vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Predictive margins                                      Number of obs = 22,367
+ Model VCE: Robust
+
+ Expression: Linear prediction, predict()
+ 1._at: educ = 12
+        age  = 25
+ 2._at: educ = 12
+        age  = 35
+ 3._at: educ = 12
+        age  = 45
+ 4._at: educ = 12
+        age  = 55
+ 5._at: educ = 20
+        age  = 25
+ 6._at: educ = 20
+        age  = 35
+ 7._at: educ = 20
+        age  = 45
+ 8._at: educ = 20
+        age  = 55
+</code></pre>
+<hr>
+<pre><code>         |            Delta-method
+         |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+
+     _at |
+      1  |   13091.92     236.14    55.44   0.000     12629.07    13554.76
+      2  |   16513.52     172.78    95.57   0.000     16174.85    16852.19
+      3  |   19935.12     286.72    69.53   0.000     19373.12    20497.11
+      4  |   23356.72     461.33    50.63   0.000     22452.47    24260.96
+      5  |   24173.82     876.85    27.57   0.000     22455.13    25892.50
+      6  |   36788.43     619.20    59.41   0.000     35574.75    38002.11
+      7  |   49403.04     906.00    54.53   0.000     47627.21    51178.86
+      8  |   62017.65    1442.62    42.99   0.000     59190.01    64845.28
+</code></pre>
+<hr>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   marginsplot,noci legend(title(Age))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/linear%20interaction.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Adjusted means for a linear by linear interaction with education on the axis</strong></figcaption>
+</figure>
+<p>we can estimate the slope of each line (that is, the educ slope) using the margins command, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins,at(age=(25(10)55)) dydx(educ)vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Average marginal effects                                Number of obs = 22,367
+ Model VCE: Robust
+
+ Expression: Linear prediction, predict()
+ dy/dx wrt:  educ
+ 1._at: age = 25
+ 2._at: age = 35
+ 3._at: age = 45
+ 4._at: age = 55
+</code></pre>
+<hr>
+<pre><code>              |            Delta-method
+              |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+
+ educ         |
+          _at |
+           1  |    1385.24     129.78    10.67   0.000      1130.87     1639.61
+           2  |    2534.36      90.87    27.89   0.000      2356.24     2712.48
+           3  |    3683.49     131.45    28.02   0.000      3425.83     3941.15
+           4  |    4832.62     209.54    23.06   0.000      4421.90     5243.33
+</code></pre>
+<hr>
+<p>As age increases, so does the educ slope. For every one-unitincrease in age, the educ slope increases by 114.91, the estimate of the age#educ interaction. For a 10-unit increase in age, the educ slope would be expected to increase by 1,149.12.</p>
+<h3 id="14-interpreting-the-interaction-in-terms-of-age-slope">1.4 Interpreting the interaction in terms of age slope</h3>
+<p>We can visualize the age by educ interaction by illustrating the way that <strong>the age slope changes as a function of education.</strong> The margins command below includes the dydx(age) option to estimate the age slope at each level of educ.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins,dydx(age) at(educ=(12(1)20))vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Average marginal effects                                Number of obs = 22,367
+ Model VCE: Robust
+
+ Expression: Linear prediction, predict()
+ dy/dx wrt:  age
+ 1._at: educ = 12
+ 2._at: educ = 13
+ 3._at: educ = 14
+ 4._at: educ = 15
+ 5._at: educ = 16
+ 6._at: educ = 17
+ 7._at: educ = 18
+ 8._at: educ = 19
+ 9._at: educ = 20
+</code></pre>
+<hr>
+<pre><code>              |            Delta-method
+              |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+
+ age          |
+          _at |
+           1  |     342.16      19.78    17.30   0.000       303.39      380.93
+           2  |     457.07      15.51    29.47   0.000       426.68      487.47
+           3  |     571.99      16.30    35.09   0.000       540.03      603.94
+           4  |     686.90      21.61    31.78   0.000       644.54      729.26
+           5  |     801.81      29.06    27.59   0.000       744.85      858.77
+           6  |     916.72      37.39    24.52   0.000       843.44      990.01
+           7  |    1031.64      46.12    22.37   0.000       941.23     1122.04
+           8  |    1146.55      55.07    20.82   0.000      1038.61     1254.49
+           9  |    1261.46      64.14    19.67   0.000      1135.73     1387.19
+</code></pre>
+<hr>
+<p>This shows that the age slope increases as a function of education. In fact, the age slope increases by 114.91 units for every one-unit increase in educ. We can visualize these age slopes as a function of education using the marginsplot command (shown below).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot.png"
+        title="age slope as a function of education" /></p>
+<h3 id="15-interpreting-the-interaction-in-terms-of-the-educ-slope">1.5 Interpreting the interaction in terms of the educ slope</h3>
+<p>We can visualize the age by educ interaction by focusing on the way that the educ slope changes as a function of age. The margins command below estimates the educ slope for ages ranging from 25 to 55 in five-year increments.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins,dydx(educ)at(age=(25(5)55))vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Average marginal effects                                Number of obs = 22,367
+ Model VCE: Robust
+
+ Expression: Linear prediction, predict()
+ dy/dx wrt:  educ
+ 1._at: age = 25
+ 2._at: age = 30
+ 3._at: age = 35
+ 4._at: age = 40
+ 5._at: age = 45
+ 6._at: age = 50
+ 7._at: age = 55
+</code></pre>
+<hr>
+<pre><code>              |            Delta-method
+              |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+
+ educ         |
+          _at |
+           1  |    1385.24     129.78    10.67   0.000      1130.87     1639.61
+           2  |    1959.80     101.73    19.26   0.000      1760.40     2159.20
+           3  |    2534.36      90.87    27.89   0.000      2356.24     2712.48
+           4  |    3108.93     102.80    30.24   0.000      2907.43     3310.43
+           5  |    3683.49     131.45    28.02   0.000      3425.83     3941.15
+           6  |    4258.05     168.50    25.27   0.000      3927.78     4588.33
+           7  |    4832.62     209.54    23.06   0.000      4421.90     5243.33
+</code></pre>
+<hr>
+<p>This shows that the educ slope increases as a function of age. For each five-year increase in age, the educ slope increases by 574.56 (that is, the age#educ coefficient multiplied by five, $114.91 × 5$).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">marginsplot,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot2.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot2.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot2.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot2.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot2.png"
+        title="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3marginsplot2.png" /></p>
+<h2 id="2-linear-by-quadratic-interactions">2 Linear by quadratic interactions</h2>
+<p><strong>This section considers models with an interaction of two continuous variables, where one of the variables is fit linearly and the other is fit using a quadratic term.</strong></p>
+<p>A quadratic term introduces curvature in the fitted relationship between the predictor and outcome.</p>
+<p>Let’s first illustrate a model that contains a quadratic predictor and a linear predictor <strong>but no interaction between these predictors.</strong> This hypothetical example uses realrinc as the outcome variable, age as the quadratic predictor, and educ as the linear predictor.</p>
+<p>$$ \widehat{realrin}=-7000 + 2100age + - age^2 + 3000educ $$</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3three%20dimentional.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Three-dimensional graph of fitted values for linear and quadratic models without an interaction</strong></figcaption>
+</figure>
+<p>Let’s now consider a model that includes an interaction between age (as a quadratic term) and educ. This regression equation is shown below</p>
+<p>$$ \widehat{realrin}=165000 + -8600age + 95age^2 +-14000educ + 780age*educ + - 8age^2 * educ  $$</p>
+<p>The key term is the age squared by education interaction. This governs the degree of the curvature in age as a function of education.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.3three%20dimentional2.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Three-dimensional graph of fitted values for linear and quadratic models with an interaction</strong></figcaption>
+</figure>
+<p>As education increases from 12 to 20years, the degree of the inverted U-shape grows as a function of education. This is due to the interaction of education with age squared. When quadratic terms become more negative, the inverted U-shape becomes more pronounced. Thus for every one-unit increase in education, the relationship between income and age shows more of an inverted U-shape.</p>
+<p>We can clearly see how the degree of the curvature in relationship between income and age is the same across the levels of education. The right panel of figure shows a two-dimensional representation of figure above, where there was an interaction of education with the quadratic term for age.</p>
+ <figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two-dimensional%20graph2.png" style="width:600px;height:350px;" alt="图片描述">
+  <figcaption><strong>Two-dimensional graph of fitted values for linear and quadratic models without an interaction (left panel) and with linear by quadratic interaction (right panel)</strong></figcaption>
+</figure>
+<h3 id="21-example-using-gss-data">2.1 Example using GSS data</h3>
+<p>Let’s use the GSS dataset to fit a model that predicts realrinc from educ (treated as a continuous linear variable) interacted with age (treated as a continuous variable fit using a <strong>quadratic term</strong>).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if (age&gt;=22 &amp; age&lt;=80) &amp; (educ&gt;=12)
+</span></span><span class="line"><span class="cl">  reg realrinc c.educ c.age##c.age female,vce(robust)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let’s begin by fitting a model that predicts realrinc using educ as a linear term and age as a quadratic term <strong>but no interaction</strong> between education and age.</p>
+<pre><code> Linear regression                               Number of obs     =     25,964
+                                                 F(4, 25959)       =     785.49
+                                                 Prob &gt; F          =     0.0000
+                                                 R-squared         =     0.1658
+                                                 Root MSE          =      26078
+</code></pre>
+<hr>
+<pre><code>              |               Robust
+     realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+      
+         educ |    3071.27      93.46    32.86   0.000      2888.08     3254.45
+          age |    2245.62      79.05    28.41   0.000      2090.67     2400.57
+              |
+  c.age#c.age |     -21.77       0.94   -23.09   0.000       -23.62      -19.92
+              |
+       female |  -13344.78     319.66   -41.75   0.000    -13971.33   -12718.23
+        _cons |  -64839.08    2060.09   -31.47   0.000    -68876.96   -60801.20
+</code></pre>
+<hr>
+<p>The quadratic term is significant and is negative. This negative coefficient indicates that the relationship between age and income has an <strong>inverted U-shape</strong>.</p>
+<p>Let’s use the margins and marginsplot commands to visualize the adjusted means of income as a function of age while holding education constant at 12 to 20 years of education (in two-year increments).</p>
+<p>We first compute the adjusted means as a function of age and education using the margins command.
+Then, the marginsplot command graphs the adjusted means on the $y$ axis and age on the $x$ axis, with separate lines for each level of education.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins,at(age=(22(1)80) educ=(12(2)20))
+</span></span><span class="line"><span class="cl">   marginsplot,noci legend(rows(2))recast(line) scheme(s1mono)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.4.1.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Adjusted means at 12, 14, 16, 18, and 20 years of education</strong></figcaption>
+</figure>
+<p>Let’s now fit a model that <strong>includes an interaction</strong> of educ with the quadratic term for age.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   reg realrinc c.educ##c.age##c.age female,vce(robust) noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Linear regression                               Number of obs     =     25,964
+                                                 F(6, 25957)       =     558.27
+                                                 Prob &gt; F          =     0.0000
+                                                 R-squared         =     0.1757
+                                                 Root MSE          =      25924
+</code></pre>
+<hr>
+<pre><code>                    |               Robust
+           realrinc | Coefficient  std. err.      t    P&gt;|t|
+ 
+               educ |   -9317.78     817.82   -11.39   0.000
+                age |   -5009.26     551.97    -9.08   0.000
+                    |
+       c.educ#c.age |     517.95      41.56    12.46   0.000
+                    |
+        c.age#c.age |      46.88       6.39     7.34   0.000
+                    |
+ c.educ#c.age#c.age |      -4.91       0.48   -10.18   0.000
+                    |
+             female |  -13160.33     317.92   -41.40   0.000
+              _cons |  108559.85   10897.04     9.96   0.000
+</code></pre>
+<hr>
+<p>Let’s interpret this as a function of age by graphing the adjusted means on the axis and age on the axis, with separate lines to indicate the levels of education.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">   margins,at(age=(22 25(5)80) educ=(12(2)20))
+</span></span><span class="line"><span class="cl">   marginsplot,plotdimension(,allsimple)legend(subtitle(Education)rows(2))noci recast(line) scheme(s1mono)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src=""
+        data-srcset=",  1.5x,  2x"
+        data-sizes="auto"
+        alt=""
+        title="" /></p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.4.2.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Adjusted means from linear by quadratic model</strong></figcaption>
+</figure>
+<p>the c.educ#c.age#c.age coefficient describes the degree to which the inverted U-shape changes as a function of education. This coefficient, which is $-4.9$, represents the change in the quadratic term for age for a one-unit increase in educ. As education increases by one unit, the quadratic term for age decreases by 4.9, creating a more inverted U-shape.</p>
+<p>For those with lower educations, the relationship between age and income tends to be more linear, and for those with higher levels of education, the relationship between age and income is more curved, showing a greater rise and fall across ages.</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-01</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/5.continuous-by-continuous-interactions/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/interaction/">Interaction</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/3.continuous-predictors_piecewise-models/" class="prev" rel="prev" title="Chapter4 ：Continuous predictors: Piecewise models"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter4 ：Continuous predictors: Piecewise models</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

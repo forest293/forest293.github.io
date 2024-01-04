@@ -18,7 +18,7 @@
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/3.continuous-predictors_piecewise-models/" /><link rel="prev" href="https://forest293.github.io/2.continuous-predictors_polynomials/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/3.continuous-predictors_piecewise-models/" /><link rel="prev" href="https://forest293.github.io/2.continuous-predictors_polynomials/" /><link rel="next" href="https://forest293.github.io/5.continuous-by-continuous-interactions/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/forest293.github.io\/3.continuous-predictors_piecewise-models\/"
-        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Continuous predictors, stata","wordcount":  4579 ,
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Continuous predictors, stata","wordcount":  4578 ,
         "url": "https:\/\/forest293.github.io\/3.continuous-predictors_piecewise-models\/","datePublished": "2023-12-29T16:29:41+08:00","dateModified": "2023-12-31T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
@@ -109,7 +109,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter4 ：Continuous predictors: Piecewise models</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-29">2023-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4579 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-12-29">2023-12-29</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4578 字&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 22 分钟&nbsp;<span id="/3.continuous-predictors_piecewise-models/" class="leancloud_visitors" data-flag-title="Chapter4 ：Continuous predictors: Piecewise models">
                         <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -152,27 +152,17 @@
     <li><a href="#8-automating-graphs-of-piecewise-models">8 Automating graphs of piecewise models</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p><em><strong>This chapter illustrates the use of piecewise regression. This involves fitting separate line segments, demarcated by knots, that account for the nonlinearity between the predictor and outcome. .</strong></em></p>
+            </div><div class="content" id="content"><p><strong>This chapter illustrates the use of piecewise regression. This involves fitting separate line segments, demarcated by knots, that account for the nonlinearity between the predictor and outcome.</strong></p>
 <h2 id="1-introduction-to-piecewise-regression-models">1 Introduction to piecewise regression models</h2>
 <p>A piecewise regression goes by several names, including <strong>spline regression</strong>,<strong>broken line regression</strong>, <strong>broken stick regression</strong>, and even <strong>hockey stick models</strong>.</p>
-<p>Consider the example, predicting annual income from education, shown in the figure below
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png"
-        title="Piecewise regression with one knot (left) and two knots (right)" /></p>
+<p>Consider the example, predicting annual income from education, shown in the figure below</p>
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png"title="Piecewise regression with one knot (left) and two knots (right)"  />
+</div>
 <p><strong>A knot can signify a change of slope and a change of intercept, yielding an increase (or decrease) in the outcome upon attaining a particular milestone.</strong></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png"
-        title="Piecewise regression with one knot (left) and two knots (right)" /></p>
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png"title="Piecewise regression with one knot (left) and two knots (right)"  />
+</div>
 <blockquote>
 <p>Note! Instantaneous jumps?</p>
 <blockquote>
@@ -220,14 +210,9 @@
 </span></span><span class="line"><span class="cl">  showcoding educ ed1 ed2
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png"
-        title="showcoding educ ed1 ed2" /></p>
+</div><div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png"title="showcoding educ ed1 ed2" width = "300" height = "400" />
+</div>
 <p>The next step is to use the regress command to predict realrinc from ed1 and ed2. This will yield a piecewise model with 12 years of education as the knot.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -330,14 +315,9 @@ realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mkspline ed1m 12 ed2m = educ,marginal
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png"
-        title="showcoding" /></p>
+</div><div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png"title="showcoding" width = "300" height = "400" />
+</div>
 <p>The next step is to enter ed1m and ed2m as predictors of income, as shown below.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -379,14 +359,9 @@ realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
 </span></span><span class="line"><span class="cl">  showcoding educ ed1m ed2m ed3m
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png"
-        title="showcoding" /></p>
+</div><div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png"title="showcoding" width = "300" height = "400" />
+</div>
 <p>The coefficient for ed2m will represent the change in slope for <strong>high school graduates versus non–high school graduates.</strong> The coefficient for ed3m will represent the change in slope <strong>comparing college graduates with high school graduates.</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -528,14 +503,9 @@ realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
 </code></pre>
 <hr>
 <p>At 12 years of education, the adjusted mean is <strong>computed twice</strong>, once assuming the absence of a high school degree and once <strong>assuming a high school degree</strong>, illustrating the jump in income due to graduating high school.</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png"
-        title="Adjusted means from piecewise model with one knot and one jump at educ = 12" /></p>
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png"title="Adjusted means from piecewise model with one knot and one jump at educ = 12"  />
+</div>
 <p><strong>How tow interpret the regression coefficient?</strong></p>
 <ul>
 <li>For each additional year of education (up to 12), income increases by $273.10.$figure shows the adjusted means given zero and one year of education. This difference in these adjusted means equals 273.10 $(10521.83-10248.73)$</li>
@@ -558,14 +528,9 @@ realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
 </span></span><span class="line"><span class="cl">          at(ed1m=20 ed2m=8 hsgrad=1) vsquish 
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png"
-        title="showcoding" /></p>
+</div><div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png"title="showcoding" width = "300" height = "400" />
+</div>
 <pre><code> Predictive margins                                      Number of obs = 32,183
  Model VCE: Robust
 
@@ -667,14 +632,9 @@ realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
    _cons |   16339.10     988.28    16.53   0.000     14402.04    18276.16
 </code></pre>
 <hr>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png"
-        title="Adjusted means from piecewise model with knots and jumps at educ = 12 and educ = 16" /></p>
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png"title="Adjusted means from piecewise model with knots and jumps at educ = 12 and educ = 16"  />
+</div>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -695,14 +655,9 @@ realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
 </span></span><span class="line"><span class="cl">          at(ed1m=20 ed2m=8 ed3m=4 hsgrad=1 cograd=1) vsquish noatlegend
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png"
-        title="showcoding" /></p>
+</div><div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png"title="showcoding" width = "300" height = "400" />
+</div>
 <pre><code> Predictive margins                                      Number of obs = 32,183
  Model VCE: Robust
 
@@ -834,14 +789,9 @@ Residual |  464092.28      52869  8.77815515    Adj R-squared =     0.0947
 <blockquote>
 <p>In place of educ, you would insert your outcome variable, and in place of yrborn, you would place your predictor variable. Then for the initial() option, you would insert plausible values for knot, b1, b2, and cons. These correspond to <strong>the placement of the knot</strong>, <strong>the slope before the knot</strong>, <strong>the slope after the knot</strong>, and <strong>the constant</strong>, respectively.</p>
 </blockquote>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png"
-        data-srcset="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png 1.5x, https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png 2x"
-        data-sizes="auto"
-        alt="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png"
-        title="Average education with hand-drawn fitted lines" /></p>
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png"title="Average education with hand-drawn fitted lines"  />
+</div>
 <ul>
 <li>In this example, I used 1945 as the knot. To estimate b1, I looked at the graph and saw that the mean education rose about <strong>4 units</strong> from 1905 to 1945. <strong>Taking a change of 4 units divided by 40 gave me an estimate of 0.1 for b1.</strong></li>
 <li>Likewise, I estimated that education declined by about 0.5 units from 1945 to 1985 and divided $-0.5$ units by 40 to yield $-0.0125$ as an estimate of b2.</li>
@@ -1272,13 +1222,14 @@ In such a case, we can intentionally fit a model with too many knots and then pr
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2.continuous-predictors_polynomials/" class="prev" rel="prev" title="Chapter3 ：Continuous predictors: Polynomials"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter3 ：Continuous predictors: Polynomials</a></div>
+    <div class="post-nav"><a href="/2.continuous-predictors_polynomials/" class="prev" rel="prev" title="Chapter3 ：Continuous predictors: Polynomials"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter3 ：Continuous predictors: Polynomials</a>
+            <a href="/5.continuous-by-continuous-interactions/" class="next" rel="next" title="Chapter5 ：Continuous by continuous interactions">Chapter5 ：Continuous by continuous interactions<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="comments"><div id="valine" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

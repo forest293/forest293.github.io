@@ -4,15 +4,24 @@
         <link>https://forest293.github.io/posts/</link>
         <description>所有文章 | Alex_Wang</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 29 Dec 2023 16:29:41 &#43;0800</lastBuildDate><atom:link href="https://forest293.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 01 Jan 2024 16:29:41 &#43;0800</lastBuildDate><atom:link href="https://forest293.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Chapter5 ：Continuous by continuous interactions</title>
+    <link>https://forest293.github.io/5.continuous-by-continuous-interactions/</link>
+    <pubDate>Mon, 01 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/5.continuous-by-continuous-interactions/</guid>
+    <description><![CDATA[This chapter illustrates how to interpret interactions of two continuous predictors. 1 Linear by linear interactions A linear by linear interaction implies that the slope of the relationship between one of the predictors and the outcome changes as a linear function of the other predictor. Let’s begin with a hypothetical example in which we predict income (realrinc) from age (age) and education (educ) without an interaction.]]></description>
+</item>
+<item>
     <title>Chapter4 ：Continuous predictors: Piecewise models</title>
     <link>https://forest293.github.io/3.continuous-predictors_piecewise-models/</link>
     <pubDate>Fri, 29 Dec 2023 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
     <guid>https://forest293.github.io/3.continuous-predictors_piecewise-models/</guid>
-    <description><![CDATA[This chapter illustrates the use of piecewise regression. This involves fitting separate line segments, demarcated by knots, that account for the nonlinearity between the predictor and outcome. .
+    <description><![CDATA[This chapter illustrates the use of piecewise regression. This involves fitting separate line segments, demarcated by knots, that account for the nonlinearity between the predictor and outcome.
 1 Introduction to piecewise regression models A piecewise regression goes by several names, including spline regression,broken line regression, broken stick regression, and even hockey stick models.
-Consider the example, predicting annual income from education, shown in the figure below A knot can signify a change of slope and a change of intercept, yielding an increase (or decrease) in the outcome upon attaining a particular milestone.]]></description>
+Consider the example, predicting annual income from education, shown in the figure below
+A knot can signify a change of slope and a change of intercept, yielding an increase (or decrease) in the outcome upon attaining a particular milestone.]]></description>
 </item>
 <item>
     <title>Chapter3 ：Continuous predictors: Polynomials</title>
@@ -84,14 +93,6 @@ When I use the termcontinuous variable, I am referring to a variable that is mea
     <guid>https://forest293.github.io/theme-documentation-mermaid-shortcode/</guid>
     <description><![CDATA[<a href="https://github.com/dillonzq/LoveIt/releases/tag/v0.2.11" rel="noopener noreffer" target="_blank"></a>
 <p><code>mermaid</code> shortcode 使用 <a href="https://mermaidjs.github.io/" target="_blank" rel="noopener noreffer ">Mermaid</a> 库提供绘制图表和流程图的功能.</p>]]></description>
-</item>
-<item>
-    <title>Emoji 支持</title>
-    <link>https://forest293.github.io/emoji-support/</link>
-    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://forest293.github.io/emoji-support/</guid>
-    <description><![CDATA[<p>Emoji 可以通过多种方式在 Hugo 项目中启用.</p>]]></description>
 </item>
 </channel>
 </rss>

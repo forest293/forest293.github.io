@@ -1,18 +1,26 @@
 # Chapter4 ：Continuous predictors: Piecewise models
 
 
-***This chapter illustrates the use of piecewise regression. This involves fitting separate line segments, demarcated by knots, that account for the nonlinearity between the predictor and outcome. .***
+**This chapter illustrates the use of piecewise regression. This involves fitting separate line segments, demarcated by knots, that account for the nonlinearity between the predictor and outcome.**
 
 ## 1 Introduction to piecewise regression models
 
 A piecewise regression goes by several names, including **spline regression**,**broken line regression**, **broken stick regression**, and even **hockey stick models**.
 
 Consider the example, predicting annual income from education, shown in the figure below
-![Piecewise regression with one knot (left) and two knots (right)](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png)
+
+
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/piecewise.png"title="Piecewise regression with one knot (left) and two knots (right)"  />
+</div>
 
 **A knot can signify a change of slope and a change of intercept, yielding an increase (or decrease) in the outcome upon attaining a particular milestone.**
 
-![Piecewise regression with one knot (left) and two knots (right)](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png)
+
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/picewise1.png"title="Piecewise regression with one knot (left) and two knots (right)"  />
+</div>
+
 
 >Note! Instantaneous jumps?
 >>As a thought experiment, imagine someone being one day short of graduating high school and the wages they would obtain as they seek a job. Compare this person with an identical job seeker who has one more day of education (that is, they graduated high school). These two people are identical except that one crossed the threshold of getting a diploma. It is indeed plausible that the second person would be offered an annual income $2,200 more than the first person$. 
@@ -48,7 +56,9 @@ The first step is to **create two new variables that are coded to represent the 
   showcoding educ ed1 ed2
 ``` 
 
-![showcoding educ ed1 ed2](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png)
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding.png"title="showcoding educ ed1 ed2" width = "300" height = "400" />
+</div>
 
 The next step is to use the regress command to predict realrinc from ed1 and ed2. This will yield a piecewise model with 12 years of education as the knot.
 
@@ -129,7 +139,10 @@ The key difference is that **we add the marginal option to the mkspline command,
 ``` code
   mkspline ed1m 12 ed2m = educ,marginal
 ``` 
-![showcoding](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png)
+
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding1.png"title="showcoding" width = "300" height = "400" />
+</div>
 
 The next step is to enter ed1m and ed2m as predictors of income, as shown below.
 
@@ -166,7 +179,9 @@ The individual slope coding method **omitted the marginal option on the mkspline
   showcoding educ ed1m ed2m ed3m
 ```
 
-![showcoding](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png)
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/showcoding2.png"title="showcoding" width = "300" height = "400" />
+</div>
 
 The coefficient for ed2m will represent the change in slope for **high school graduates versus non–high school graduates.** The coefficient for ed3m will represent the change in slope **comparing college graduates with high school graduates.**
 
@@ -278,7 +293,10 @@ The variable **hsgrad** is coded 1 if someone has 12 or more years of education,
 
 At 12 years of education, the adjusted mean is **computed twice**, once assuming the absence of a high school degree and once **assuming a high school degree**, illustrating the jump in income due to graduating high school.
 
-![Adjusted means from piecewise model with one knot and one jump at educ = 12](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png)
+
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/one%20jump1.png"title="Adjusted means from piecewise model with one knot and one jump at educ = 12"  />
+</div>
 
 **How tow interpret the regression coefficient?**
 * For each additional year of education (up to 12), income increases by $273.10.$figure shows the adjusted means given zero and one year of education. This difference in these adjusted means equals 273.10 $(10521.83-10248.73)$
@@ -293,7 +311,12 @@ At 12 years of education, the adjusted mean is **computed twice**, once assuming
           at(ed1m=20 ed2m=8 hsgrad=1) vsquish 
 
 ```
-![showcoding](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png)
+
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/12.31.png"title="showcoding" width = "300" height = "400" />
+</div>
+
+
 
      Predictive margins                                      Number of obs = 32,183
      Model VCE: Robust
@@ -372,7 +395,10 @@ At 12 years of education, the adjusted mean is **computed twice**, once assuming
        _cons |   16339.10     988.28    16.53   0.000     14402.04    18276.16
 ------------------------------------------------------------------------------
 
-![Adjusted means from piecewise model with knots and jumps at educ = 12 and educ = 16](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png)
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump.png"title="Adjusted means from piecewise model with knots and jumps at educ = 12 and educ = 16"  />
+</div>
+
 
 ``` code
   showcoding educ ed1m ed2m ed3m hsgrad cograd
@@ -384,7 +410,9 @@ At 12 years of education, the adjusted mean is **computed twice**, once assuming
           at(ed1m=20 ed2m=8 ed3m=4 hsgrad=1 cograd=1) vsquish noatlegend
 ```
 
-![showcoding](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png)
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/two%20jump1.png"title="showcoding" width = "300" height = "400" />
+</div>
 
      Predictive margins                                      Number of obs = 32,183
      Model VCE: Robust
@@ -477,7 +505,10 @@ Note: Parameter cons is used as a constant term during estimation.
 
 >In place of educ, you would insert your outcome variable, and in place of yrborn, you would place your predictor variable. Then for the initial() option, you would insert plausible values for knot, b1, b2, and cons. These correspond to **the placement of the knot**, **the slope before the knot**, **the slope after the knot**, and **the constant**, respectively.
 
-![Average education with hand-drawn fitted lines](https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png)
+
+<div align=center>
+<img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/unkownjump1.png"title="Average education with hand-drawn fitted lines"  />
+</div>
 
 * In this example, I used 1945 as the knot. To estimate b1, I looked at the graph and saw that the mean education rose about **4 units** from 1905 to 1945. **Taking a change of 4 units divided by 40 gave me an estimate of 0.1 for b1.**
 * Likewise, I estimated that education declined by about 0.5 units from 1945 to 1985 and divided $-0.5$ units by 40 to yield $-0.0125$ as an estimate of b2. 
