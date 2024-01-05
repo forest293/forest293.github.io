@@ -4,9 +4,17 @@
         <link>https://forest293.github.io/</link>
         <description>Hugo theme - LoveIt</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 01 Jan 2024 16:29:41 &#43;0800</lastBuildDate>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 04 Jan 2024 16:29:41 &#43;0800</lastBuildDate>
             <atom:link href="https://forest293.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Chapter6 ：Continuous by continuous by continuous interactions</title>
+    <link>https://forest293.github.io/6.continuous-by-continuous-by-continuous-interactions/</link>
+    <pubDate>Thu, 04 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/6.continuous-by-continuous-by-continuous-interactions/</guid>
+    <description><![CDATA[This chapter explores models that involve the interaction of three continuous linear predictors. 1 Overview Let’s first consider a hypothetical example looking at income (adjusted for inflation) as a function of age, education, and year born. To illustrate the meaning of an interaction of these three continuous predictor, let’s first consider a model that does not include a three-way interaction. $$ \widehat{realrin}=3365394]]></description>
+</item>
+<item>
     <title>Chapter5 ：Continuous by continuous interactions</title>
     <link>https://forest293.github.io/5.continuous-by-continuous-interactions/</link>
     <pubDate>Mon, 01 Jan 2024 16:29:41 &#43;0800</pubDate>
@@ -86,15 +94,6 @@ When I use the termcontinuous variable, I am referring to a variable that is mea
     <author>Dillon</author>
     <guid>https://forest293.github.io/basic-markdown-syntax/</guid>
     <description><![CDATA[<p>这篇文章提供了可以在 Hugo 的文章中使用的基本 Markdown 语法示例.</p>]]></description>
-</item>
-<item>
-    <title>主题文档 - mermaid Shortcode</title>
-    <link>https://forest293.github.io/theme-documentation-mermaid-shortcode/</link>
-    <pubDate>Tue, 03 Mar 2020 15:29:59 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://forest293.github.io/theme-documentation-mermaid-shortcode/</guid>
-    <description><![CDATA[<a href="https://github.com/dillonzq/LoveIt/releases/tag/v0.2.11" rel="noopener noreffer" target="_blank"></a>
-<p><code>mermaid</code> shortcode 使用 <a href="https://mermaidjs.github.io/" target="_blank" rel="noopener noreffer ">Mermaid</a> 库提供绘制图表和流程图的功能.</p>]]></description>
 </item>
 </channel>
 </rss>
