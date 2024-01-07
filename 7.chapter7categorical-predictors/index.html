@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter7 ：Categorical predictors - Alex_Wang</title><meta name="Description" content="This chapter covers models that involve categorical predictors."><meta property="og:title" content="Chapter7 ：Categorical predictors" />
+<meta property="og:description" content="This chapter covers models that involve categorical predictors." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/7.chapter7categorical-predictors/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-05T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-05T16:29:41+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter7 ：Categorical predictors"/>
+<meta name="twitter:description" content="This chapter covers models that involve categorical predictors."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/7.chapter7categorical-predictors/" /><link rel="prev" href="https://forest293.github.io/6.continuous-by-continuous-by-continuous-interactions/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter7 ：Categorical predictors",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/7.chapter7categorical-predictors\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Categorical, stata","wordcount":  6137 ,
+        "url": "https:\/\/forest293.github.io\/7.chapter7categorical-predictors\/","datePublished": "2024-01-05T16:29:41+08:00","dateModified": "2024-01-05T16:29:41+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter covers models that involve categorical predictors."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/7.chapter7categorical-predictors/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/7.chapter7categorical-predictors/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter7 ：Categorical predictors</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-05">2024-01-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 6137 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 13 分钟&nbsp;<span id="/7.chapter7categorical-predictors/" class="leancloud_visitors" data-flag-title="Chapter7 ：Categorical predictors">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-comparing-two-groups-using-a-t-test">1 Comparing two groups using a t test</a></li>
+    <li><a href="#2-more-groups-and-more-predictors">2 More groups and more predictors</a></li>
+    <li><a href="#3-overview-of-contrast-operators">3 Overview of contrast operators</a></li>
+    <li><a href="#4-compare-each-group-against-a-reference-group">4 Compare each group against a reference group</a>
+      <ul>
+        <li><a href="#41--selecting-a-specific-contrast">4.1  Selecting a specific contrast</a></li>
+        <li><a href="#42-selecting-a-different-reference-group">4.2 Selecting a different reference group</a></li>
+        <li><a href="#43-selecting-a-contrast-and-reference-group">4.3 Selecting a contrast and reference group</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-compare-each-group-against-the-grand-mean">5 Compare each group against the grand mean</a></li>
+    <li><a href="#6-compare-adjacent-means">6 Compare adjacent means</a>
+      <ul>
+        <li><a href="#61-reverse-adjacent-contrasts">6.1 Reverse adjacent contrasts</a></li>
+        <li><a href="#62-selecting-a-specific-contrast">6.2 Selecting a specific contrast</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-comparing-the-mean-of-subsequent-or-previous-levels">7 Comparing the mean of subsequent or previous levels</a>
+      <ul>
+        <li><a href="#71-comparing-the-mean-of-previous-levels">7.1 Comparing the mean of previous levels</a></li>
+        <li><a href="#72-selecting-a-specific-contrast">7.2 Selecting a specific contrast</a></li>
+      </ul>
+    </li>
+    <li><a href="#polynomial-contrasts">Polynomial contrasts</a></li>
+    <li><a href="#9-custom-contrasts">9 Custom contrasts</a></li>
+    <li><a href="#10-weighted-contrasts">10 Weighted contrasts</a></li>
+    <li><a href="#11-pairwise-comparisons">11 Pairwise comparisons</a></li>
+    <li><a href="#12-interpreting-confidence-intervals">12 Interpreting confidence intervals</a></li>
+    <li><a href="#13-testing-categorical-variables-using-regression">13 Testing categorical variables using regression</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><strong>This chapter covers models that involve categorical predictors. The emphasis is on how to make contrasts among levels of the categorical predictor to answer interesting questions regarding the differences among the categories.</strong></p>
+<h2 id="1-comparing-two-groups-using-a-t-test">1 Comparing two groups using a t test</h2>
+<p>The simplest kind of categorical predictor has two levels. Examples of such twolevel predictors include gender (male versus female), treatment assignment (treatment group versus control group), or whether one is married (married versus not married).</p>
+<p>The variable happy7 indicates the happiness rating of the respondent on a 1 to 7 scale, where 7 is completely happy and 1 is completely unhappy. To compare the average happiness between those who are married and unmarried, we can perform an independent groups $t$test, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  ttest happy7, by(married)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The variable happy7 indicates the happiness rating of the respondent on a 1 to 7 scale, where 7 is completely happy and 1 is completely unhappy.</p>
+<p>To compare the average happiness between those who are married and unmarried, we can perform an independent groups $t$ test,</p>
+<pre><code> Two-sample t test with equal variances
+ ------------------------------------------------------------------------------
+    Group |     Obs        Mean    Std. err.   Std. dev.   [95% conf. interval]
+ ---------+--------------------------------------------------------------------
+ Unmarrie |     604     5.35596    .0425197    1.044982    5.272456    5.439465
+  Married |     556    5.705036    .0368763    .8695302    5.632602     5.77747
+ ---------+--------------------------------------------------------------------
+ Combined |   1,160    5.523276    .0287773    .9801179    5.466815    5.579737
+ ---------+--------------------------------------------------------------------
+     diff |           -.3490757    .0567084               -.4603384    -.237813
+ ------------------------------------------------------------------------------
+          diff = mean(Unmarrie) - mean(Married)                         t =  -6.1556
+      H0: diff = 0                                     Degrees of freedom =     1158
+ 
+     Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
+  Pr(T &lt; t) = 0.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 1.0000
+</code></pre>
+<p>The t-test command shows that the average happiness is 5.356 for those who are unmarried and 5.705 for those who are married. The difference between these means is $-0.349$, and that difference is significantly different from 0 (with a two-tailed value of 0.0000).</p>
+<p>The difference between these means is negative. We can interpret this result to say that those who are unmarried are significantly less happy than those who are married. We could also say that those who are married are significantly happier than those who are unmarried</p>
+<h2 id="2-more-groups-and-more-predictors">2 More groups and more predictors</h2>
+<p>We are seldom interested in simply comparing two groups in the absence of any additional predictors (covariates). Let’s extend the previous example in two ways.</p>
+<p>First, let’s use a five-level measure of marital status, which is coded: 1 = married, 2 = widowed, 3 = divorced, 4 = separated, and 5 = never married.</p>
+<p>Second, let’s include additional predictors (covariates): gender,2 race, and age. We begin by testing the overall null hypothesis that <strong>the average happiness is equal among the five marital status groups</strong>:</p>
+<p>$$ H_{0} = \mu_{2} = \mu_{3} = \mu_{4} = \mu_{5}$$</p>
+<p>I included the i. prefix before each of the categorical variables and the c. prefix in front of age to specify that it is a continuous variable.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  anova happy7 i.marital i.gender i.race c.age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                      Number of obs =      1,156    R-squared     =  0.0488
+                      Root MSE      =    .957826    Adj R-squared =  0.0422
+
+               Source | Partial SS         df         MS        F    Prob&gt;F
+               -----------+----------------------------------------------------
+                Model |  53.979104          8    6.747388      7.35  0.0000
+                      |
+              marital |  47.156057          4   11.789014     12.85  0.0000
+               gender |  3.8954776          1   3.8954776      4.25  0.0396
+                 race |  .92449374          2   .46224687      0.50  0.6043
+                  age |  5.3200497          1   5.3200497      5.80  0.0162
+                      |
+             Residual |  1052.2934      1,147   .91743103  
+               -----------+----------------------------------------------------
+               Total |  1106.2725      1,155   .95781168 
+</code></pre>
+<blockquote>
+<p>Note! The anova and regress commands</p>
+<blockquote>
+<p>In this chapter (as well as chapters 8 and 9), my focus will be on starting the analysis with an assessment of the main effects (and interactions, if any) using the omnibus $F$-tests provided by the anova command. I would emphasize, however, that these same results could be obtained via the regress command.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Note! Omnibus $F$-tests</p>
+<blockquote>
+<p>Omnibus F-tests are statistical tests used to assess the overall significance or goodness-of-fit of a regression model. These tests evaluate the joint significance of multiple coefficients in the model or the overall explanatory power of the regression equation.<br>
+In regression analysis, the Omnibus F-test is typically used to determine whether there is a significant relationship between the predictor variables and the dependent variable. It examines the overall fit of a model by comparing the variance explained by the model to the unexplained variance (residuals) around the regression line.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>The steps involved in performing an Omnibus F-test include:</p>
+<ol>
+<li>Fit the regression model using the given predictor variables.</li>
+<li>Calculate the overall F-statistic using the explained and unexplained variance from the model.</li>
+<li>Obtain the degrees of freedom for the F-distribution based on the number of predictors and the sample size.</li>
+<li>Compare the calculated F-statistic with the critical value from the F-distribution at a specified significance level (commonly 0.05 or 0.01).</li>
+<li>If the calculated F-statistic exceeds the critical value, the null hypothesis is rejected, indicating that the overall model is statistically significant.</li>
+</ol>
+</blockquote>
+</blockquote>
+<p>The overall test of marital is significant ( , ). After adjusting for gender, race, and age, we can reject the null hypothesis that the average happiness is equal among the five marital status groups.</p>
+<p>Let’s probe this finding in more detail. Suppose that our research hypothesis (prior to even seeing the data) was that those who are married will be happier than each of the four other marital status groups. We can frame this as four separate null hypotheses, shown below</p>
+<p>$$H_{0}: \mu_{2} = \mu_{1} $$
+$$H_{0}: \mu_{3} = \mu_{1} $$
+$$H_{0}: \mu_{4} = \mu_{1} $$
+$$H_{0}: \mu_{5} = \mu_{1} $$</p>
+<p>Let’s begin the exploration of these tests by using the margins command to compute the adjusted mean of happiness by marital status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins marital
+</span></span><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Predictive margins                                       Number of obs = 1,156
+
+ Expression: Linear prediction, predict()
+
+ --------------------------------------------------------------------------------
+                |            Delta-method
+                |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+ ---------------+----------------------------------------------------------------
+        marital |
+       married  |       5.70       0.04   139.63   0.000         5.62        5.78
+       widowed  |       5.25       0.12    44.51   0.000         5.01        5.48
+      divorced  |       5.20       0.07    75.92   0.000         5.06        5.33
+     separated  |       5.15       0.16    31.25   0.000         4.83        5.47
+ never married  |       5.54       0.06    87.86   0.000         5.42        5.67
+ --------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.5.5.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Adjusted mean of happiness by marital status</strong></figcaption>
+</figure>
+<p>The results so far have given some indirect support for our research hypotheses. The overall test of marital is significant, and the pattern of means is consistent with our hypothesis—the adjusted means of those who are married appear greater than the means for the other groups.</p>
+<p>But let’s directly test the four null hypotheses based on our research question—the happiness ratings for each group compared with those who are married to determine if these differences are statistically significant. We can perform such tests using the <strong>contrast command</strong>, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.marital
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------------------------------------------
+                             |         df           F        P&gt;F
+ ----------------------------+----------------------------------
+                     marital |
+       (widowed vs married)  |          1       13.44     0.0003
+      (divorced vs married)  |          1       39.38     0.0000
+     (separated vs married)  |          1       10.46     0.0013
+ (never married vs married)  |          1        4.18     0.0411
+                      Joint  |          4       12.85     0.0000
+                             |
+                 Denominator |       1147
+ ---------------------------------------------------------------
+
+ -----------------------------------------------------------------------------
+                             |   Contrast   Std. err.     [95% conf. interval]
+ ----------------------------+------------------------------------------------
+                     marital |
+       (widowed vs married)  |      -0.45       0.12         -0.70       -0.21
+      (divorced vs married)  |      -0.50       0.08         -0.66       -0.34
+     (separated vs married)  |      -0.55       0.17         -0.88       -0.22
+ (never married vs married)  |      -0.16       0.08         -0.31       -0.01
+ -----------------------------------------------------------------------------
+</code></pre>
+<p>This contrast command compares each marital status group with the first group (those who are married), adjusting for gender, race, and age.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.marital
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can use margins and marginsplot to visually depicts these contrast,this graph illustrates the differences in the adjusted means (comparing each group with those who are unmarried) along with the 95% confidence interval for each difference.</p>
+<p><strong>This confidence interval excludes 0, indicating that this difference is significant at the 5% level.</strong></p>
+<pre><code> Contrasts of predictive margins                          Number of obs = 1,156
+
+ Expression: Linear prediction, predict()
+
+ ---------------------------------------------------------------
+                             |         df           F        P&gt;F
+ ----------------------------+----------------------------------
+                     marital |
+       (widowed vs married)  |          1       13.44     0.0003
+      (divorced vs married)  |          1       39.38     0.0000
+     (separated vs married)  |          1       10.46     0.0013
+ (never married vs married)  |          1        4.18     0.0411
+                      Joint  |          4       12.85     0.0000
+                             |
+                 Denominator |       1147
+ ---------------------------------------------------------------
+
+ -----------------------------------------------------------------------------
+                             |            Delta-method
+                             |   Contrast   std. err.     [95% conf. interval]
+ ----------------------------+------------------------------------------------
+                     marital |
+       (widowed vs married)  |      -0.45       0.12         -0.70       -0.21
+      (divorced vs married)  |      -0.50       0.08         -0.66       -0.34
+     (separated vs married)  |      -0.55       0.17         -0.88       -0.22
+ (never married vs married)  |      -0.16       0.08         -0.31       -0.01
+ -----------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.5.6.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Contrasts of adjusted means to those who are married</strong></figcaption>
+</figure>
+<h2 id="3-overview-of-contrast-operators">3 Overview of contrast operators</h2>
+<p>the contrast operators table provides a brief description of each contrast operator and shows the section of this chapter in which each contrast operator is covered.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.6.1.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Summary of contrast operators</strong></figcaption>
+</figure>
+<h2 id="4-compare-each-group-against-a-reference-group">4 Compare each group against a reference group</h2>
+<p>This section provides further examples illustrating the r. contrast operator for making reference group contrasts.</p>
+<p>Let’s continue with the example that predicting happiness from marital status, adjusting for gender, race, and age.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  anova happy7 i.marital i.gender i.race c.age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =      1,156    R-squared     =  0.0488
+                          Root MSE      =    .957826    Adj R-squared =  0.0422
+ 
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+               -----------+----------------------------------------------------
+                    Model |  53.979104          8    6.747388      7.35  0.0000
+                          |
+                  marital |  47.156057          4   11.789014     12.85  0.0000
+                   gender |  3.8954776          1   3.8954776      4.25  0.0396
+                     race |  .92449374          2   .46224687      0.50  0.6043
+                      age |  5.3200497          1   5.3200497      5.80  0.0162
+                          |
+                 Residual |  1052.2934      1,147   .91743103  
+               -----------+----------------------------------------------------
+                    Total |  1106.2725      1,155   .95781168  
+</code></pre>
+<h3 id="41--selecting-a-specific-contrast">4.1  Selecting a specific contrast</h3>
+<p>Suppose you wanted to focus on the contrast of group 3 to group 1 (divorced versus married) and group 5 to group 1 (never married versus married). <strong>You can perform those two contrasts by specifying the r(3 5). contrast operator.</strong> This compares each of the groups within the parentheses with the reference group (group 1).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r(3 5).marital,pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------------------------------------------
+                             |         df           F        P&gt;F
+ ----------------------------+----------------------------------
+                     marital |
+      (divorced vs married)  |          1       39.38     0.0000
+ (never married vs married)  |          1        4.18     0.0411
+                      Joint  |          2       19.78     0.0000
+                             |
+                 Denominator |       1147
+ ---------------------------------------------------------------
+
+ --------------------------------------------------------------------
+                             |   Contrast   Std. err.      t    P&gt;|t|
+ ----------------------------+---------------------------------------
+                     marital |
+      (divorced vs married)  |      -0.50       0.08    -6.28   0.000
+ (never married vs married)  |      -0.16       0.08    -2.04   0.041
+ --------------------------------------------------------------------
+</code></pre>
+<blockquote>
+<p>Note! Options on the contrast command</p>
+<blockquote>
+<p>The previous contrast command included two options: nowald and pveffects. This yields concise output that fits well on the pages of this book. When you run such analyses yourself, I recommend specifying the options nowald and effects, which will display both significance tests and confidence intervals associated with each comparison.</p>
+</blockquote>
+</blockquote>
+<h3 id="42-selecting-a-different-reference-group">4.2 Selecting a different reference group</h3>
+<p>Suppose that instead we wanted to compare each group with a different reference group. We can <strong>specify the rb5. contrast operator,</strong> which requests reference group contrasts using group 5 (never married) as the baseline (reference) group.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">    contrast rb5.marital,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ----------------------------------------------------------------------
+                               |   Contrast   Std. err.      t    P&gt;|t|
+ ------------------------------+---------------------------------------
+                       marital |
+   (married vs never married)  |       0.16       0.08     2.04   0.041
+   (widowed vs never married)  |      -0.30       0.14    -2.06   0.040
+  (divorced vs never married)  |      -0.34       0.09    -3.62   0.000
+ (separated vs never married)  |      -0.39       0.18    -2.24   0.026
+ ----------------------------------------------------------------------
+</code></pre>
+<h3 id="43-selecting-a-contrast-and-reference-group">4.3 Selecting a contrast and reference group</h3>
+<p>You can both specify the reference group and specify the contrasts to be made at one time.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r(1 3)b5.marital,nowald pveffects //(1 versus 5)(3 versus 5)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------------------------------------------------
+                              |   Contrast   Std. err.      t    P&gt;|t|
+ -----------------------------+---------------------------------------
+                      marital |
+  (married vs never married)  |       0.16       0.08     2.04   0.041
+ (divorced vs never married)  |      -0.34       0.09    -3.62   0.000
+ ---------------------------------------------------------------------
+</code></pre>
+<h2 id="5-compare-each-group-against-the-grand-mean">5 Compare each group against the grand mean</h2>
+<p>This section illustrates the g. contrast operator that compares each group with the grand mean of all groups.</p>
+<p>a researcher might be interested in comparing the mean happiness of each marital status group versus the grand mean of all groups.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  anova happy7 i.marital i.gender i.race c.age
+</span></span><span class="line"><span class="cl">  margins g.marital,contrast(nowald pveffects)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>the prefix &ldquo;g&rdquo; means the mean happiness of each marital status group with the grand mean</p>
+<pre><code> Contrasts of predictive margins                          Number of obs = 1,156
+
+ Expression: Linear prediction, predict()
+
+ -----------------------------------------------------------------
+                          |            Delta-method
+                          |   Contrast   std. err.      t    P&gt;|t|
+ -------------------------+---------------------------------------
+                  marital |
+       (married vs mean)  |       0.33       0.05     6.12   0.000
+       (widowed vs mean)  |      -0.12       0.10    -1.18   0.240
+      (divorced vs mean)  |      -0.17       0.07    -2.44   0.015
+     (separated vs mean)  |      -0.22       0.14    -1.61   0.107
+ (never married vs mean)  |       0.18       0.07     2.48   0.013
+ -----------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  marginsplot,yline(0)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>When the confidence interval for a contrast excludes zero, the difference is significant at the 5% level.</strong></p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.6.2.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Contrasts comparing each group with the grand mean</strong></figcaption>
+</figure>
+<h2 id="6-compare-adjacent-means">6 Compare adjacent means</h2>
+<p>This section illustrates contrasts that compare the means of adjacent groups, for example, group 1 versus 2, group 2 versus 3, group 3 versus 4.</p>
+<p>These kinds of contrasts are especially useful for studies where you expect a <strong>nonlinear relationship between an ordinal or interval predictor and outcome.</strong></p>
+<p>For example, consider a hypothetical study about the dosage of a new pain medication where the researchers expect that at a certain dosage level the effects of the medication will kick in and lead to a statistically significant reduction in pain. The medication dosages range from 0 mg to 250 mg incrementing by 50 mg, yielding six dosage groups.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use pain
+</span></span><span class="line"><span class="cl">  codebook dosegrp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                   Type: Numeric (float)
+                  Label: dosegrp
+
+                  Range: [1,6]                         Units: 1
+          Unique values: 6                         Missing .: 0/180
+
+             Tabulation: Freq.   Numeric  Label
+                            30         1  0mg
+                            30         2  50mg
+                            30         3  100mg
+                            30         4  150mg
+                            30         5  200mg
+                            30         6  250mg
+</code></pre>
+<p>Let’s begin the analysis relating pain to medication dosage by testing the most general null hypothesis that could be tested—that the average pain is equal across all six dosage groups:</p>
+<p>$$ H_{0} = \mu_{2} = \mu_{3} = \mu_{4} = \mu_{5}$$</p>
+<p>This null hypothesis is tested using the anova command shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  anova pain i.dosegrp 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =        180    R-squared     =  0.4602
+                          Root MSE      =    10.4724    Adj R-squared =  0.4447
+
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+               -----------+----------------------------------------------------
+                    Model |  16271.694          5   3254.3389     29.67  0.0000
+                          |
+                  dosegrp |  16271.694          5   3254.3389     29.67  0.0000
+                          |
+                 Residual |  19082.633        174   109.67031  
+               -----------+----------------------------------------------------
+                    Total |  35354.328        179   197.51021  
+</code></pre>
+<p>he $F$ value is 29.67 and is significant. We can reject the overall null hypothesis. Let’s use the margins command and the marginsplot command to display and graph the predicted mean of pain by dosegrp.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins dosegrp   //the predicted mean of pain by dosegrp
+</span></span><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Adjusted predictions                                       Number of obs = 180
+
+ Expression: Linear prediction, predict()
+
+ ------------------------------------------------------------------------------
+              |            Delta-method
+              |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+ -------------+----------------------------------------------------------------
+      dosegrp |
+         0mg  |      71.83       1.91    37.57   0.000        68.06       75.61
+        50mg  |      70.60       1.91    36.93   0.000        66.83       74.37
+       100mg  |      72.13       1.91    37.73   0.000        68.36       75.91
+       150mg  |      70.40       1.91    36.82   0.000        66.63       74.17
+       200mg  |      54.70       1.91    28.61   0.000        50.93       58.47
+       250mg  |      48.30       1.91    25.26   0.000        44.53       52.07
+ ------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.6.3.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Mean pain rating by dosage group</strong></figcaption>
+</figure>
+<p>For this study, the research question of interest focuses on the test of each dosage against the previous dosage to determine the dosage that leads to a statistically significant decrease in pain. This leads us to five specific null hypotheses.</p>
+<p>$$H_{0}: \mu_{1} = \mu_{2} $$
+$$H_{0}: \mu_{2} = \mu_{3} $$
+$$H_{0}: \mu_{3} = \mu_{4} $$
+$$H_{0}: \mu_{4} = \mu_{5} $$
+$$H_{0}: \mu_{5} = \mu_{6} $$</p>
+<p>Let’s now test each of the hypotheses using the contrast command with the a. contrast operator to compare each dosage with the adjacent (subsequent) dosage.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins a.dosegrp,contrast(nowald pveffects)
+</span></span><span class="line"><span class="cl">  margins a.dosegrp,contrast(nowald cieffects)  //specify cieffects in lieu of pveffects
+</span></span><span class="line"><span class="cl">  marginsplot,yline(0)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of adjusted predictions                          Number of obs = 180
+
+ Expression: Linear prediction, predict()
+
+ ----------------------------------------------------------
+                   |            Delta-method
+                   |   Contrast   std. err.      t    P&gt;|t|
+ ------------------+---------------------------------------
+           dosegrp |
+    (0mg vs 50mg)  |       1.23       2.70     0.46   0.649
+  (50mg vs 100mg)  |      -1.53       2.70    -0.57   0.571
+ (100mg vs 150mg)  |       1.73       2.70     0.64   0.522
+ (150mg vs 200mg)  |      15.70       2.70     5.81   0.000
+ (200mg vs 250mg)  |       6.40       2.70     2.37   0.019
+ ----------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.6.4.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Contrasts of each dosage to the previous dosage</strong></figcaption>
+</figure>
+<h3 id="61-reverse-adjacent-contrasts">6.1 Reverse adjacent contrasts</h3>
+<p>The ar. contrast operator, shown below, provides adjacent group contrasts in reverse order.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast ar.dosegrp,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ----------------------------------------------------------
+                   |   Contrast   Std. err.      t    P&gt;|t|
+ ------------------+---------------------------------------
+           dosegrp |
+    (50mg vs 0mg)  |      -1.23       2.70    -0.46   0.649
+  (100mg vs 50mg)  |       1.53       2.70     0.57   0.571
+ (150mg vs 100mg)  |      -1.73       2.70    -0.64   0.522
+ (200mg vs 150mg)  |     -15.70       2.70    -5.81   0.000
+ (250mg vs 200mg)  |      -6.40       2.70    -2.37   0.019
+ ----------------------------------------------------------
+</code></pre>
+<h3 id="62-selecting-a-specific-contrast">6.2 Selecting a specific contrast</h3>
+<p>When making adjacent group contrasts, you can select a specific contrast.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast a1.dosegrp,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -------------------------------------------------------
+                |   Contrast   Std. err.      t    P&gt;|t|
+ ---------------+---------------------------------------
+        dosegrp |
+ (0mg vs 50mg)  |       1.23       2.70     0.46   0.649
+ -------------------------------------------------------
+</code></pre>
+<p>We can also select contrasts using the ar. contrast operator. The ar. contrast operator forms contrasts with the previous group, so specifying ar3. (as shown below) contrasts group 3 (100 mg) with the previous group (group 2, 50 mg).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast ar3.dosegrp,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------------------------------------
+                  |   Contrast   Std. err.      t    P&gt;|t|
+ -----------------+---------------------------------------
+          dosegrp |
+ (100mg vs 50mg)  |       1.53       2.70     0.57   0.571
+ ---------------------------------------------------------
+</code></pre>
+<p>We can combine selected contrasts as well. Suppose we wanted to test the equality of the mean pain ratings for the first four groups.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> contrast a(1 2 3).dosegrp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -----------------------------------------------------
+                   |         df           F        P&gt;F
+ ------------------+----------------------------------
+           dosegrp |
+    (0mg vs 50mg)  |          1        0.21     0.6489
+  (50mg vs 100mg)  |          1        0.32     0.5714
+ (100mg vs 150mg)  |          1        0.41     0.5223
+            Joint  |          3        0.21     0.8918
+                   |
+       Denominator |        174
+ -----------------------------------------------------
+
+ -------------------------------------------------------------------
+                   |   Contrast   Std. err.     [95% conf. interval]
+ ------------------+------------------------------------------------
+           dosegrp |
+    (0mg vs 50mg)  |       1.23       2.70         -4.10        6.57
+  (50mg vs 100mg)  |      -1.53       2.70         -6.87        3.80
+ (100mg vs 150mg)  |       1.73       2.70         -3.60        7.07
+ -------------------------------------------------------------------
+</code></pre>
+<h2 id="7-comparing-the-mean-of-subsequent-or-previous-levels">7 Comparing the mean of subsequent or previous levels</h2>
+<p>This section describes contrasts that compare <strong>each group mean with the mean of the subsequent groups</strong> (also known as Helmert contrasts).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> use pain2
+</span></span><span class="line"><span class="cl"> tab dosage
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>  Medication |
+   dosage in |
+          mg |      Freq.     Percent        Cum.
+ ------------+-----------------------------------
+         300 |         30       16.67       16.67
+         400 |         30       16.67       33.33
+         500 |         30       16.67       50.00
+         600 |         30       16.67       66.67
+         800 |         30       16.67       83.33
+        1000 |         30       16.67      100.00
+ ------------+-----------------------------------
+       Total |        180      100.00
+</code></pre>
+<p>Let’s begin by testing this overall null hypothesis using the anova command below.</p>
+<p>$$ H_{0} : \mu_{300} = \mu_{400} = \mu_{500} = \mu_{600}= \mu_{800}= \mu_{1000}$$</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  anova pain i.dosage
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =        180    R-squared     =  0.2052
+                          Root MSE      =    10.5056    Adj R-squared =  0.1824
+ 
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+               -----------+----------------------------------------------------
+                    Model |  4958.8667          5   991.77333      8.99  0.0000
+                          |
+                   dosage |  4958.8667          5   991.77333      8.99  0.0000
+                          |
+                 Residual |  19204.133        174   110.36858  
+               -----------+----------------------------------------------------
+                    Total |      24163        179   134.98883  
+</code></pre>
+<p>Let’s use the margins and marginsplot commands to show and graph the means by the six levels of dosage.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins dosage 
+</span></span><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Adjusted predictions                                       Number of obs = 180
+
+ Expression: Linear prediction, predict()
+
+ ------------------------------------------------------------------------------
+              |            Delta-method
+              |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+ -------------+----------------------------------------------------------------
+       dosage |
+         300  |      43.83       1.92    22.85   0.000        40.05       47.62
+         400  |      37.60       1.92    19.60   0.000        33.81       41.39
+         500  |      31.87       1.92    16.61   0.000        28.08       35.65
+         600  |      29.63       1.92    15.45   0.000        25.85       33.42
+         800  |      30.63       1.92    15.97   0.000        26.85       34.42
+        1000  |      29.43       1.92    15.35   0.000        25.65       33.22
+ ------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.6.5.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Mean pain rating by dosage</strong></figcaption>
+</figure>
+<p>$$H_{0}: \mu_{300} = \mu &gt; _{\text{300}}$$</p>
+<p>$$H_{0}: \mu_{400} = \mu &gt; _{\text{400}}$$</p>
+<p>$$H_{0}: \mu_{500} = \mu &gt; _{\text{500}}$$</p>
+<p>$$H_{0}: \mu_{600} = \mu &gt; _{\text{600}}$$</p>
+<p>$$H_{0}: \mu_{800} = \mu &gt; _{\text{1000}}$$</p>
+<p>Let’s now test each of the null hypotheses below using the margins command combined with the h. contrast operator.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins h.dosage,contrast(nowald pveffects)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of adjusted predictions                          Number of obs = 180
+
+ Expression: Linear prediction, predict()
+
+ --------------------------------------------------------
+                 |            Delta-method
+                 |   Contrast   std. err.      t    P&gt;|t|
+ ----------------+---------------------------------------
+          dosage |
+ (300 vs &gt; 300)  |      12.00       2.10     5.71   0.000
+ (400 vs &gt; 400)  |       7.21       2.14     3.36   0.001
+ (500 vs &gt; 500)  |       1.97       2.21     0.89   0.376
+ (600 vs &gt; 600)  |      -0.40       2.35    -0.17   0.865
+ (800 vs  1000)  |       1.20       2.71     0.44   0.659
+ --------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  marginsplot,yline(0) xlabel(, angle(45))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.6.6.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Mean pain rating by dosage</strong></figcaption>
+</figure>
+<p>When the confidence interval for the contrast excludes zero,the difference is significant at the 5% level.</p>
+<h3 id="71-comparing-the-mean-of-previous-levels">7.1 Comparing the mean of previous levels</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast j.dosage,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------------------------------------
+                  |   Contrast   Std. err.      t    P&gt;|t|
+ -----------------+---------------------------------------
+           dosage |
+  (400 vs   300)  |      -6.23       2.71    -2.30   0.023
+  (500 vs &lt; 500)  |      -8.85       2.35    -3.77   0.000
+  (600 vs &lt; 600)  |      -8.13       2.21    -3.67   0.000
+  (800 vs &lt; 800)  |      -5.10       2.14    -2.38   0.018
+ (1000 vs &lt;1000)  |      -5.28       2.10    -2.51   0.013
+ ---------------------------------------------------------
+</code></pre>
+<h3 id="72-selecting-a-specific-contrast">7.2 Selecting a specific contrast</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast h400.dosage,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>we wanted to focus only on the contrast of those whose value of dosage was 400 to those who have higher values of dosage.</p>
+<pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -------------------------------------------------------
+                |   Contrast   Std. err.      t    P&gt;|t|
+ ---------------+---------------------------------------
+         dosage |
+ (400 vs &gt;400)  |       7.21       2.14     3.36   0.001
+ -------------------------------------------------------
+</code></pre>
+<p>Alternatively, we might want to focus only on the contrasts of 400 mg versus the subsequent groups and 500 mg versus the subsequent groups.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast h(400 500).dosage,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -------------------------------------------------------
+                |   Contrast   Std. err.      t    P&gt;|t|
+ ---------------+---------------------------------------
+         dosage |
+ (400 vs &gt;400)  |       7.21       2.14     3.36   0.001
+ (500 vs &gt;500)  |       1.97       2.21     0.89   0.376
+ -------------------------------------------------------
+</code></pre>
+<p>select the contrast of 500mg versus the mean of the previous groups</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast j500.dosage,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -------------------------------------------------------
+                |   Contrast   Std. err.      t    P&gt;|t|
+ ---------------+---------------------------------------
+         dosage |
+ (500 vs &lt;500)  |      -8.85       2.35    -3.77   0.000
+ -------------------------------------------------------
+</code></pre>
+<h2 id="polynomial-contrasts">Polynomial contrasts</h2>
+<p>Let’s consider the use of polynomial contrasts for assessing nonlinear trends (for example, quadratic, cubic, or quartic).</p>
+<p>We can specify q.dosegrp on the contrast command to compute tests of polynomial trend with respect to dosegrp. (The noeffects option is used to save space and focus on the results of the Wald tests.)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use pain
+</span></span><span class="line"><span class="cl">  contrast q.dosegrp,noeffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>compute tests of polynomial trend with respect to dosegrp.</p>
+<pre><code> Margins: asbalanced
+
+ ------------------------------------------------
+              |         df           F        P&gt;F
+ -------------+----------------------------------
+      dosegrp |
+    (linear)  |          1      109.12     0.0000
+ (quadratic)  |          1       29.25     0.0000
+     (cubic)  |          1        0.00     0.9824
+   (quartic)  |          1        8.39     0.0043
+   (quintic)  |          1        1.62     0.2048
+       Joint  |          5       29.67     0.0000
+              |
+  Denominator |        174
+ ------------------------------------------------
+</code></pre>
+<p><strong>Suppose you wanted to fit the relationship between a predictor and outcome using a linear term and wanted to assess whether there are significant nonlinear trends in the relationship between the predictor and outcome.</strong> You can use the contrast command to test only the nonlinear terms, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast q(2/6).dosegrp,noeffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ------------------------------------------------
+              |         df           F        P&gt;F
+ -------------+----------------------------------
+      dosegrp |
+ (quadratic)  |          1       29.25     0.0000
+     (cubic)  |          1        0.00     0.9824
+   (quartic)  |          1        8.39     0.0043
+   (quintic)  |          1        1.62     0.2048
+       Joint  |          4        9.81     0.0000
+              |
+  Denominator |        174
+ ------------------------------------------------
+</code></pre>
+<p>The joint test of all the nonlinear terms (powers 2 through 6) is significant.In such a case, <strong>it would be inadvisable to fit the relationship between the predictor and outcome using only a linear fit.</strong></p>
+<p>The q.contrast operator assumes that the levels of dosegrp are <strong>equidistant</strong> from each other. In next example the level of dosage are not equidistant and we would have obtained different results by specifying q.dosage compared with specifying p.dosage.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast p.dosage,noeffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>the p.contrast operator to dosage.this tests the polynomial trends based on the actual dosage,accounting for the differing gaps among the levels of dosage.</p>
+<pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ------------------------------------------------
+              |         df           F        P&gt;F
+ -------------+----------------------------------
+       dosage |
+    (linear)  |          1       28.37     0.0000
+ (quadratic)  |          1       13.44     0.0003
+     (cubic)  |          1        2.60     0.1084
+   (quartic)  |          1        0.47     0.4956
+   (quintic)  |          1        0.05     0.8202
+       Joint  |          5        8.99     0.0000
+              |
+  Denominator |        174
+ ------------------------------------------------
+</code></pre>
+<p>specific on cubic,quartic,and quintic</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast p(3/6).dosage,noeffects 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="9-custom-contrasts">9 Custom contrasts</h2>
+<p>For those times when you want to make another kind of contrast, you can specify a custom contrast.</p>
+<p>Let’s begin by illustrating how to perform custom contrasts using simple examples that compare one group with another group.</p>
+<p>For the first example, let’s compare the mean of group 1 (married) with group 5 (not married). The custom contrast is <strong>enclosed within curly braces by specifying the variable name followed by the contrast coefficients.</strong> The contrast coefficients map to the levels (groups) of the variable. In this example, the contrast coefficient of 1 is applied to group 1, and is applied to group 5. (A contrast coefficient of 0 is applied to groups 2, 3, and 4.) The result is a contrast of group 1 minus group 5.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast {marital 1 0 0 0 -1} 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>the contrast coef of 1 is applied to group 1,and -1 is applied to group 5(a contrast coefficient of 0 is applied to group 2 3 and 4)</p>
+<pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ------------------------------------------------
+              |         df           F        P&gt;F
+ -------------+----------------------------------
+      marital |          1        4.18     0.0411
+              |
+  Denominator |       1147
+ ------------------------------------------------
+
+ --------------------------------------------------------------
+              |   Contrast   Std. err.     [95% conf. interval]
+ -------------+------------------------------------------------
+      marital |
+         (1)  |       0.16       0.08          0.01        0.31
+ --------------------------------------------------------------
+</code></pre>
+<p>Let’s switch the above contrast. Let’s compare group 5 (not married) with group 1 (married), as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast {marital -1 0 0 0 1},nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -----------------------------------------------------
+              |   Contrast   Std. err.      t    P&gt;|t|
+ -------------+---------------------------------------
+      marital |
+         (1)  |      -0.16       0.08    -2.04   0.041
+ -----------------------------------------------------
+</code></pre>
+<p>Say that we want to compare those who are married (group 1) with the average of those who are separated and divorced (groups 3 and 4). We can form that contrast as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast{marital 1 0 -.5 -.5 0},nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -----------------------------------------------------
+              |   Contrast   Std. err.      t    P&gt;|t|
+ -------------+---------------------------------------
+      marital |
+         (1)  |       0.52       0.10     5.34   0.000
+ -----------------------------------------------------
+</code></pre>
+<p>Suppose we want to compare those who are married (group 1) with the average of those who are widowed, divorced, and separated (groups 2, 3, and 4).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast{marital 1 -.33333333 -.33333333 -.33333333 0},nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -----------------------------------------------------
+              |   Contrast   Std. err.      t    P&gt;|t|
+ -------------+---------------------------------------
+      marital |
+         (1)  |       0.50       0.08     6.10   0.000
+ -----------------------------------------------------
+</code></pre>
+<blockquote>
+<p>Note! Contrasts must sum to zero</p>
+<blockquote>
+<p>The contrast coefficients that we specify in a custom contrast must sum to zero. In the previous example, the contrast coefficients for groups 2, 3, and 4 are expressed as -.33333333, using eight digits after the decimal point. Although the sum of the coefficients for that custom contrast is not exactly zero, it is close enough to zero to satisfy the margins command.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>You can use inline expansions to directly specify the fraction , as shown in the contrast command below.
+contrast {marital 1 ‘=-1/3’ ‘=-1/3’ ‘=-1/3’ 0}, nowald pveffects</p>
+</blockquote>
+</blockquote>
+<p>Let’s form a contrast of the average of those who are married (group 1) and separated (group 4) to the average of those who are widowed (group 2) and divorced (group 3). Note how the coefficients for groups 1 and 4 are specified as 0.5 and the coefficients for groups 2 and 3 are specified as .</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast{marital .5 -.5 -.5 .5 0},nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Margins: asbalanced
+
+ -----------------------------------------------------
+              |   Contrast   Std. err.      t    P&gt;|t|
+ -------------+---------------------------------------
+      marital |
+         (1)  |       0.20       0.11     1.84   0.065
+ -----------------------------------------------------
+</code></pre>
+<p>To formulate the contrast coefficients, it can be helpful to write out the null hypothesis that you want to test. For example, let’s write the null hypothesis corresponding to the contrast above:</p>
+<p>$$H_{0}: (\mu_{1} +\mu_{4})/2 = (\mu_{2} +\mu_{3})/2$$</p>
+<p>$$H_{0}: (1/2) * \mu_{1} +  (1/2) * \mu_{4} = (1/2) * \mu_{2} +  (1/2) * \mu_{3}$$</p>
+<p>$$H_{0}: (1/2) * \mu_{1} +  (1/2) * \mu_{4} + - (1/2) * \mu_{2} + -  (1/2) * \mu_{3} = 0$$</p>
+<p>$$H_{0}: (1/2) * \mu_{1} + -   (1/2) * \mu_{2} + - (1/2) * \mu_{3} + -  (1/2) * \mu_{4} = 0$$</p>
+<h2 id="10-weighted-contrasts">10 Weighted contrasts</h2>
+<p>So far, the examples I have shown estimate the mean for groups 2 and 3 combined by obtaining the mean for group 2 and the mean for group 3, and then averaging those means. Stata calls this the <strong>as-balanced approach, because it gives equal weights to the groups even if their sample sizes are different.</strong></p>
+<p>We could, instead, weight the means for groups 2 and 3 proportionate to their sample size. Stata calls this the <strong>as-observed approach, because the means are weighted in proportion to their observed sample size.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  anova happy7 i.marital3
+</span></span><span class="line"><span class="cl">  margins h.marital3,contrast(nowald pveffects) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =      1,160    R-squared     =  0.0369
+                          Root MSE      =    .962698    Adj R-squared =  0.0352
+ 
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+               -----------+----------------------------------------------------
+                    Model |   41.07881          2   20.539405     22.16  0.0000
+                          |
+                 marital3 |   41.07881          2   20.539405     22.16  0.0000
+                          |
+                 Residual |  1072.2927      1,157   .92678716  
+               -----------+----------------------------------------------------
+                    Total |  1113.3716      1,159   .96063119  
+</code></pre>
+<p>Let’s use the <strong>h. contrast operator to compare each group with the mean of the subsequent groups,</strong> using the as-balanced approach.</p>
+<p>Let’s focus our attention on the first contrast, Married vs &gt;Married, which compares those who are married (group 1) versus those who are previously married and never married (groups 2 and 3).</p>
+<p>Compare each group with the mean of the subsequent groups,using the as-balanced approach</p>
+<pre><code> Contrasts of adjusted predictions                        Number of obs = 1,160
+
+ Expression: Linear prediction, predict()
+
+ -------------------------------------------------------------------------
+                                  |            Delta-method
+                                  |   Contrast   std. err.      t    P&gt;|t|
+ ---------------------------------+---------------------------------------
+                         marital3 |
+           (Married vs &gt;Married)  |       0.34       0.06     6.07   0.000
+ (Prevmarried vs  Never married)  |      -0.20       0.08    -2.50   0.012
+ -------------------------------------------------------------------------
+</code></pre>
+<p>We can manually compute this estimate:</p>
+<p>$5.705036 - (5.263323 + 5.459649)/2 = 0.34355$</p>
+<p>Let’s compare this estimate with the <strong>as-observed approach,</strong> which weights the mean of groups 2 and 3 (previously married and never married) by their sample size. <strong>The hw. contrast operator is used to obtain the as-observed estimate.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins h.marital3,contrast(nowald pveffects)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of adjusted predictions                        Number of obs = 1,160
+
+ Expression: Linear prediction, predict()
+
+ -------------------------------------------------------------------------
+                                  |            Delta-method
+                                  |   Contrast   std. err.      t    P&gt;|t|
+ ---------------------------------+---------------------------------------
+                         marital3 |
+           (Married vs &gt;Married)  |       0.34       0.06     6.07   0.000
+ (Prevmarried vs  Never married)  |      -0.20       0.08    -2.50   0.012
+ -------------------------------------------------------------------------
+</code></pre>
+<p>Instead of weighting groups 2 and 3 equally—by (1/2)—groups 2 and 3 are weighted by their individual sample size divided by the combined sample size. The $N$ for group 2 (previously married) is 319, and the $N$ for group 3 (never married) is 285, and the combined for the two groups is 604.</p>
+<p>We can manually compute this estimate:</p>
+<p>$5.705036 - (5.263323*(319/604)+ 5.459649*(285/604)) = 0.34907573$</p>
+<p>Thus, if you want estimates that are weighted as a function of the proportion of observations in each group, then the as-observed estimates will provide you the kind of estimates that you desire.</p>
+<h2 id="11-pairwise-comparisons">11 Pairwise comparisons</h2>
+<p>Sometimes, you want to test all pairwise comparisons that can be formed for a factor variable. The pwcompare command can be used to form such comparisons.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm,clear
+</span></span><span class="line"><span class="cl">  anova happy7 i.marital i.gender i.race c.age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can use the pwcompare command to form all pairwise comparisons among the marital status groups.</p>
+<p>Because of the many comparisons, we might want to make adjustments to the values to account for the multiple comparisons. For example, let’s use <strong>Šidák’s method for adjusting for multiple comparisons by adding the mcompare(sidak) option.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  pwcompare marital,pveffects mcompare(sidak)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Pairwise comparisons of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------
+              |    Number of
+              |  comparisons
+ -------------+-------------
+     marital3 |            3
+ ---------------------------
+
+ ----------------------------------------------------------------------
+                               |                              Sidak
+                               |   Contrast   Std. err.      t    P&gt;|t|
+ ------------------------------+---------------------------------------
+                      marital3 |
+       Prevmarried vs Married  |      -0.44       0.07    -6.53   0.000
+     Never married vs Married  |      -0.25       0.07    -3.50   0.001
+ Never married vs Prevmarried  |       0.20       0.08     2.50   0.037
+ ----------------------------------------------------------------------
+</code></pre>
+<p>The bonferroni or scheffe method could have alternatively been specified within the mcompare() option. When you have <strong>balanced data</strong>, the tukey, snk, duncan, or dunnett method can be specified within mcompare() (see [R] pwcompare for more details)</p>
+<h2 id="12-interpreting-confidence-intervals">12 Interpreting confidence intervals</h2>
+<p>The marginsplot command displays margins and confidence intervals that were computed from the most recent margins command. Sometimes, these confidence intervals <strong>might tempt you into falsely believing that they tell us about differences among groups.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm,clear
+</span></span><span class="line"><span class="cl">  anova happy7 i.marital i.gender i.race c.age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The margins command is used to estimate the adjusted means of happiness by marital. The output also includes the 95% confidence interval for each adjusted mean.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins marital
+</span></span><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Predictive margins                                       Number of obs = 1,156
+
+ Expression: Linear prediction, predict()
+
+ --------------------------------------------------------------------------------
+                |            Delta-method
+                |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+ ---------------+----------------------------------------------------------------
+        marital |
+       married  |       5.70       0.04   139.63   0.000         5.62        5.78
+       widowed  |       5.25       0.12    44.51   0.000         5.01        5.48
+      divorced  |       5.20       0.07    75.92   0.000         5.06        5.33
+     separated  |       5.15       0.16    31.25   0.000         4.83        5.47
+ never married  |       5.54       0.06    87.86   0.000         5.42        5.67
+ --------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.7.1.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Adjusted means of happiness by marital status</strong></figcaption>
+</figure>
+<p>Our eye might be tempted to use the overlap (or lack of overlap) of confidence intervals between groups to draw conclusions about the significance of the differences between groups. <strong>However, such conclusions would not be appropriate.</strong> For example, although the confidence intervals for those who are separated and never married overlap, the output from the contrast command below shows that the difference in these means is statistically significant ($P = 0.026$)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast ar.marital,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ----------------------------------------------------------------------
+                               |   Contrast   Std. err.      t    P&gt;|t|
+ ------------------------------+---------------------------------------
+                       marital |
+         (widowed vs married)  |      -0.45       0.12    -3.67   0.000
+        (divorced vs widowed)  |      -0.05       0.13    -0.34   0.732
+      (separated vs divorced)  |      -0.05       0.18    -0.28   0.777
+ (never married vs separated)  |       0.39       0.18     2.24   0.026
+ ----------------------------------------------------------------------
+</code></pre>
+<h2 id="13-testing-categorical-variables-using-regression">13 Testing categorical variables using regression</h2>
+<p>The analyses in this chapter have been conducted using the anova command because it produces concise printed output. However, this is not to imply that we cannot perform such tests using the regress command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm,clear
+</span></span><span class="line"><span class="cl">  anova happy7 i.marital i.gender i.race c.age
+</span></span><span class="line"><span class="cl">  reg happy7 i.marital i.gender i.race c.age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>       Source |       SS           df       MS      Number of obs   =     1,156
+ -------------+----------------------------------   F(8, 1147)      =      7.35
+        Model |  53.9791041         8  6.74738801   Prob &gt; F        =    0.0000
+     Residual |  1052.29339     1,147  .917431026   R-squared       =    0.0488
+ -------------+----------------------------------   Adj R-squared   =    0.0422
+        Total |  1106.27249     1,155  .957811681   Root MSE        =    .95783
+
+ --------------------------------------------------------------------------------
+         happy7 | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+ ---------------+----------------------------------------------------------------
+        marital |
+       widowed  |      -0.45       0.12    -3.67   0.000        -0.70       -0.21
+      divorced  |      -0.50       0.08    -6.28   0.000        -0.66       -0.34
+     separated  |      -0.55       0.17    -3.23   0.001        -0.88       -0.22
+ never married  |      -0.16       0.08    -2.04   0.041        -0.31       -0.01
+                |
+         gender |
+        Female  |       0.12       0.06     2.06   0.040         0.01        0.23
+                |
+           race |
+         black  |      -0.04       0.09    -0.42   0.676        -0.20        0.13
+         other  |      -0.11       0.12    -0.95   0.341        -0.34        0.12
+                |
+            age |       0.01       0.00     2.41   0.016         0.00        0.01
+          _cons |       5.42       0.11    47.90   0.000         5.19        5.64
+ --------------------------------------------------------------------------------
+</code></pre>
+<p>The output of the regress command is lengthier because it uses dummy coding for each of the categorical variables and shows the effect for each of the dummy variables. <strong>To obtain the test of the overall effect of marital and the test of the overall effect of race, we can use the contrast command, as shown below.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl"> contrast marital race
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Contrasts of marginal linear predictions</p>
+<p>Margins: asbalanced</p>
+<pre><code> ------------------------------------------------
+              |         df           F        P&gt;F
+ -------------+----------------------------------
+      marital |          4       12.85     0.0000
+              |
+         race |          2        0.50     0.6043
+              |
+  Denominator |       1147
+ ------------------------------------------------
+</code></pre>
+<p>**The contrast, margins, marginsplot, and pwcompare commands work the same way after the regress command as they do after the anova command.**For example, wecan use the margins command to obtain the adjusted means broken down by marital.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.marital,nowald pveffects 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Predictive margins                                       Number of obs = 1,156
+ Model VCE: OLS
+
+ Expression: Linear prediction, predict()
+
+ --------------------------------------------------------------------------------
+                |            Delta-method
+                |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+ ---------------+----------------------------------------------------------------
+        marital |
+       married  |       5.70       0.04   139.63   0.000         5.62        5.78
+       widowed  |       5.25       0.12    44.51   0.000         5.01        5.48
+      divorced  |       5.20       0.07    75.92   0.000         5.06        5.33
+     separated  |       5.15       0.16    31.25   0.000         4.83        5.47
+ never married  |       5.54       0.06    87.86   0.000         5.42        5.67
+ --------------------------------------------------------------------------------
+</code></pre>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-05</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/7.chapter7categorical-predictors/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/categorical/">Categorical</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/6.continuous-by-continuous-by-continuous-interactions/" class="prev" rel="prev" title="Chapter6 ：Continuous by continuous by continuous interactions"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter6 ：Continuous by continuous by continuous interactions</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
