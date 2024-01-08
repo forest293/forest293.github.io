@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter8 ：Categorical by categorical interactions - Alex_Wang</title><meta name="Description" content="This chapter illustrates models that involve the interaction of two categorical variables. "><meta property="og:title" content="Chapter8 ：Categorical by categorical interactions" />
+<meta property="og:description" content="This chapter illustrates models that involve the interaction of two categorical variables. " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/8.chapter8categorical-by-categorical-interactions/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-06T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-06T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter8 ：Categorical by categorical interactions"/>
+<meta name="twitter:description" content="This chapter illustrates models that involve the interaction of two categorical variables. "/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/8.chapter8categorical-by-categorical-interactions/" /><link rel="prev" href="https://forest293.github.io/7.chapter7categorical-predictors/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter8 ：Categorical by categorical interactions",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/8.chapter8categorical-by-categorical-interactions\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Categorical, Interaction, stata","wordcount":  4589 ,
+        "url": "https:\/\/forest293.github.io\/8.chapter8categorical-by-categorical-interactions\/","datePublished": "2024-01-06T16:29:41+08:00","dateModified": "2024-01-06T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter illustrates models that involve the interaction of two categorical variables. "
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/8.chapter8categorical-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/8.chapter8categorical-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter8 ：Categorical by categorical interactions</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-06">2024-01-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4589 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 10 分钟&nbsp;<span id="/8.chapter8categorical-by-categorical-interactions/" class="leancloud_visitors" data-flag-title="Chapter8 ：Categorical by categorical interactions">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-two-by-two-models-example-1">1 Two by two models: Example 1</a>
+      <ul>
+        <li><a href="#11-simple-effects">1.1 Simple effects</a></li>
+        <li><a href="#12-estimating-the-size-of-the-interaction">1.2 Estimating the size of the interaction</a></li>
+        <li><a href="#13-more-about-interaction">1.3 More about interaction</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-two-by-three-models">2 Two by three models</a>
+      <ul>
+        <li><a href="#21-example-2">2.1 Example 2</a>
+          <ul>
+            <li><a href="#211-simple-effects">2.1.1 Simple effects</a></li>
+            <li><a href="#212-partial-interactions">2.1.2 Partial interactions</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#3-three-by-three-models-example-4">3 Three by three models: Example 4</a>
+      <ul>
+        <li><a href="#31--simple-effects">3.1  Simple effects</a></li>
+        <li><a href="#32--simple-contrast">3.2  Simple contrast</a></li>
+        <li><a href="#33-partial-interaction">3.3 Partial interaction</a></li>
+        <li><a href="#34-interaction-contrasts">3.4 Interaction contrasts</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-unbalanced-designs">4 Unbalanced designs</a></li>
+    <li><a href="#5-main-effects-with-interactions-anova-versus-regress">5 Main effects with interactions: anova versus regress</a></li>
+    <li><a href="#6-interpreting-confidence-intervals">6 Interpreting confidence intervals</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This chapter illustrates models that involve the interaction of two categorical variables.The emphasis of this chapter is <strong>not only how to test for interactions between factor variables but also how to understand and dissect those interactions.</strong></p>
+<p>This chapter focuses on three types of interactions:</p>
+<ol>
+<li><strong>two by two interactions.</strong></li>
+<li><strong>two by three interactions.</strong></li>
+<li><strong>three by three interactions.</strong></li>
+</ol>
+<h2 id="1-two-by-two-models-example-1">1 Two by two models: Example 1</h2>
+<p>In this first hypothetical study, she seeks to determine the effectiveness of happiness therapy by comparing the optimism of people who have completed happiness therapy treatment with the optimism of people in a control group who received no treatment.</p>
+<p>The researcher is interested in <strong>not only assessing the effectiveness of happiness therapy but also assessing whether its effectiveness depends on whether the person has been diagnosed as clinically depressed.</strong> This yields a two by two research design, crossing treatment group assignment (control group versus happiness therapy) with depression status (nondepressed versus depressed).</p>
+<ul>
+<li>The variable treat indicates the treatment assignment, coded: 1 = control group (Con) and 2 = happiness therapy (HT).</li>
+<li>The variable depstat reflects the person’s depression status at the beginning of the study and is coded: 1 = nondepressed and 2 = depressed.</li>
+<li>The variable opt is the optimism score at the end of the study. In this dataset, opt has a mean of 44.5, a minimum of 16, and a maximum of 80.</li>
+</ul>
+<p>Let’s now run an analysis that predicts opt based on treat, depstat, and the interaction of these two variables.</p>
+<p>This analysis uses the anova command (instead of the regress command) because <strong>the anova command directly shows the significance tests for each of the main effects as well as the interaction.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use opt-2by2.dta&#34;
+</span></span><span class="line"><span class="cl">  anova opt depstat##treat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =        120    R-squared     =  0.4889
+                          Root MSE      =    10.0136    Adj R-squared =  0.4757
+
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+            --------------+----------------------------------------------------
+                    Model |      11126          3   3708.6667     36.99  0.0000
+                          |
+                  depstat |  7426.1333          1   7426.1333     74.06  0.0000
+                    treat |  2803.3333          1   2803.3333     27.96  0.0000
+            depstat#treat |  896.53333          1   896.53333      8.94  0.0034
+                          |
+                 Residual |  11631.467        116   100.27126  
+            --------------+----------------------------------------------------
+                    Total |  22757.467        119   191.23922  
+</code></pre>
+<blockquote>
+<p>Note! The anova and regress commands</p>
+<blockquote>
+<p>if you want use regress command in stead of the anova command to fit the previous model, there are two caveats:</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<ol>
+<li>the regress command will require an extra step using the contrast command to test the overall interaction (for example, contrast depstat#treat).</li>
+<li>the tests of the main effects differ when using the regress command compared with the anova command.</li>
+</ol>
+</blockquote>
+</blockquote>
+<p>The significant interaction indicates that the effect of happiness therapy for those who are nondepressed is significantly different from the effect of happiness therapy for those who are depressed.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins treat#depstat,nopvalues
+</span></span><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Adjusted predictions                                       Number of obs = 120
+
+ Expression: Linear prediction, predict()
+
+ ---------------------------------------------------------------
+               |            Delta-method
+               |     Margin   std. err.     [95% conf. interval]
+ --------------+------------------------------------------------
+ treat#depstat |
+      Con#Non  |      44.87       1.83         41.25       48.49
+      Con#Dep  |      34.60       1.83         30.98       38.22
+       HT#Non  |      60.00       1.83         56.38       63.62
+       HT#Dep  |      38.80       1.83         35.18       42.42
+ ---------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.7.2.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Graph of means</strong></figcaption>
+</figure>
+<h3 id="11-simple-effects">1.1 Simple effects</h3>
+<p>The significant interaction indicates that the effect of happiness therapy is different for those who are depressed versus nondepressed. Each of these effects is called a simple effect, because they reflect the effect of one variable while holding another variable constant.</p>
+<p>We can estimate and test these simple effects using the contrast command, as shown below. <strong>Note the use of the @ symbol.</strong> This requests the simple effect of treat at each level of depstat.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat@depstat
+</span></span><span class="line"><span class="cl">  contrast treat@depstat,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ----------------------------------------------------------
+                   |   Contrast   Std. err.      t    P&gt;|t|
+ ------------------+---------------------------------------
+     treat@depstat |
+ (HT vs base) Non  |      15.13       2.59     5.85   0.000
+ (HT vs base) Dep  |       4.20       2.59     1.62   0.107
+ ----------------------------------------------------------
+</code></pre>
+<p>By adding the nowald and pveffects options, the contrast command displays a table with the estimate of the simple effect, the standard error, and a significance test of the simple effect.</p>
+<p>This shows the effect of treatment among those who are nondepressed equals 15.1, and this effect is significant ( $t = 5.85,p=0.000$ ). Among those who are depressed, the treatment effect is 4.2, and this difference is not significant ( $t = 1.62,p=0.107$ ).</p>
+<blockquote>
+<p>Note! Contrast options</p>
+<blockquote>
+<p><strong>Combining the nowald and pveffects options provides a concise output that includes an estimate of the size of the contrast and a test of its significance.</strong></p>
+</blockquote>
+</blockquote>
+<h3 id="12-estimating-the-size-of-the-interaction">1.2 Estimating the size of the interaction</h3>
+<p>As we saw in the analysis of the simple effects, the simple effect of treatment is 4.2 for those who are depressed and is 15.1 for those who are nondepressed. Taking the difference in these simple effects ($4.2 - 15.1$) gives us an estimate of the size of the interaction, which is $-10.9$.
+This is the same value that we obtain if we estimate the interaction using the contrast command below.</p>
+<pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ --------------------------------------------------------------------
+                             |   Contrast   Std. err.      t    P&gt;|t|
+ ----------------------------+---------------------------------------
+               treat#depstat |
+ (HT vs base) (Dep vs base)  |     -10.93       3.66    -2.99   0.003
+ --------------------------------------------------------------------
+</code></pre>
+<p>the $p$-value for this test matches the $p$-value of the treat#depstat interaction from the original anova command.</p>
+<h3 id="13-more-about-interaction">1.3 More about interaction</h3>
+<p>let’s further explore what we mean by an interaction by considering the hypothetical pattern of results shown in below.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.7.3.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Two by two with no interaction</strong></figcaption>
+</figure>
+<p>This is an example pattern in which there is no interaction between treatment and depression status. One way we can see the absence of an interaction is by seeing that the line for D1 is parallel to the line for D2.</p>
+<h2 id="2-two-by-three-models">2 Two by three models</h2>
+<p>his section considers models where one of the categorical variables has two levels and the other categorical variable has three levels.</p>
+<h3 id="21-example-2">2.1 Example 2</h3>
+<p>Referring to the example from the previous section, depression status had two levels, nondepressed and depressed.</p>
+<p>Suppose that we instead use three categories for depression status: nondepressed, mildly depressed, and severely depressed.</p>
+<p>Let’s now perform an analysis predicting optimism from treatment group, depression status, and the interaction of these two variables.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use opt-2by3-ex1.dta
+</span></span><span class="line"><span class="cl">  anova opt depstat##treat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =        180    R-squared     =  0.5402
+                          Root MSE      =    10.0154    Adj R-squared =  0.5270
+
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+            --------------+----------------------------------------------------
+                    Model |  20505.828          5   4101.1656     40.89  0.0000
+                          |
+                  depstat |  15432.844          2   7716.4222     76.93  0.0000
+                    treat |  3183.6056          1   3183.6056     31.74  0.0000
+            depstat#treat |  1889.3778          2   944.68889      9.42  0.0001
+                          |
+                 Residual |  17453.567        174   100.30785  
+            --------------+----------------------------------------------------
+                    Total |  37959.394        179   212.06366  
+</code></pre>
+<p>As expected, the depstat#treat interaction is significant. We can compute the mean optimism as a function of depression status and treatment group by using the margins command below.</p>
+<p>Had there been additional predictors in the model, <strong>the margins command would have produced adjusted means, adjusting for the other predictors in the model.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins treat#depstat,nopvalues
+</span></span><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Adjusted predictions                                       Number of obs = 180
+
+ Expression: Linear prediction, predict()
+
+ ---------------------------------------------------------------
+               |            Delta-method
+               |     Margin   std. err.     [95% conf. interval]
+ --------------+------------------------------------------------
+ treat#depstat |
+      Con#Non  |      44.23       1.83         40.62       47.84
+     Con#Mild  |      39.63       1.83         36.02       43.24
+      Con#Sev  |      29.80       1.83         26.19       33.41
+       HT#Non  |      59.60       1.83         55.99       63.21
+      HT#Mild  |      49.73       1.83         46.12       53.34
+       HT#Sev  |      29.57       1.83         25.96       33.18
+ ---------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.7.4.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Graph of means</strong></figcaption>
+</figure>
+<h4 id="211-simple-effects">2.1.1 Simple effects</h4>
+<p>We can ask whether the effect of happiness therapy is significant at each level of depression status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat@depstat,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -----------------------------------------------------------
+                    |   Contrast   Std. err.      t    P&gt;|t|
+ -------------------+---------------------------------------
+      treat@depstat |
+  (HT vs base) Non  |      15.37       2.59     5.94   0.000
+ (HT vs base) Mild  |      10.10       2.59     3.91   0.000
+  (HT vs base) Sev  |      -0.23       2.59    -0.09   0.928
+ -----------------------------------------------------------
+</code></pre>
+<p>This test of simple effects tells us that happiness therapy is significantly better than the control group for those who are nondepressed and for those who are mildly depressed. For those who are severely depressed, happiness therapy is not significantly different from being in the control group</p>
+<h4 id="212-partial-interactions">2.1.2 Partial interactions</h4>
+<p>Another way to dissect a two by three interaction is through the use of partial interactions. In this example, a partial interaction is constructed by applying a contrast operator to depstat and interacting that with treat.</p>
+<p>For example, applying the <strong>a.contrast</strong> operator to depstat yields two contrasts: group 1 versus 2 (Non vs Mild depression); and group 2 versus 3 (Mild vs Sev depression). Interacting <strong>a.depstat</strong> with treat forms two partial interactions.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast a.depstat#treat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ----------------------------------------------------------
+                        |         df           F        P&gt;F
+ -----------------------+----------------------------------
+          depstat#treat |
+ (Non vs Mild) (joint)  |          1        2.07     0.1516
+ (Mild vs Sev) (joint)  |          1        7.98     0.0053
+                 Joint  |          2        9.42     0.0001
+                        |
+            Denominator |        174
+ ----------------------------------------------------------
+</code></pre>
+<p>The first partial interaction is not significant ( $F = 2.07 , p = 0.1516$ ).The effect of happiness therapy (compared with the control group) is not significantly different for those who are nondepressed versus mildly depressed.</p>
+<p>The second partial interaction is significant ( $F = 7.98 , p = 0.0053$ ). The effect of happiness therapy (compared with the control group) is significantly different when comparing those who are mildly depressed versus severely depressed.</p>
+<p>We are not limited to using the <strong>a. contrast</strong> operator when forming such partial interactions. The <strong>j. contrast</strong> operator compares each group with the mean of the previous groups.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast j.depstat#treat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -----------------------------------------------------------
+                         |         df           F        P&gt;F
+ ------------------------+----------------------------------
+           depstat#treat |
+ (Mild vs  Non) (joint)  |          1        2.07     0.1516
+  (Sev vs &lt;Sev) (joint)  |          1       16.76     0.0001
+                  Joint  |          2        9.42     0.0001
+                         |
+             Denominator |        174
+ -----------------------------------------------------------
+</code></pre>
+<p>The first contrast shown by the contrast command is the same as the first test we saw using the a. contrast operator. However, the second contrast shows us the interaction of the comparison of those who are severely depressed versus those mildly depressed and nondepressed interacted with treatment. This partial interaction is significant.</p>
+<h2 id="3-three-by-three-models-example-4">3 Three by three models: Example 4</h2>
+<p>Let’s now consider an example that illustrates a three by three design.</p>
+<p>there are three levels of treatment (control group, traditional therapy, and happiness therapy), and three depression groups (nondepressed, mildly depressed, and severely depressed)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use opt-3by3.dta.dta
+</span></span><span class="line"><span class="cl">  anova opt depstat##treat  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =        270    R-squared     =  0.4898
+                          Root MSE      =     10.023    Adj R-squared =  0.4742
+
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+            --------------+----------------------------------------------------
+                    Model |  25175.519          8   3146.9398     31.32  0.0000
+                          |
+                  depstat |  17664.096          2   8832.0481     87.92  0.0000
+                    treat |   5250.363          2   2625.1815     26.13  0.0000
+            depstat#treat |  2261.0593          4   565.26481      5.63  0.0002
+                          |
+                 Residual |  26220.367        261   100.46117  
+            --------------+----------------------------------------------------
+                    Total |  51395.885        269   191.06277  
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins treat#depstat,nopvalues  
+</span></span><span class="line"><span class="cl">  marginsplot 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Adjusted predictions                                       Number of obs = 270
+
+ Expression: Linear prediction, predict()
+
+ ---------------------------------------------------------------
+               |            Delta-method
+               |     Margin   std. err.     [95% conf. interval]
+ --------------+------------------------------------------------
+ treat#depstat |
+      Con#Non  |      44.20       1.83         40.60       47.80
+     Con#Mild  |      39.70       1.83         36.10       43.30
+      Con#Sev  |      29.90       1.83         26.30       33.50
+       TT#Non  |      54.53       1.83         50.93       58.14
+      TT#Mild  |      49.53       1.83         45.93       53.14
+       TT#Sev  |      39.80       1.83         36.20       43.40
+       HT#Non  |      59.33       1.83         55.73       62.94
+      HT#Mild  |      49.87       1.83         46.26       53.47
+       HT#Sev  |      30.10       1.83         26.50       33.70
+ ---------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.7.6.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Mean optimism by treatment group and depression status</strong></figcaption>
+</figure>
+<p>We can statistically dissect this interaction in four different ways: using simple effects , simple contrasts , partial interactions , or interaction contrasts . Each of these techniques is illustrated below</p>
+<h3 id="31--simple-effects">3.1  Simple effects</h3>
+<p>One way to dissect the interaction is by looking at the effect of treatment at each level of depression status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat@depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -------------------------------------------------
+               |         df           F        P&gt;F
+ --------------+----------------------------------
+ treat@depstat |
+          Non  |          2       17.86     0.0000
+         Mild  |          2        9.96     0.0001
+          Sev  |          2        9.56     0.0001
+        Joint  |          6       12.46     0.0000
+               |
+   Denominator |        261
+ -------------------------------------------------
+</code></pre>
+<p>These results show that the effect of treat is significant at each level of depstat.</p>
+<h3 id="32--simple-contrast">3.2  Simple contrast</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.treat@1.depstat,nowald pveffects  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This yields a comparison of each treatment group with the reference group (that is, group 1, the control group) at each level of depression status.</p>
+<pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------------------------------------
+                  |   Contrast   Std. err.      t    P&gt;|t|
+ -----------------+---------------------------------------
+    treat@depstat |
+ (TT vs Con) Non  |      10.33       2.59     3.99   0.000
+ (HT vs Con) Non  |      15.13       2.59     5.85   0.000
+ ---------------------------------------------------------
+</code></pre>
+<p>Let’s now perform these simple contrasts for those who are mildly depressed.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.treat@2.depstat,nowald pveffects  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ----------------------------------------------------------
+                   |   Contrast   Std. err.      t    P&gt;|t|
+ ------------------+---------------------------------------
+     treat@depstat |
+ (TT vs Con) Mild  |       9.83       2.59     3.80   0.000
+ (HT vs Con) Mild  |      10.17       2.59     3.93   0.000
+ ----------------------------------------------------------
+</code></pre>
+<p>Finally, let’s perform these simple contrasts for those who are severely depressed.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.treat@3.depstat,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ---------------------------------------------------------
+                  |   Contrast   Std. err.      t    P&gt;|t|
+ -----------------+---------------------------------------
+    treat@depstat |
+ (TT vs Con) Sev  |       9.90       2.59     3.83   0.000
+ (HT vs Con) Sev  |       0.20       2.59     0.08   0.938
+ ---------------------------------------------------------
+</code></pre>
+<p>If you prefer, you can obtain all six of these simple contrasts at once using the contrast command below</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.treat@depstat,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ----------------------------------------------------------
+                   |   Contrast   Std. err.      t    P&gt;|t|
+ ------------------+---------------------------------------
+     treat@depstat |
+  (TT vs Con) Non  |      10.33       2.59     3.99   0.000
+ (TT vs Con) Mild  |       9.83       2.59     3.80   0.000
+  (TT vs Con) Sev  |       9.90       2.59     3.83   0.000
+  (HT vs Con) Non  |      15.13       2.59     5.85   0.000
+ (HT vs Con) Mild  |      10.17       2.59     3.93   0.000
+  (HT vs Con) Sev  |       0.20       2.59     0.08   0.938
+ ----------------------------------------------------------
+</code></pre>
+<h3 id="33-partial-interaction">3.3 Partial interaction</h3>
+<p>I used the means from the margins command to create a visual depiction of these two partial interactions, shown in figure below.</p>
+<p>The left panel of figure illustrates the comparison of treatment group 2 versus 1 (traditional therapy versus control) interacted with depression status.</p>
+<p>The right panel illustrates the comparison of treatment group 3 versus 1 (happiness therapy versus control) interacted with depression status</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.7.7.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Partial interactions</strong></figcaption>
+</figure>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.treat#depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ --------------------------------------------------------
+                      |         df           F        P&gt;F
+ ---------------------+----------------------------------
+        treat#depstat |
+ (TT vs Con) (joint)  |          2        0.01     0.9891
+ (HT vs Con) (joint)  |          2        8.64     0.0002
+               Joint  |          4        5.63     0.0002
+                      |
+          Denominator |        261
+ --------------------------------------------------------
+</code></pre>
+<p>The first partial interaction is not significant.The difference in optimism between traditional therapy and the control group does not differ among the levels of depression status. This result represent the left panel:The effect of traditional therapy (versus the control group) is similar for all three lines (representing the three levels of depression).</p>
+<p>The first partial interaction is not significant.The difference in optimism between happiness therapy and the control group depends on the level of depression. This result represent the right panel:the effect of happiness therapy (compared with the control group) may be similar for those who are nondepressed and mildly depressed but different for those who are severely depressed.</p>
+<h3 id="34-interaction-contrasts">3.4 Interaction contrasts</h3>
+<p>Suppose we applied the r. contrast operator to treatment group and the a. contrast operator to depression status.</p>
+<p>This would create contrasts of each treatment group against the control group (that is, group 2 versus 1 and group 3 versus 1) interacted with contrasts of adjacent levels of depression groups (that is, group 1 versus 2 and group 2 versus 3).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast a.depstat#r.treat,nowald pveffects 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -------------------------------------------------------------------
+                            |   Contrast   Std. err.      t    P&gt;|t|
+ ---------------------------+---------------------------------------
+              depstat#treat |
+ (Non vs Mild) (TT vs Con)  |       0.50       3.66     0.14   0.891
+ (Non vs Mild) (HT vs Con)  |       4.97       3.66     1.36   0.176
+ (Mild vs Sev) (TT vs Con)  |      -0.07       3.66    -0.02   0.985
+ (Mild vs Sev) (HT vs Con)  |       9.97       3.66     2.72   0.007
+ -------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.7.8.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Interaction contrasts</strong></figcaption>
+</figure>
+<p>Let’s begin by interpreting the fourth interaction contrast, the only one that was significant.
+The significance of this interaction contrast indicates that the effect of happiness therapy (compared with the control group) is different for those who are mildly depressed compared with those who are severely depressed.</p>
+<h2 id="4-unbalanced-designs">4 Unbalanced designs</h2>
+<p>Even in the context of a randomized experiment, <strong>it is unusual to have the same number of observations in each cell.</strong></p>
+<p>This section presents an example of an unbalanced design. This will allow us to consider two different strategies that can be used for estimating adjusted means, <strong>the asobserved strategy</strong> and <strong>the as-balanced strategy.</strong> As we will see, the asbalanced option can be used with the margins command to estimate margins as though the design were balanced, even if the actual design is not balanced.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  tab married cograd if !missing(happy7),row
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> +----------------+
+ | Key            |
+ |----------------|
+ |   frequency    |
+ | row percentage |
+ +----------------+
+
+   marital: |
+ married=1, |
+ unmarried= |   College graduate
+          0 |     (1=yes, 0=no)
+  (recoded) | Not CO Gr    CO Grad |     Total
+ -----------+----------------------+----------
+  Unmarried |       454        147 |       601 
+            |     75.54      24.46 |    100.00 
+ -----------+----------------------+----------
+    Married |       403        153 |       556 
+            |     72.48      27.52 |    100.00 
+ -----------+----------------------+----------
+      Total |       857        300 |     1,157 
+            |     74.07      25.93 |    100.00 
+</code></pre>
+<p>Before performing the analysis, let’s compute the mean of happy7 by married and cograd using the tabulate command below</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  tab married cograd,sum(happy7)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>   marital: |
+ married=1, |
+ unmarried= |  College graduate
+          0 |    (1=yes, 0=no)
+  (recoded) | Not CO Gr    CO Grad |     Total
+ -----------+----------------------+----------
+  Unmarried | 5.3039648  5.5170068 | 5.3560732
+            | 1.0590229  .99556373 | 1.0470596
+            |       454        147 |       601
+ -----------+----------------------+----------
+    Married | 5.7121588  5.6862745 |  5.705036
+            |  .8986037  .79032462 | .86953016
+            |       403        153 |       556
+ -----------+----------------------+----------
+      Total |  5.495916  5.6033333 | 5.5237684
+            | 1.0071217  .89926887 |  .9810472
+            |       857        300 |      1157
+</code></pre>
+<p>Let’s now perform an analysis that predicts happy7 from married, cograd, and the interaction of these two variables.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  anova happy7 married##cograd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =      1,157    R-squared     =  0.0362
+                          Root MSE      =    .964375    Adj R-squared =  0.0337
+
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+           ---------------+----------------------------------------------------
+                    Model |  40.284425          3   13.428142     14.44  0.0000
+                          |
+                  married |  18.502336          1   18.502336     19.89  0.0000
+                   cograd |    1.94355          1     1.94355      2.09  0.1486
+           married#cograd |  3.1674385          1   3.1674385      3.41  0.0652
+                          |
+                 Residual |  1072.3119      1,153   .93001903  
+           ---------------+----------------------------------------------------
+                    Total |  1112.5964      1,156   .96245361  
+</code></pre>
+<p>We can see that the married#cograd interaction is not significant ($p = 0.0652$). Let’s assume that we want to retain this interaction. (We may want to retain it based on theoretical considerations or because its -value is close to 0.05.) Let’s now turn our attention to married, which is significant ($p&lt;0.001$).</p>
+<p>To understand this significant result, let’s use the margins command to compute the adjusted means by the levels of married.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins married,nopvalues
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Predictive margins                                       Number of obs = 1,157
+
+ Expression: Linear prediction, predict()
+
+ --------------------------------------------------------------
+              |            Delta-method
+              |     Margin   std. err.     [95% conf. interval]
+ -------------+------------------------------------------------
+      married |
+   Unmarried  |       5.36       0.04          5.28        5.44
+     Married  |       5.71       0.04          5.63        5.79
+ --------------------------------------------------------------
+</code></pre>
+<p>We can think of this adjusted mean as being computed by taking each cell mean of happy7 among those who are not married and weighing it by the corresponding proportion of those are college graduates or noncollege graduates, as illustrated below.</p>
+<p>$ 454 num ÷ 601 = 0.74$</p>
+<p>$ 147 num ÷ 601 = 0.26$</p>
+<p>$ 5.3039648 * 0.7407 + 5.5170068 * 0.2593 = 5.3592066 $</p>
+<p>We can likewise compute the adjusted mean for those who are married using the same strategy, as shown below.</p>
+<p>$ 5.7121588 * 0.7407 + 5.6862745 * 0.2593 = 5.05447$</p>
+<p><strong>The key point is that the adjusted means are computed by creating a weighted average of cell means that is weighted by the observed proportions of observations in the data (in this case, the observed proportions of cograd). Stata calls this the asobserved strategy.</strong></p>
+<p>This is the default strategy, unless we specify otherwise. We can explicitly request this strategy by <strong>adding the as observed option to the margins command</strong>, as shown below. This yields the same adjusted means we saw in the previous margins command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins married,nopvalues asobserved
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Predictive margins                                       Number of obs = 1,157
+
+ Expression: Linear prediction, predict()
+
+ --------------------------------------------------------------
+              |            Delta-method
+              |     Margin   std. err.     [95% conf. interval]
+ -------------+------------------------------------------------
+      married |
+   Unmarried  |       5.36       0.04          5.28        5.44
+     Married  |       5.71       0.04          5.63        5.79
+ --------------------------------------------------------------
+</code></pre>
+<p>In some cases, we might want the adjusted means to be computed using an equal weighting of the cell means, as though the design had been balanced.</p>
+<p>In the context of this example, it would mean weighing college graduates and noncollege graduates equally.8 This can be accomplished by using the asbalanced option.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins married,nopvalues asbalanced
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Adjusted predictions                                     Number of obs = 1,157
+
+ Expression: Linear prediction, predict()
+ At: married   (asbalanced)
+     cograd    (asbalanced)
+
+ --------------------------------------------------------------
+              |            Delta-method
+              |     Margin   std. err.     [95% conf. interval]
+ -------------+------------------------------------------------
+      married |
+   Unmarried  |       5.41       0.05          5.32        5.50
+     Married  |       5.70       0.05          5.61        5.79
+ --------------------------------------------------------------
+</code></pre>
+<p>$  dis 5.3039648 * 0.5 + 5.5170068 * 0.5 = 5.4104858$</p>
+<p>$  dis 5.7121588 * 0.5 + 5.6862745 * 0.5 = 5.6992167$</p>
+<h2 id="5-main-effects-with-interactions-anova-versus-regress">5 Main effects with interactions: anova versus regress</h2>
+<p>This section considers the meaning of main effects in the presence of an interaction when using the regress command compared with the anova command.</p>
+<p>In the presence of interactions, this can lead to conflicting estimates of so-called main effects for the regress command versus the anova command.</p>
+<p>Let’s use the dataset for this example and show the mean optimism by treatment group and depression status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use opt-2by2.dta
+</span></span><span class="line"><span class="cl">  anova opt treat##depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                          Number of obs =        120    R-squared     =  0.4889
+                          Root MSE      =    10.0136    Adj R-squared =  0.4757
+ 
+                   Source | Partial SS         df         MS        F    Prob&gt;F
+            --------------+----------------------------------------------------
+                    Model |      11126          3   3708.6667     36.99  0.0000
+                          |
+                    treat |  2803.3333          1   2803.3333     27.96  0.0000
+                  depstat |  7426.1333          1   7426.1333     74.06  0.0000
+            treat#depstat |  896.53333          1   896.53333      8.94  0.0034
+                          |
+                 Residual |  11631.467        116   100.27126  
+            --------------+----------------------------------------------------
+                    Total |  22757.467        119   191.23922  
+</code></pre>
+<p>Let’s now perform this analysis but instead use the regress command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg opt treat##depstat,vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>        Source |       SS           df       MS      Number of obs   =       120
+  -------------+----------------------------------   F(3, 116)       =     36.99
+         Model |       11126         3  3708.66667   Prob &gt; F        =    0.0000
+      Residual |  11631.4667       116  100.271264   R-squared       =    0.4889
+  -------------+----------------------------------   Adj R-squared   =    0.4757
+         Total |  22757.4667       119  191.239216   Root MSE        =    10.014
+
+ -------------------------------------------------------------------------------
+           opt | Coefficient  Std. err.      t    P&gt;|t|     [95% conf. interval]
+ --------------+----------------------------------------------------------------
+         treat |
+           HT  |      15.13       2.59     5.85   0.000        10.01       20.25
+       depstat |
+          Dep  |     -10.27       2.59    -3.97   0.000       -15.39       -5.15
+ treat#depstat |
+       HT#Dep  |     -10.93       3.66    -2.99   0.003       -18.18       -3.69
+         _cons |      44.87       1.83    24.54   0.000        41.25       48.49
+ -------------------------------------------------------------------------------
+</code></pre>
+<p>Let’s now compare the results of the anova command with the results of the regress command, focusing on the significance tests.</p>
+<p>These comparisons are a bit tricky, <strong>because the anova command reports $F$ statistics, whereas the regress command reports $t$ statistics.</strong> But we can square the value from the regress command to convert it into an equivalent of an statistic.</p>
+<p>If we square $t$ the value of $-2.99$ from the regress command, we obtain the 8.94, the same value as $F$ the statistic from the anova command.</p>
+<p>Using the contrast treat#depstat command following the regress command also yields the same results as the anova command. The value from the contrast command is the same as the $F$ value from the anova command, 8.94.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat#depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ -------------------------------------------------
+               |         df           F        P&gt;F
+ --------------+----------------------------------
+ treat#depstat |          1        8.94     0.0034
+               |
+   Denominator |        116
+ -------------------------------------------------
+</code></pre>
+<p>Let’s now compare the test of treat from the anova command with the regress command. We square of the $t$ value for the treat effect from the regress command(5.85) and obtain 34.22. <strong>This is different from the $F$ value for the treat effect from the anova command, 27.96.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of marginal linear predictions
+
+ Margins: asbalanced
+
+ ------------------------------------------------
+              |         df           F        P&gt;F
+ -------------+----------------------------------
+        treat |          1       27.96     0.0000
+              |
+  Denominator |        116
+ ------------------------------------------------
+</code></pre>
+<p>This might seem perplexing, but there is a perfectly logical explanation for this. The reason for these discrepancies is because of differences in the coding used by the anova and regress commands. The regress command uses dummy (0/1) coding, whereas the anova command and the contrast command use effect ($-1/1$) coding.The interpretation of the interactions is the same whether you use effect coding or dummy coding, but the meaning of the main effects differ.</p>
+<p>The interpretation of the interactions is the same whether you use effect coding or dummy coding, but the meaning of the main effects differ. When using dummy coding, the coefficient for treat represents the effect of treat when depstat is held constant at 0 (that is, for those who are nondepressed, the reference group).</p>
+<p>In the dummy-coded model used by the regress command, the tests of treat and depstat might be called main effects, but this is really a misnomer. These are really simple effects. The test of treat from the regress output is the effect of treat when depstat is held constant at the reference group, and the coefficient for depstat is the effect of depstat when treat is held constant at the reference group.</p>
+<p>The anova and contrast commands instead use effect coding, and the terms associated with the main effects represent the classic analysis of variance main effects.</p>
+<p>his begs the question of whether we should even be interpreting main effects in the presence of an interaction. Whether the main effects are coded using dummycoding or using effect coding, <strong>main effects are not meaningful when they are part of a significant interaction term.</strong></p>
+<h2 id="6-interpreting-confidence-intervals">6 Interpreting confidence intervals</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  anova happy7 i.marital3##i.gender c.health
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                     Number of obs =        783    R-squared     =  0.1246
+                     Root MSE      =    .941504    Adj R-squared =  0.1178
+
+              Source | Partial SS         df         MS        F    Prob&gt;F
+     ----------------+----------------------------------------------------
+               Model |  97.864391          6   16.310732     18.40  0.0000
+                     |
+            marital3 |   26.17214          2    13.08607     14.76  0.0000
+              gender |  3.8126465          1   3.8126465      4.30  0.0384
+     marital3#gender |  2.4708203          2   1.2354101      1.39  0.2488
+              health |  51.985684          1   51.985684     58.65  0.0000
+                     |
+            Residual |  687.86996        776   .88643037  
+     ----------------+----------------------------------------------------
+               Total |  785.73436        782   1.0047754  
+</code></pre>
+<p>Let’s compute the adjusted means of happiness by marital3 by gender using the margins command and graph them using the marginsplot command</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins marital3#gender
+</span></span><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Predictive margins                                         Number of obs = 783
+
+ Expression: Linear prediction, predict()
+
+ ---------------------------------------------------------------------------------------
+                       |            Delta-method
+                       |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+ ----------------------+----------------------------------------------------------------
+       marital3#gender |
+         Married#Male  |       5.68       0.09    59.93   0.000         5.50        5.87
+       Married#Female  |       5.69       0.06    98.87   0.000         5.57        5.80
+     Prevmarried#Male  |       5.13       0.11    44.95   0.000         4.90        5.35
+   Prevmarried#Female  |       5.29       0.08    64.16   0.000         5.13        5.46
+   Never married#Male  |       5.27       0.09    57.86   0.000         5.09        5.45
+ Never married#Female  |       5.55       0.09    60.82   0.000         5.37        5.73
+ ---------------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.8.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong> Adjusted means of happiness by marital status and gender</strong></figcaption>
+</figure>
+<p>we would need to test the effect of gender at each level of marital status using the margins command, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender@marital3,contrast(nowald pveffects)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Contrasts of predictive margins                            Number of obs = 783
+
+ Expression: Linear prediction, predict()
+
+ ------------------------------------------------------------------------
+                                 |            Delta-method
+                                 |   Contrast   std. err.      t    P&gt;|t|
+ --------------------------------+---------------------------------------
+                 gender@marital3 |
+       (Female vs base) Married  |       0.01       0.11     0.05   0.961
+   (Female vs base) Prevmarried  |       0.17       0.14     1.20   0.231
+ (Female vs base) Never married  |       0.29       0.13     2.21   0.027
+ ------------------------------------------------------------------------
+</code></pre>
+<p>In summary, the marginsplot command provides a graphical display of the results calculated by the margins command. Sometimes, the appearance of the confidence intervals of individual groups might tempt you to inappropriately make statistical inferences about the comparisons between the groups. To avoid this trap, <strong>you can directly form comparisons among the groups of interest to ascertain the significance of the group differences.</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/8.chapter8categorical-by-categorical-interactions/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/categorical/">Categorical</a>,&nbsp;<a href="/tags/interaction/">Interaction</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/7.chapter7categorical-predictors/" class="prev" rel="prev" title="Chapter7 ：Categorical predictors"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter7 ：Categorical predictors</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
