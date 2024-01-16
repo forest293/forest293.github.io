@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter16 ：Time as a continuous predictor - Alex_Wang</title><meta name="Description" content="This chapter considers models involving the analysis of longitudinal data.  "><meta property="og:title" content="Chapter16 ：Time as a continuous predictor" />
+<meta property="og:description" content="This chapter considers models involving the analysis of longitudinal data.  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-13T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-13T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter16 ：Time as a continuous predictor"/>
+<meta name="twitter:description" content="This chapter considers models involving the analysis of longitudinal data.  "/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/" /><link rel="prev" href="https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/" /><link rel="next" href="https://forest293.github.io/15.chapter15multilevel-models/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter16 ：Time as a continuous predictor",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/16.chapter16time-as-a-continuous-predictor\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Multilevel, Interaction, stata","wordcount":  4887 ,
+        "url": "https:\/\/forest293.github.io\/16.chapter16time-as-a-continuous-predictor\/","datePublished": "2024-01-13T16:29:41+08:00","dateModified": "2024-01-13T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter considers models involving the analysis of longitudinal data.  "
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/16.chapter16time-as-a-continuous-predictor/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/16.chapter16time-as-a-continuous-predictor/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter16 ：Time as a continuous predictor</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-13">2024-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4887 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 10 分钟&nbsp;<span id="/16.chapter16time-as-a-continuous-predictor/" class="leancloud_visitors" data-flag-title="Chapter16 ：Time as a continuous predictor">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-example-1-linear-effect-of-time">1 Example 1: Linear effect of time</a></li>
+    <li><a href="#2-example-2-linear-effect-of-time-by-a-categorical-predictor">2 Example 2: Linear effect of time by a categorical predictor</a></li>
+    <li><a href="#3-example-3piecewise-modeling-of-time">3 Example 3:Piecewise modeling of time</a></li>
+    <li><a href="#4-example-4-piecewise-effects-of-time-by-a-categorical-predictor">4 Example 4: Piecewise effects of time by a categorical predictor</a>
+      <ul>
+        <li><a href="#41-baseline-slope-means-the-prior-to-the-treatment-phase">4.1 Baseline slope [means the prior to the treatment phase]</a></li>
+        <li><a href="#42-change-in-slopes-treatment-versus-baseline">4.2 Change in slopes: Treatment versus baseline</a></li>
+        <li><a href="#43-jump-at-treatment">4.3 Jump at treatment</a></li>
+        <li><a href="#44-comparisons-among-groups">4.4 Comparisons among groups</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This chapter considers models involving the analysis of longitudinal data.</p>
+<p>Such designs involve participants that are observed at more than one time point and time is generally treated as one of the important predictors in the model. Like any predictor, we need to ask ourselves how we want to model the relationship between time and the outcome. <strong>A key distinction is whether time will be treated as a continuous variable or as a categorical variable.</strong></p>
+<p>There are several approaches that can be used for modeling longitudinal data, including repeated-measures analysis of variance (ANOVA), generalized estimating equations (GEE), and multilevel modeling. This chapter will focus on using multilevel modeling for analyzing longitudinal models <strong>where time is treated as level 1 and the person will be treated as level 2.</strong> In such a model, characteristics that change as a function of time are level-1 predictors and characteristics that are a property of the person that do not change over time are level-2 predictors.</p>
+<h2 id="1-example-1-linear-effect-of-time">1 Example 1: Linear effect of time</h2>
+<p>Let’s begin by considering a simple model in which we look at the linear effect of time on the outcome variable.</p>
+<p>For example, let’s consider a study in which we are looking at the number of minutes people sleep at night over a seven-week period. For the sake of this example, assume that the people were selected for the study because they have recently experienced a stressful event in their life, and the purpose of the study is to understand the natural course of sleep change over the seven weeks after a stressful event.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use sleep_conlin.dta
+</span></span><span class="line"><span class="cl">  list in 1/5
+</span></span><span class="line"><span class="cl">  summarize
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>         +---------------------+
+         | id   obsday   sleep |
+         |---------------------|
+      1. |  1        1     382 |
+      2. |  1        6     382 |
+      3. |  1       13     390 |
+      4. |  1       21     378 |
+      5. |  1       27     401 |
+         +---------------------+
+</code></pre>
+<p>The dataset for this study is organized in a long format, with one observation per person per night of observation.</p>
+<pre><code>        Variable |        Obs        Mean    Std. dev.       Min        Max
+    -------------+---------------------------------------------------------
+              id |        600          38    21.66677          1         75
+          obsday |        600      23.565    14.82854          1         52
+           sleep |        600     360.785    48.13086        175        528
+</code></pre>
+<p>Instead, we can fit a random-intercept model that accounts for the nonindependence of the residuals within each person. Such a model is fit below first using the xtset command to specify that id is the panel variable and obsday is the time variable.</p>
+<p>We can then use the xtreg command to fit a random-intercept model predicting sleep from obsday</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  xtset id obsday
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Panel variable: id (weakly balanced)
+     Time variable: obsday, 1 to 52, but with gaps
+             Delta: 1 unit
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  xtreg sleep obsday
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Random-effects GLS regression                   Number of obs     =        600
+    Group variable: id                              Number of groups  =         75
+    
+    R-squared:                                      Obs per group:
+         Within  = 0.1652                                         min =          8
+         Between = 0.0062                                         avg =        8.0
+         Overall = 0.0218                                         max =          8
+    
+                                                    Wald chi2(1)      =     103.56
+    corr(u_i, X) = 0 (assumed)                      Prob &gt; chi2       =     0.0000
+    
+    ------------------------------------------------------------------------------
+           sleep | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+          obsday |       0.51       0.05    10.18   0.000         0.41        0.61
+           _cons |     348.80       5.31    65.66   0.000       338.39      359.21
+    -------------+----------------------------------------------------------------
+         sigma_u |  44.412437
+         sigma_e |  18.051717
+             rho |  .85821678   (fraction of variance due to u_i)
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>The interpretation of the obsday coefficient is straightforward. For each additional day in the study, nightly minutes of sleep increased by, on average, by 0.51 minutes.</p>
+<p>In this model, the coefficient for obsday is treated as a fixed effect.</p>
+<p>The model recognizes that people randomly vary in terms of their average sleep time at the start of the study (represented by the random intercept). <strong>But perhaps people also vary individually in their trajectory of sleep times across the weeks of the study.</strong></p>
+<p>By adding obsday as a random coefficient (that is, a random slope), the model can account for both individual differences in the average length of sleep at the start of the study (that is, a random intercept) and individual differences in the trajectory of sleep times across the weeks of the study (that is, a random slope for obsday).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mixed sleep obsday || id:obsday, covariance(un) nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Mixed-effects ML regression                          Number of obs    =    600
+    Group variable: id                                   Number of groups =     75
+                                                         Obs per group:
+                                                                      min =      8
+                                                                      avg =    8.0
+                                                                      max =      8
+                                                         Wald chi2(1)     =  20.54
+    Log likelihood = -2488.5378                          Prob &gt; chi2      = 0.0000
+    
+    -----------------------------------------------------------------------------------
+                sleep | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    ------------------+----------------------------------------------------------------
+               obsday |       0.51       0.11     4.53   0.000         0.29        0.73
+                _cons |     348.82       3.31   105.43   0.000       342.34      355.31
+    -----------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+      Random-effects parameters  |   Estimate   Std. err.     [95% conf. interval]
+    -----------------------------+------------------------------------------------
+    id: Unstructured             |
+                     var(obsday) |       0.89       0.16          0.63        1.26
+                      var(_cons) |     775.84     134.13        552.86     1088.75
+               cov(obsday,_cons) |      14.30       3.56          7.33       21.27
+    -----------------------------+------------------------------------------------
+                   var(Residual) |     101.23       6.75         88.83      115.35
+    ------------------------------------------------------------------------------
+    LR test vs. linear model: chi2(3) = 1360.11               Prob &gt; chi2 = 0.0000
+    
+    Note: LR test is conservative and provided only for reference.
+</code></pre>
+<p>4
+The slope of the relationship between sleep duration and observation day is significant $( z= 4.53 , p = 0.000 )$. For each additional day in the study, the participants slept an additional 0.51 minutes.</p>
+<p>This model added a random effect for obsday, which we see reflected in the estimate of var(obsday) in the random-effects portion of the output. This representsthe degree to which the sleep trajectories vary between individuals.</p>
+<p>As described in Singer and Willett (2003), we can form a simple one-sided $z$ test to determine if this value is significantly greater than 0. We can compute a $z$ statistic by dividing the estimate (0.8926) by its standard error (0.1553), which yields a $z$-value of 5.75. This value well exceeds 1.645 (the 5% cutoff for a one-sided $z$test), suggesting that there is significant variation in the sleep trajectories among individuals.2</p>
+<blockquote>
+<p>Singer and Willett (2003)&mdash;-Simple one-sided $z$ test</p>
+<blockquote>
+<p>Singer and Willett (2003) note that although this is a simple test to perform, there is disagreement over its appropriateness and it is probably best treated as a quick, but imprecise, test. They provide a useful discussion of the concerns surrounding this test and provide an alternative test that may be more preferable. The most appropriate method for performing such tests appears to be an unsettled question and the topic of continued research.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>What is &ldquo;Simple one-sided $z$ test&rdquo;</p>
+<blockquote>
+<p>A simple one-sided z-test is a statistical hypothesis test used to determine whether there is a significant difference between a sample mean and a population mean when the population standard deviation is known. The &ldquo;one-sided&rdquo; aspect refers to the direction of the difference that you are interested in: either greater than or less than.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>The basic step for Simple one-sided $z$ test</p>
+<blockquote>
+<ol>
+<li>Formulate Hypotheses:</li>
+</ol>
+<ul>
+<li>Null Hypothesis (H0): μ (population mean) is equal to a specified value.</li>
+<li>Alternative Hypothesis (H1): μ is greater than or less than the specified value.</li>
+</ul>
+<ol start="2">
+<li>Choose Significance Level (α):</li>
+</ol>
+<ul>
+<li>Common choices include 0.05, 0.01, or 0.10.</li>
+</ul>
+<ol start="3">
+<li>Select the Test Statistic:</li>
+</ol>
+<ul>
+<li>For a z-test, you use the z-statistic, which is calculated as (X̄ - μ) / (σ/√n), where X̄ is the sample mean, μ is the population mean under the null hypothesis, σ is the population standard deviation, and n is the sample size.</li>
+</ul>
+<ol start="4">
+<li>Determine the Critical Region:</li>
+</ol>
+<ul>
+<li>Based on the chosen significance level and whether it&rsquo;s a one-sided test (right-tailed or left-tailed), find the critical value from the standard normal distribution.</li>
+</ul>
+<ol start="5">
+<li>Make a Decision:</li>
+</ol>
+<ul>
+<li>If the test statistic falls into the critical region, reject the null hypothesis. Otherwise, fail to reject the null hypothesis.</li>
+</ul>
+<ol start="6">
+<li>Draw a Conclusion:</li>
+</ol>
+<ul>
+<li>State the conclusion in terms of the problem. If you reject the null hypothesis, it suggests evidence in favor of the alternative hypothesis.</li>
+</ul>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>The choice between a one-sided and a two-sided test depends on the research question and the direction of the effect you are investigating. If you are specifically interested in whether the sample mean is greater than (or less than) a certain value, a one-sided test is appropriate. If you are interested in whether the sample mean is different from a certain value (greater or less), a two-sided test is used.</p>
+</blockquote>
+<p>We might be interested in estimating the predicted mean number of minutes slept at night across the weeks of the study. Let’s estimate this for the first 50 days of observation in 7-day increments.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,nopvalues at(obsday=(1(7)50)) vsquish  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                       Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    1._at: obsday =  1
+    2._at: obsday =  8
+    3._at: obsday = 15
+    4._at: obsday = 22
+    5._at: obsday = 29
+    6._at: obsday = 36
+    7._at: obsday = 43
+    8._at: obsday = 50
+    
+    --------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.     [95% conf. interval]
+    -------------+------------------------------------------------
+             _at |
+              1  |     349.33       3.36        342.74      355.92
+              2  |     352.90       3.81        345.44      360.37
+              3  |     356.48       4.36        347.94      365.01
+              4  |     360.05       4.97        350.32      369.78
+              5  |     363.62       5.62        352.60      374.64
+              6  |     367.20       6.31        354.83      379.56
+              7  |     370.77       7.02        357.02      384.52
+              8  |     374.34       7.74        359.18      389.51
+    --------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  marginsplot
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.14.1.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Minutes of sleep at night by time</strong></figcaption>
+</figure>
+<p>The margins command would have estimated the effect of the day of observation after holding the covariates constant, and you could have used the at() option to hold the covariates constant at a specified level.</p>
+<h2 id="2-example-2-linear-effect-of-time-by-a-categorical-predictor">2 Example 2: Linear effect of time by a categorical predictor</h2>
+<p>Let’s consider another sleep study in which participants diagnosed with insomnia were randomly assigned to one of three different treatments to increase the number of minutes of sleep at night. The three different treatments were 1) control group (no treatment), 2) medication group (where a sleep medication is given), or 3) education group (where the participants receive education about how to sleep better and longer).</p>
+<p>This model involves a combination of a continuous predictor (time) and a threelevel categorical predictor (treatment group).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use sleep_cat3conlin.dta
+</span></span><span class="line"><span class="cl">  list in 1/5
+</span></span><span class="line"><span class="cl">  summarize
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We can fit a model that predicts sleep from the observation day, the group assignment, and the interaction of these two variables using the mixed command shown below. Note that the random-effects portion of the model specifies that obsday is a random effect. [Thinking in terms of a multilevel model, group#obsday is a crosslevel interaction of a level-2 variable (group) with a level-1 variable (obsday).]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mixed sleep i.group##c.obsday || id:obsday,covariance(un)nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Mixed-effects ML regression                          Number of obs    =    600
+    Group variable: id                                   Number of groups =     75
+                                                         Obs per group:
+                                                                      min =      8
+                                                                      avg =    8.0
+                                                                      max =      8
+                                                         Wald chi2(5)     =  66.55
+    Log likelihood = -2482.6017                          Prob &gt; chi2      = 0.0000
+    
+    -----------------------------------------------------------------------------------
+                sleep | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    ------------------+----------------------------------------------------------------
+                group |
+          Medication  |      35.48       9.50     3.74   0.000        16.86       54.10
+           Education  |       5.55       9.50     0.58   0.559       -13.07       24.17
+                      |
+               obsday |      -0.07       0.18    -0.37   0.715        -0.42        0.29
+                      |
+       group#c.obsday |
+          Medication  |       0.18       0.25     0.71   0.475        -0.32        0.68
+           Education  |       0.83       0.25     3.27   0.001         0.33        1.33
+                      |
+                _cons |     339.45       6.72    50.53   0.000       326.28      352.61
+    -----------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+      Random-effects parameters  |   Estimate   Std. err.     [95% conf. interval]
+    -----------------------------+------------------------------------------------
+    id: Unstructured             |
+                     var(obsday) |       0.72       0.13          0.50        1.03
+                      var(_cons) |    1079.51     184.18        772.68     1508.17
+               cov(obsday,_cons) |      22.52       4.23         14.22       30.82
+    -----------------------------+------------------------------------------------
+                   var(Residual) |     108.37       7.22         95.10      123.48
+    ------------------------------------------------------------------------------
+    LR test vs. linear model: chi2(3) = 1425.42               Prob &gt; chi2 = 0.0000
+    
+    Note: LR test is conservative and provided only for reference.
+</code></pre>
+<p>We first use the margins command to estimate the predicted means by group at selected values of obsday. We follow that with the marginsplot command to graph the predicted means computed by the margins command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins group,at(obsday=(0 45))
+</span></span><span class="line"><span class="cl">  marginsplot,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                       Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    1._at: obsday =  0
+    2._at: obsday = 45
+    
+    -------------------------------------------------------------------------------
+                  |            Delta-method
+                  |     Margin   std. err.      z    P&gt;|z|     [95% conf. interval]
+    --------------+----------------------------------------------------------------
+        _at#group |
+       1#Control  |     339.45       6.72    50.53   0.000       326.28      352.61
+    1#Medication  |     374.93       6.72    55.83   0.000       361.76      388.09
+     1#Education  |     345.00       6.72    51.36   0.000       331.83      358.16
+       2#Control  |     336.49      13.61    24.71   0.000       309.80      363.17
+    2#Medication  |     380.14      13.60    27.94   0.000       353.47      406.80
+     2#Education  |     379.42      13.61    27.88   0.000       352.75      406.10
+    -------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.14.2.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Minutes of sleep at night by time and treatment group</strong></figcaption>
+</figure>
+<p>The slope appears to be slightly negative for the control group. In other words, their sleep durations appear to mildly decrease as a linear function of the observation day. For the medication group, the slope appears to be slightly positive. By contrast, sleep durations increase as a linear function of time for the education group. In other words, the obsday slope is positive for the education group.</p>
+<p>Let’s use the margins command to estimate the three slopes depicted in figure. This is computed using the margins command, including <strong>the dydx(obsday) option to estimate the obsday slope.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,dydx(obsday) over(group) vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Average marginal effects                                   Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    dy/dx wrt:  obsday
+    Over:       group
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |      dy/dx   std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+    obsday       |
+           group |
+        Control  |      -0.07       0.18    -0.37   0.715        -0.42        0.29
+     Medication  |       0.12       0.18     0.65   0.518        -0.24        0.47
+      Education  |       0.77       0.18     4.26   0.000         0.41        1.12
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>For the education group (group 3), the obsday slope is 0.77 and is significantly different from 0. This is consistent with the positive slope for the education group illustrated in figure above. For the education group, sleep durations increased (on average) by 0.77 minutes for every additional day.</p>
+<p>Let’s now form comparisons of these slopes, comparing the slope for each group against group 1 (the control group). The r. contrast operator is applied to group to form reference group comparisons.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.group,dydx(obsday) contrast(pveffects nowald)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of average marginal effects                      Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    dy/dx wrt:  obsday
+    
+    -----------------------------------------------------------------
+                             |   Contrast Delta-method
+                             |      dy/dx   std. err.      z    P&gt;|z|
+    -------------------------+---------------------------------------
+    obsday                   |
+                       group |
+    (Medication vs Control)  |       0.18       0.25     0.71   0.475
+     (Education vs Control)  |       0.83       0.25     3.27   0.001
+    -----------------------------------------------------------------
+</code></pre>
+<p>Say that we wanted to compare the predicted mean of sleep duration for each group with the control group across all days of observation. The margins command can be combined with the marginsplot command to create a graph that compares each group with the control group at each of the days of observation (1 to 45 days).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.group,at(obsday=(1(1)45))
+</span></span><span class="line"><span class="cl">  marginsplot, bydimension(group) yline(0) xlabel(1(7)45)recast(line) recastci(rarea) ciopts(fcolor(black%20))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.14.3.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Minutes of sleep at night by time and treatment group</strong></figcaption>
+</figure>
+<p>The confidence interval for each comparison is shown with a reference line at zero. Where the confidence interval excludes zero, the difference is significant at the 5% level.</p>
+<h2 id="3-example-3piecewise-modeling-of-time">3 Example 3:Piecewise modeling of time</h2>
+<p>Time can be modeled in a piecewise fashion by breaking up the days of observation into the baseline phase and the treatment phase.</p>
+<p>In this example, we can assess the slope of the relationship between sleep duration and time (obsday) during the baseline and treatment phases. We can also test for a sudden jump in sleep duration on the 31st day, corresponding to the start of the treatment phase.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use sleep_conpw.dta
+</span></span><span class="line"><span class="cl">  list in 1/5,sepby(id)
+</span></span><span class="line"><span class="cl">  summarize
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We need to create some variables to prepare for the piecewise analysis. First, we use the mkspline command to create the variables named obsday1m and obsday2m, placing the knot at 31 days (corresponding to the start of the treatment phase).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mkspline obsday1m 31 obsday2m = obsday,marginal  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Next, we create the variable trtphase that is coded 0 for the baseline phase (where obsday was 1 to 30) and coded 1 during the treatment phase (where obsday is 31 or more).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  generate trtphase = 0 if obsday &lt;= 30  
+</span></span><span class="line"><span class="cl">  replace trtphase = 1 if obsday &gt;=31 &amp; !missing(obsday) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We are now ready to run a piecewise model that predicts sleep from obsday1m, obsday2m, and trtphase. In this example, obsday1m, obsday2m, and trtphase are also included as random effects.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mixed sleep obsday1m obsday2m trtphase || id: obsday1m obsday2m trtphase,covariance(un)nolog 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Mixed-effects ML regression                          Number of obs    =    600
+    Group variable: id                                   Number of groups =     75
+                                                         Obs per group:
+                                                                      min =      8
+                                                                      avg =    8.0
+                                                                      max =      8
+                                                         Wald chi2(3)     =  70.48
+    Log likelihood = -2601.8889                          Prob &gt; chi2      = 0.0000
+    
+    ----------------------------------------------------------------------------------------
+                     sleep | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -----------------------+----------------------------------------------------------------
+                  obsday1m |      -0.01       0.12    -0.05   0.961        -0.24        0.23
+                  obsday2m |       0.54       0.17     3.27   0.001         0.22        0.87
+                  trtphase |      11.14       1.94     5.74   0.000         7.33       14.94
+                     _cons |     349.01      10.64    32.80   0.000       328.15      369.87
+    ----------------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+      Random-effects parameters  |   Estimate   Std. err.     [95% conf. interval]
+    -----------------------------+------------------------------------------------
+    id: Unstructured             |
+                   var(obsday1m) |       0.83       0.18          0.55        1.25
+                   var(obsday2m) |       0.69       0.33          0.27        1.78
+                   var(trtphase) |      59.53      48.90         11.90      297.83
+                      var(_cons) |    8425.42    1386.81       6102.18    11633.16
+          cov(obsday1m,obsday2m) |      -0.37       0.19         -0.73       -0.00
+          cov(obsday1m,trtphase) |      -1.54       2.14         -5.73        2.65
+             cov(obsday1m,_cons) |      32.85      11.53         10.25       55.46
+          cov(obsday2m,trtphase) |       2.84       2.78         -2.62        8.29
+             cov(obsday2m,_cons) |      -5.19      15.46        -35.50       25.12
+             cov(trtphase,_cons) |    -133.63     180.15       -486.71      219.45
+    -----------------------------+------------------------------------------------
+                   var(Residual) |     101.86       8.07         87.20      118.97
+    ------------------------------------------------------------------------------
+    LR test vs. linear model: chi2(10) = 2057.12              Prob &gt; chi2 = 0.0000
+    
+    Note: LR test is conservative and provided only for reference.
+</code></pre>
+<p>We can then use the margins command to compute the predicted means for these key days. When obsday equals 31, <strong>we estimate the predicted mean assuming trtphase is 0 and 1, to estimate the jump in the fitted values due to the start of the treatment phase. (The noatlegend option is included to save space.)</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,at(obsday1m = 1 obsday2m = 0 trtphase=0) ///
+</span></span><span class="line"><span class="cl">          at(obsday1m = 31 obsday2m = 0 trtphase=0) ///
+</span></span><span class="line"><span class="cl">		      at(obsday1m = 31 obsday2m = 0 trtphase=1) ///
+</span></span><span class="line"><span class="cl">	        at(obsday1m = 49 obsday2m = 18 trtphase=1) nopvalues noatlegend
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                       Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    
+    --------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.     [95% conf. interval]
+    -------------+------------------------------------------------
+             _at |
+              1  |     349.01      10.68        328.07      369.94
+              2  |     348.83      12.30        324.72      372.94
+              3  |     359.97      12.16        336.14      383.79
+              4  |     369.65      13.11        343.95      395.34
+    --------------------------------------------------------------
+</code></pre>
+<p>We save the predicted means to the current dataset.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  matrix yhat = r(b)&#39;
+</span></span><span class="line"><span class="cl">  matrix day = (1 \ 31 \ 31 \ 49)
+</span></span><span class="line"><span class="cl">  svmat yhat 
+</span></span><span class="line"><span class="cl">  svmat day
+</span></span><span class="line"><span class="cl">  list yhat1 day1 in 1/4
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  graph twoway line yhat1 day1,sort xline(31) xlabel(1(7)49 31)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.14.4.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Minutes of sleep at night by timep</strong></figcaption>
+</figure>
+<p>The coefficient for obsday2m reflects the change in the slope for the treatment phase minus the baseline phase. The difference in these slopes is 0.543 and is significant. We can estimate the slope during the treatment phase using the lincom command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  lincom obsday1m + obsday2m
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>     ( 1)  [sleep]obsday1m + [sleep]obsday2m = 0
+    
+    ------------------------------------------------------------------------------
+           sleep | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+             (1) |       0.54       0.16     3.34   0.001         0.22        0.85
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>During the treatment phase, each additional day of observation is associated with sleeping 0.538 additional minutes of sleep per night.</p>
+<p>Finally, consider the coefficient for trtphase. This represents the jump in sleep at the start of the treatment phase (when observation day is 31). This coefficient is 11.1 and is statistically significant.</p>
+<h2 id="4-example-4-piecewise-effects-of-time-by-a-categorical-predictor">4 Example 4: Piecewise effects of time by a categorical predictor</h2>
+<p>Let’s consider an extension of the previous example that includes a baseline and treatment phase, but where participants are divided into different groups and receive different kinds of treatments during the treatment phase.</p>
+<p>The first 30 days of the study are a baseline period during which the sleep is observed, but no treatment is administered to any of the groups. Starting on the 31st day, the medication group receives sleep medication, the sleep education group receives education about how to lengthen their sleep, and the control group receives nothing.</p>
+<p>The first phase of the study (days 1 to 30) is called the baseline phase, and the second phase (day 31 until the end of the study) is called the treatment phase.</p>
+<p>We can study the slope of the relationship between sleep duration and time during each of these phases, as well as the change (jump or drop) in sleep that occurs at the transition from baseline to the treatment phase. Furthermore, we can investigate the impact of the treatment group assignment (control, medication, and education) on the slope in each phase, as well as the jump or drop in sleep due to the start of the treatment phase.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use sleep_cat3pw.dta
+</span></span><span class="line"><span class="cl">  list in 1/5,sepby(id)
+</span></span><span class="line"><span class="cl">  summarize
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Imagine the educational periods (before high school graduation and after high school graduation) being replaced with the baseline and treatment phases. Also, imagine gender (male and female) being replaced with treatment group assignment (control, medication, and education).</p>
+<p>First, the mkspline command is used to create the variables obsday1m and obsday2m, specifying 31 as the knot. By including the marginal option, obsday1m will represent the slope for the baseline period and obsday2m will represent the change in the slope for the treatment period compared with the baseline period.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mkspline obsday1m 31 obsday2m = obsday,marginal
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To account for the jump in sleep at the start of the treatment phase, we use the generate and replace commands to create the variable trtphase that is coded: 0 = baseline and 1 = treatment.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  generate trtphase = 0 if obsday &lt; 31 
+</span></span><span class="line"><span class="cl">  replace trtphase = 1 if obsday &gt;= 31 &amp; !missing(obsday)
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  label define trtlab 0 &#34;baseline&#34; 1 &#34;treatment&#34;
+</span></span><span class="line"><span class="cl">  label values trtphase trtlab
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The mixed command for fitting this model is shown below. Note the variables trtphase, obsday1m, and obsday2m are specified as random effects. The nolog, noheader, and noretable options are used to suppress the iteration log, header, and random-effects table to save space.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mixed sleep i.group##(i.trtphase c.obsday1m c.obsday2m), || id:trtphase obsday1m obsday2m,covariance(un) nolog noheader noretable noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    ---------------------------------------------------------------
+                     sleep | Coefficient  Std. err.      z    P&gt;|z|
+    -----------------------+---------------------------------------
+                     group |
+               Medication  |      -2.07       3.41    -0.61   0.543
+                Education  |      16.31       3.41     4.78   0.000
+                           |
+                  trtphase |
+                treatment  |      -4.20       2.79    -1.51   0.132
+                  obsday1m |      -0.04       0.30    -0.14   0.890
+                  obsday2m |      -0.10       0.51    -0.19   0.849
+                           |
+            group#trtphase |
+     Medication#treatment  |      34.28       4.00     8.58   0.000
+      Education#treatment  |       1.65       3.97     0.41   0.678
+                           |
+          group#c.obsday1m |
+               Medication  |       0.40       0.42     0.95   0.343
+                Education  |      -0.14       0.42    -0.34   0.735
+                           |
+          group#c.obsday2m |
+               Medication  |      -0.29       0.72    -0.40   0.686
+                Education  |       2.48       0.72     3.45   0.001
+                           |
+                     _cons |     351.36       2.41   145.54   0.000
+    ---------------------------------------------------------------
+</code></pre>
+<p>We can now use the margins command to compute the predicted mean of sleep for each group at four key points—for the beginning of the study, the first day of the treatment phase (with and without treatment), and the 49th day of the study. (The noatlegend option is specified to save space.)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins group,at(obsday1m = 1 obsday2m = 0 trtphase=0) ///
+</span></span><span class="line"><span class="cl">                at(obsday1m = 31 obsday2m = 0 trtphase=0) ///
+</span></span><span class="line"><span class="cl">				        at(obsday1m = 31 obsday2m = 0 trtphase=1) ///
+</span></span><span class="line"><span class="cl">				        at(obsday1m = 49 obsday2m = 18 trtphase=1)nopvalues noatlegend
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                       Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    
+    ---------------------------------------------------------------
+                  |            Delta-method
+                  |     Margin   std. err.     [95% conf. interval]
+    --------------+------------------------------------------------
+        _at#group |
+       1#Control  |     351.32       2.36        346.69      355.95
+    1#Medication  |     349.65       2.36        345.03      354.28
+     1#Education  |     367.49       2.36        362.87      372.11
+       2#Control  |     350.08       9.04        332.36      367.80
+    2#Medication  |     360.45       9.04        342.74      378.17
+     2#Education  |     361.94       9.04        344.21      379.66
+       3#Control  |     345.87       9.05        328.13      363.62
+    3#Medication  |     390.54       9.08        372.75      408.32
+     3#Education  |     359.38       9.06        341.62      377.13
+       4#Control  |     343.39      11.26        321.32      365.46
+    4#Medication  |     390.03      11.26        367.96      412.11
+     4#Education  |     398.91      11.25        376.86      420.96
+    ---------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  *save predicted means as a matrix named -yhat-
+</span></span><span class="line"><span class="cl">  matrix yhat = r(b)&#39;
+</span></span><span class="line"><span class="cl">  *save the day number in a matrix named -day-
+</span></span><span class="line"><span class="cl">  matrix day = (0 \ 0 \ 0 \ 31 \ 31 \ 31 \ 31 \ 31 \ 31 \ 49 \ 49 \ 49 ) 
+</span></span><span class="line"><span class="cl">  *save the group in a matrix named -gp-
+</span></span><span class="line"><span class="cl">  matrix gp = (1 \ 2 \ 3 \ 1 \ 2 \ 3 \ 1 \ 2 \ 3 \ 1 \ 2 \ 3 )
+</span></span><span class="line"><span class="cl">  *save the contents of the matrices to the current dataset
+</span></span><span class="line"><span class="cl">  svmat yhat
+</span></span><span class="line"><span class="cl">  svmat day
+</span></span><span class="line"><span class="cl">  svmat gp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  graph twoway (line yhat1 day1 if gp1==1) (line yhat1 day1 if gp1==2) ///
+</span></span><span class="line"><span class="cl">               (line yhat1 day1 if gp1==3),xline(31)xlabel(1(7)49 30) ///
+</span></span><span class="line"><span class="cl">			         legend(title(Treatment group) ///
+</span></span><span class="line"><span class="cl">			         label(1 &#34;Control&#34;)label(2 &#34;Medication&#34;) ///
+</span></span><span class="line"><span class="cl">			         label(3 &#34;Education&#34;) rows(5))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.14.5.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Minutes of sleep at night by time and group</strong></figcaption>
+</figure>
+<p>we see that the sleep durations for the control group remain much the same across the entire study with a tiny (but trivial) drop in sleep at the start of treatment.</p>
+<p>For the medication group, their sleep durations remain fairly steady during the baseline phase, then jump at the start of treatment, and then remain steady.</p>
+<p>The sleep durations for the education group are fairly steady during the baseline phase, and then show a small dip at the start of treatment but a substantial increase in slope during the treatment phase.</p>
+<h3 id="41-baseline-slope-means-the-prior-to-the-treatment-phase">4.1 Baseline slope [means the prior to the treatment phase]</h3>
+<p>We can test the equality of all the baseline slopes using the contrast command below. This test is not significant.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast group#c.obsday1m 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ----------------------------------------------------
+                     |         df        chi2     P&gt;chi2
+    -----------------+----------------------------------
+    sleep            |
+    group#c.obsday1m |          2        1.78     0.4108
+    ----------------------------------------------------
+</code></pre>
+<p>You can estimate the baseline slope for each group using the margins command below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins, dydx(obsday1m) over(group) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Average marginal effects                                   Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    dy/dx wrt:  obsday1m
+    Over:       group
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |      dy/dx   std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+    obsday1m     |
+           group |
+        Control  |      -0.04       0.30    -0.14   0.890        -0.63        0.55
+     Medication  |       0.36       0.30     1.20   0.229        -0.23        0.95
+      Education  |      -0.19       0.30    -0.62   0.537        -0.77        0.40
+    ------------------------------------------------------------------------------
+</code></pre>
+<h3 id="42-change-in-slopes-treatment-versus-baseline">4.2 Change in slopes: Treatment versus baseline</h3>
+<p>You can test the equality of the changes in slope coefficients for all three groups using the contrast command below. This test is significant.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast group#c.obsday2m
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ----------------------------------------------------
+                     |         df        chi2     P&gt;chi2
+    -----------------+----------------------------------
+    sleep            |
+    group#c.obsday2m |          2       17.95     0.0001
+    ----------------------------------------------------
+</code></pre>
+<p>You can estimate the change in slope for each group using the margins command below. The change in slope for the control group and medication groups is not significant. For the education group (group 3), the slope during the treatment phase is significantly greater than the slope during the baseline phase.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,dydx(obsday2m) over(group)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Average marginal effects                                   Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    dy/dx wrt:  obsday2m
+    Over:       group
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |      dy/dx   std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+    obsday2m     |
+           group |
+        Control  |      -0.10       0.51    -0.19   0.849        -1.09        0.90
+     Medication  |      -0.39       0.51    -0.76   0.447        -1.39        0.61
+      Education  |       2.38       0.51     4.70   0.000         1.39        3.38
+    ------------------------------------------------------------------------------
+</code></pre>
+<h3 id="43-jump-at-treatment">4.3 Jump at treatment</h3>
+<p>We can test the equality of the jump or drop for all three groups using the contrast
+command below. This test is significant.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast group#trtphase
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------
+                   |         df        chi2     P&gt;chi2
+    ---------------+----------------------------------
+    sleep          |
+    group#trtphase |          2       92.58     0.0000
+    --------------------------------------------------
+</code></pre>
+<p>We can estimate the size of the jump or drop in sleep durations at the start of the treatment phase for each group using the contrast command below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast trtphase@group,pveffects nowald
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ------------------------------------------------------------------------
+                                    |   Contrast   Std. err.      z    P&gt;|z|
+    --------------------------------+---------------------------------------
+    sleep                           |
+                     trtphase@group |
+       (treatment vs base) Control  |      -4.20       2.79    -1.51   0.132
+    (treatment vs base) Medication  |      30.08       2.86    10.52   0.000
+     (treatment vs base) Education  |      -2.56       2.83    -0.90   0.366
+    ------------------------------------------------------------------------
+</code></pre>
+<h3 id="44-comparisons-among-groups">4.4 Comparisons among groups</h3>
+<p>Let’s now use the margins command to compare each group with the control group at each of these days. (The noatlegend option is specified to save space.)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.group,at(obsday1m=30 obsday2m=0 trtphase=0) ///
+</span></span><span class="line"><span class="cl">                  at(obsday1m=35 obsday2m=4 trtphase=1) ///
+</span></span><span class="line"><span class="cl">				          at(obsday1m=40 obsday2m=9 trtphase=1) ///
+</span></span><span class="line"><span class="cl">				          at(obsday1m=45 obsday2m=14 trtphase=1) ///
+</span></span><span class="line"><span class="cl">				          contrast(nowald pveffects)noatlegend
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of adjusted predictions                          Number of obs = 600
+    
+    Expression: Linear prediction, fixed portion, predict()
+    
+    -------------------------------------------------------------------
+                               |            Delta-method
+                               |   Contrast   std. err.      z    P&gt;|z|
+    ---------------------------+---------------------------------------
+                     group@_at |
+    (Medication vs Control) 1  |       9.98      12.37     0.81   0.420
+    (Medication vs Control) 2  |      45.10      12.87     3.50   0.000
+    (Medication vs Control) 3  |      45.65      13.50     3.38   0.001
+    (Medication vs Control) 4  |      46.21      14.68     3.15   0.002
+     (Education vs Control) 1  |      12.00      12.38     0.97   0.332
+     (Education vs Control) 2  |      22.84      12.87     1.77   0.076
+     (Education vs Control) 3  |      34.51      13.50     2.56   0.011
+     (Education vs Control) 4  |      46.18      14.67     3.15   0.002
+    -------------------------------------------------------------------
+</code></pre>
+<p>Focusing on the comparison of the medication group with the control group, the difference is not significant when observation day is 30 ($p=0.420$); prior to the treatment phase. However, the difference is significant at each of the time points tested during the treatment phase, when observation day is 35, 40, and 45 ( = 0.000, 0.001, and 0.002, respectively).</p>
+<p>Shifting our attention to the comparison of the education group with the control group, the comparison is not significant when observation day is 30 ($p=0.332$); prior to the start of the treatment phase. The difference remains nonsignificant early in the treatment phase when observation day is 35 ($p=0.076$) but is significant later inthe treatment phase when observation day is 40 ($p=0.011$) and 45 ($p=0.002$).</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-13</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/16.chapter16time-as-a-continuous-predictor/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/multilevel/">Multilevel</a>,&nbsp;<a href="/tags/interaction/">Interaction</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/12.chapter12piecewise-by-categorical-interactions/" class="prev" rel="prev" title="Chapter12 ：Piecewise by categorical interactions"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter12 ：Piecewise by categorical interactions</a>
+            <a href="/15.chapter15multilevel-models/" class="next" rel="next" title="Chapter15 ：Multilevel models">Chapter15 ：Multilevel models<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

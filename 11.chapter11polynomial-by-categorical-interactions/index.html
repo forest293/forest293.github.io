@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter11 ：Polynomial by categorical interactions - Alex_Wang</title><meta name="Description" content="This chapter illustrates models that involve a continuous variable modeled using a polynomial term interacted with a categorical variable. "><meta property="og:title" content="Chapter11 ：Polynomial by categorical interactions" />
+<meta property="og:description" content="This chapter illustrates models that involve a continuous variable modeled using a polynomial term interacted with a categorical variable. " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/11.chapter11polynomial-by-categorical-interactions/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-10T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-10T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter11 ：Polynomial by categorical interactions"/>
+<meta name="twitter:description" content="This chapter illustrates models that involve a continuous variable modeled using a polynomial term interacted with a categorical variable. "/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/11.chapter11polynomial-by-categorical-interactions/" /><link rel="prev" href="https://forest293.github.io/10.chapter10linear-by-categorical-interactions/" /><link rel="next" href="https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter11 ：Polynomial by categorical interactions",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/11.chapter11polynomial-by-categorical-interactions\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Interaction, stata","wordcount":  2811 ,
+        "url": "https:\/\/forest293.github.io\/11.chapter11polynomial-by-categorical-interactions\/","datePublished": "2024-01-10T16:29:41+08:00","dateModified": "2024-01-10T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter illustrates models that involve a continuous variable modeled using a polynomial term interacted with a categorical variable. "
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/11.chapter11polynomial-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/11.chapter11polynomial-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter11 ：Polynomial by categorical interactions</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-10">2024-01-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2811 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id="/11.chapter11polynomial-by-categorical-interactions/" class="leancloud_visitors" data-flag-title="Chapter11 ：Polynomial by categorical interactions">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-quadratic-by-categorical-interactions">1 Quadratic by categorical interactions</a>
+      <ul>
+        <li><a href="#11-quadratic-by-two-level-categorical">1.1 Quadratic by two-level categorical</a></li>
+        <li><a href="#12-quadratic-by-three-level-categorical">1.2 Quadratic by three-level categorical</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-cubic-by-categorical-interactions">2 Cubic by categorical interactions</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This chapter illustrates models that involve a continuous variable modeled using a polynomial term interacted with a categorical variable. This chapter covers two types of polynomial terms: quadratic and cubic.</p>
+<h2 id="1-quadratic-by-categorical-interactions">1 Quadratic by categorical interactions</h2>
+<h3 id="11-quadratic-by-two-level-categorical">1.1 Quadratic by two-level categorical</h3>
+<p>Let’s now use the GSS dataset to fit a model predicting income from age (modeled using a quadratic term), whether one is a college graduate, as well as the interaction of these variables.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if age&gt;=22 &amp; age&lt;=80
+</span></span><span class="line"><span class="cl">  lowess realrinc age,generate(yhat_lowess) nograph
+</span></span><span class="line"><span class="cl">  graph twoway line yhat_lowess age,sort
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let’s begin by looking at the relationship between age and income using a lowess smoother. The lowess command is used to create the variable yhat_lowess that contains the lowess smoothed values of realrinc. The graph command creates a graph showing the lowess smoothed values across age.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.3.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong> Lowess smoothed values of income by age</strong></figcaption>
+</figure>
+<p>Let’s create this same kind of graph but separating people based on the variable cograd, which is coded: 0 = noncollege graduate and 1 = college graduate. The lowess command is issued twice, each with an if specification.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  lowess realrinc age if cograd == 0,generate(yhat_lowess0)nograph
+</span></span><span class="line"><span class="cl">  lowess realrinc age if cograd == 1,generate(yhat_lowess1)nograph
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  graph twoway line yhat_lowess0 yhat_lowess1 age,sort
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.4.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong> Lowess smoothed values of income predicted from age by college graduation status</strong></figcaption>
+</figure>
+<p>Based on this visual inspection of the data, a regression model predicting realrinc from age and cograd would <strong>not only need to account for the quadratic trend in age, but also the difference in the quadratic trend in age for college graduates versus noncollege graduates.</strong></p>
+<p>Let’s fit a model that includes an intercept, age, and age squared for noncollege graduates, and a separate intercept, age, and age squared for college graduates.</p>
+<p>Specifying ibn.cograd with the noconstant option yields separate intercept estimates by college graduation status. Specifying ibn.cograd#c.age yields separate age estimates by college graduation status, and ibn.cograd#c.age#c.age yields separate age#age estimates by college graduation status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg realrinc ibn.cograd ibn.cograd#c.age ibn.cograd#c.age#c.age female,noconstant vce(robust) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Linear regression                               Number of obs     =     30,576
+                                                    F(7, 30569)       =    5127.56
+                                                    Prob &gt; F          =     0.0000
+                                                    R-squared         =     0.5088
+                                                    Root MSE          =      24865
+    
+    ------------------------------------------------------------------------------------
+                       |               Robust
+              realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------------+----------------------------------------------------------------
+                cograd |
+          Not CO Grad  |  -11096.99    1107.78   -10.02   0.000    -13268.29    -8925.69
+              CO Grad  |  -52730.93    3688.05   -14.30   0.000    -59959.66   -45502.21
+                       |
+          cograd#c.age |
+          Not CO Grad  |    1594.87      57.26    27.85   0.000      1482.64     1707.10
+              CO Grad  |    3941.46     194.37    20.28   0.000      3560.49     4322.43
+                       |
+    cograd#c.age#c.age |
+          Not CO Grad  |     -16.20       0.66   -24.48   0.000       -17.50      -14.90
+              CO Grad  |     -37.81       2.30   -16.46   0.000       -42.31      -33.30
+                       |
+                female |  -12457.11     278.57   -44.72   0.000    -13003.12   -11911.11
+    ------------------------------------------------------------------------------------
+</code></pre>
+<blockquote>
+<p>Note! Model shortcut</p>
+<blockquote>
+<p>Stata expands the expression ibn.cograd#(c.age c.age#c.age) to become ibn.cograd#c.age ibn.cograd#c.age#c.age, yielding the same model shown previously.</p>
+</blockquote>
+</blockquote>
+<p>$$Non-college-grad: \widehat{realrinc}=-11096.99 + 1594.87age + - 16.20age^2 + - 12457.11female $$ <br>
+$$College-grad: \widehat{realrinc}=-52730.93 + 3941.46age + -37.81age^2 + -12457.11female  $$</p>
+<p>Let’s visualize the impact of the differences in these quadratic coefficients by graphing the adjusted means as a function of age and college graduation status (that is, cograd), adjusting for gender.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins cograd, nopvalues at(age=(22(1)80))
+</span></span><span class="line"><span class="cl">  marginsplot,noci recast(line) scheme(simono)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.5.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Fitted values from quadratic by two-level categorical model</strong></figcaption>
+</figure>
+<p>We can ask whether the degree of curvature between college graduates and non-college graduates is significantly different. The contrast command below tests whether the quadratic term for non-college graduates is equal to the quadratic term for college graduates.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast cograd#c.age#c.age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ------------------------------------------------------
+                       |         df           F        P&gt;F
+    -------------------+----------------------------------
+    cograd#c.age#c.age |          1       81.75     0.0000
+                       |
+           Denominator |      30569
+    ------------------------------------------------------
+</code></pre>
+<p>Let’s now see how the margins command can be used to estimate adjusted means from this model. The margins command below <strong>computes the adjusted mean of income for a 30-year-old who did not graduate college, adjusting for gender.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,nopvalues at(cograd=0 age=30)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Predictive margins                                      Number of obs = 30,576
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    At: cograd =  0
+        age    = 30
+    
+    --------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.     [95% conf. interval]
+    -------------+------------------------------------------------
+           _cons |   16044.57     112.39      15824.29    16264.86
+    --------------------------------------------------------------
+</code></pre>
+<p>The margins command below estimates the adjusted mean for 40-year-olds, separately by the levels of cograd.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins cograd,nopvalues at(age=40)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Predictive margins                                      Number of obs = 30,576
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    At: age = 40
+    
+    --------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.     [95% conf. interval]
+    -------------+------------------------------------------------
+          cograd |
+    Not CO Grad  |   20653.96     175.10      20310.75    20997.17
+        CO Grad  |   38311.44     568.59      37196.98    39425.90
+    --------------------------------------------------------------
+</code></pre>
+<p>The at() option allows us to specify multiple ages at once, as shown in the example below. This example computes the adjusted means for ages 30 to 70 (in 10year increments) separately for each level of cograd.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins cograd,nopvalues at(age=(30(10)70)) vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Predictive margins                                      Number of obs = 30,576
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    1._at: age = 30
+    2._at: age = 40
+    3._at: age = 50
+    4._at: age = 60
+    5._at: age = 70
+    
+    ----------------------------------------------------------------
+                   |            Delta-method
+                   |     Margin   std. err.     [95% conf. interval]
+    ---------------+------------------------------------------------
+        _at#cograd |
+    1#Not CO Grad  |   16044.57     112.39      15824.29    16264.86
+        1#CO Grad  |   25361.47     340.99      24693.12    26029.82
+    2#Not CO Grad  |   20653.96     175.10      20310.75    20997.17
+        2#CO Grad  |   38311.44     568.59      37196.98    39425.90
+    3#Not CO Grad  |   22023.54     206.43      21618.92    22428.16
+        3#CO Grad  |   43700.08     638.66      42448.27    44951.89
+    4#Not CO Grad  |   20153.30     269.91      19624.26    20682.33
+        4#CO Grad  |   41527.39     877.70      39807.05    43247.72
+    5#Not CO Grad  |   15043.25     500.82      14061.62    16024.87
+        5#CO Grad  |   31793.36    1754.30      28354.86    35231.86
+    ----------------------------------------------------------------
+</code></pre>
+<p>The margins command can be used to compare the adjusted means of those who did and those who did not graduate college at specified ages.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.cograd,at(age=30) contrast(nowald pveffects)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>compare the adjusted means of those who did and those did not graduate at specified ages.</p>
+<pre><code>    Contrasts of predictive margins                         Number of obs = 30,576
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    At: age = 30
+    
+    ------------------------------------------------------------------
+                              |            Delta-method
+                              |   Contrast   std. err.      t    P&gt;|t|
+    --------------------------+---------------------------------------
+                       cograd |
+    (CO Grad vs Not CO Grad)  |    9316.90     358.48    25.99   0.000
+    ------------------------------------------------------------------
+</code></pre>
+<p>Compares college graduates with noncollege graduates at 30 to 70 years of age in 10-year increments. The difference is significant at each of the specified ages.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.cograd,at(age=(30(10)70)) contrast(nowald pveffects) vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of predictive margins                         Number of obs = 30,576
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    1._at: age = 30
+    2._at: age = 40
+    3._at: age = 50
+    4._at: age = 60
+    5._at: age = 70
+    
+    --------------------------------------------------------------------
+                                |            Delta-method
+                                |   Contrast   std. err.      t    P&gt;|t|
+    ----------------------------+---------------------------------------
+                     cograd@_at |
+    (CO Grad vs Not CO Grad) 1  |    9316.90     358.48    25.99   0.000
+    (CO Grad vs Not CO Grad) 2  |   17657.48     594.36    29.71   0.000
+    (CO Grad vs Not CO Grad) 3  |   21676.54     671.46    32.28   0.000
+    (CO Grad vs Not CO Grad) 4  |   21374.09     919.46    23.25   0.000
+    (CO Grad vs Not CO Grad) 5  |   16750.11    1825.29     9.18   0.000
+    --------------------------------------------------------------------
+</code></pre>
+<p>Let’s use the margins command to compute the difference between college graduates and high school graduates for 22- to 80-year-olds in one-year increments so we can then graph the differences using the marginsplot command.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.cograd,at(age=(22(1)80)) contrast(nowald effects)
+</span></span><span class="line"><span class="cl">  marginsplot,yline(0)recast(line)recastci(rarea)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.6.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Contrasts on college graduation status by age</strong></figcaption>
+</figure>
+<p>You might notice that the width of the confidence intervals grows with increasing age. This is because of both smaller sample sizes and increased variability in incomes for those who are older.</p>
+<h3 id="12-quadratic-by-three-level-categorical">1.2 Quadratic by three-level categorical</h3>
+<p>Let’s begin our exploration by using the lowess command to generate variables that contain the smoothed relationship between realrinc and age, separately for each of the three levels of educ3.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if age&gt;=22 &amp; age&lt;=80
+</span></span><span class="line"><span class="cl">  lowess realrinc age if educ3 == 1,generate(yhat_lowess1) nograph
+</span></span><span class="line"><span class="cl">  lowess realrinc age if educ3 == 2,generate(yhat_lowess2) nograph  
+</span></span><span class="line"><span class="cl">  lowess realrinc age if educ3 == 3,generate(yhat_lowess3) nograph  
+</span></span><span class="line"><span class="cl">  graph twoway line yhat_lowess1 yhat_lowess2 yhat_lowess3 age,sort legend(order(1 &#34;Non-HS grad&#34; 2 &#34;HS grad&#34; 3 &#34;CO grad&#34;))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.7.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Lowess smoothed values of income by age, separated by three levels of education</strong></figcaption>
+</figure>
+<p>Let’s now fit a model that includes a quadratic term for age as well as an interaction of educ3 and the quadratic term for age.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg realrinc ibn.educ3 ibn.educ3#(c.age c.age#c.age) female,noconstant vce(robust)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Linear regression                               Number of obs     =     30,576
+                                                    F(10, 30566)      =    3691.50
+                                                    Prob &gt; F          =     0.0000
+                                                    R-squared         =     0.5129
+                                                    Root MSE          =      24761
+    
+    -----------------------------------------------------------------------------------
+                      |               Robust
+             realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+    ------------------+----------------------------------------------------------------
+                educ3 |
+              not hs  |   -8609.97    1907.08    -4.51   0.000    -12347.92    -4872.01
+                  HS  |  -11115.20    1375.93    -8.08   0.000    -13812.07    -8418.32
+                Coll  |  -52556.01    3687.82   -14.25   0.000    -59784.28   -45327.74
+                      |
+          educ3#c.age |
+              not hs  |    1245.11      93.00    13.39   0.000      1062.82     1427.40
+                  HS  |    1625.58      72.45    22.44   0.000      1483.59     1767.58
+                Coll  |    3940.66     194.33    20.28   0.000      3559.76     4321.57
+                      |
+    educ3#c.age#c.age |
+              not hs  |     -12.46       1.00   -12.40   0.000       -14.43      -10.49
+                  HS  |     -16.04       0.87   -18.54   0.000       -17.74      -14.34
+                Coll  |     -37.81       2.30   -16.46   0.000       -42.31      -33.31
+                      |
+               female |  -12750.67     278.86   -45.72   0.000    -13297.24   -12204.10
+    -----------------------------------------------------------------------------------
+</code></pre>
+<p>The regression equation is written in this fashion as shown below.</p>
+<p>$$NonHis-grad:\widehat{realrinc}=-8609.67 + 1245.11age + - 12.46age^2 + - 12750.67female$$ <br>
+$$His-grad:\widehat{realrinc}=-11115.2 + 1625.59age + -16.04age^2 + -12750.67female$$
+$$College-grad:\widehat{realrinc}=-52556.01 + 3940.66age + -37.81age^2 + -12750.67female$$</p>
+<p>To help interpret the regression coefficients, let’s use the margins and marginsplot commands to visualize the adjusted means as a function of age and educ3.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins educ3,at(age=(22(1)80))
+</span></span><span class="line"><span class="cl">  marginsplot,noci recast(line) scheme(simono)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.8.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Fitted values from age (quadratic) by education level</strong></figcaption>
+</figure>
+<p>The contrast command can be used to compare the quadratic coefficients among the educational groups. The contrast command below tests the equality of the quadratic coefficient for all three levels of educ3.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast educ3#c.age#c.age 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    -----------------------------------------------------
+                      |         df           F        P&gt;F
+    ------------------+----------------------------------
+    educ3#c.age#c.age |          2       51.24     0.0000
+                      |
+          Denominator |      30566
+    -----------------------------------------------------
+</code></pre>
+<p>This test is significant, indicating that the quadratic term for age is not equal
+across all three groups.</p>
+<p>the a. contrast operator is used below to compare the quadratic terms for <strong>adjacent</strong> education groups.(Specific compare)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast a.educ3#c.age#c.age,nowald pveffects 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ----------------------------------------------------------
+                      |   Contrast   Std. err.      t    P&gt;|t|
+    ------------------+---------------------------------------
+    educ3#c.age#c.age |
+      (not hs vs HS)  |       3.58       1.33     2.70   0.007
+        (HS vs Coll)  |      21.77       2.45     8.87   0.000
+    ----------------------------------------------------------
+</code></pre>
+<p>Let’s now see how to use the margins command to <strong>compute adjusted means.</strong></p>
+<p>The margins command below computes the adjusted mean holding age constant at
+30, separately for each education group.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins educ3,nopvalues at(age=30)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Predictive margins                                      Number of obs = 30,576
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    At: age = 30
+    
+    --------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.     [95% conf. interval]
+    -------------+------------------------------------------------
+           educ3 |
+         not hs  |   11260.07     201.45      10865.22    11654.91
+             HS  |   16946.40     129.01      16693.54    17199.26
+           Coll  |   25366.86     341.21      24698.06    26035.65
+    --------------------------------------------------------------
+</code></pre>
+<p>Let’s compare adjacent levels of educ3 when age is held constant at 30.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins ar.educ3,at(age=30) contrast(nowald pveffects) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of predictive margins                         Number of obs = 30,576
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    At: age = 30
+    
+    --------------------------------------------------------
+                    |            Delta-method
+                    |   Contrast   std. err.      t    P&gt;|t|
+    ----------------+---------------------------------------
+              educ3 |
+    (HS vs not hs)  |    5686.33     240.61    23.63   0.000
+      (Coll vs HS)  |    8420.46     363.26    23.18   0.000
+    --------------------------------------------------------
+</code></pre>
+<p>Let’s repeat the above contrasts at each age level ranging from 22 to 80 using the margins command. We can then use the marginsplot command to graph each of the contrasts, as shown below.</p>
+<p>Two graphs are created: one for the contrast of high school graduates with non–high school graduates (group 2 versus 1) and the other for the contrast of college graduates with high school graduates (group 3 versus 2)</p>
+<p><strong>when the confidence interval excludes zero, the contrast is significant at the 5% level.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins ar.educ3,at(age=(22(1)80))
+</span></span><span class="line"><span class="cl">  marginsplot,bydimension(educ3) yline(0) recast(line) recastci(rarea)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.9.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Contrasts on education by age, with confidence intervals</strong></figcaption>
+</figure>
+<blockquote>
+<p>Note</p>
+<blockquote>
+<p>This command incorporates the recast(line) option to display each line without marker symbols and the scheme(s1mono) option to display the graph using the s1mono scheme, which displays each line using a different pattern.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Recall that the vce(robust) option was included when fitting the regression model, which accommodates heterogeneity of variance (that is, heteroskedasticity).</p>
+</blockquote>
+</blockquote>
+<h2 id="2-cubic-by-categorical-interactions">2 Cubic by categorical interactions</h2>
+<p>This section describes models that involve interactions of a categorical variable with a continuous variable where the continuous variable is fit using a cubic polynomial term.</p>
+<p><strong>A cubic by categorical interaction allows the groups formed by the categorical variable to differ in cubic trend.</strong></p>
+<p>In that example, we saw a cubic relationship between year of birth and number of children. Suppose that we divided women into two groups: those who graduated college and those who did not graduate college. Those who graduated college might show a different kind of cubic trend across years of birth compared with non-college graduates.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if (age&gt;=45 &amp; age &lt;=55) &amp; (yrborn&gt;=1920 &amp; yrborn&lt;=1960) &amp; female==1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let’s begin by visualizing the nature of the relationship between year of birth and number of children separately for college graduates and non-college graduates. We can do this using a lowess smoothed regression relating year of birth to number of children.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  lowess children yrborn if cograd==0,generate(yhatlowess0) nograph
+</span></span><span class="line"><span class="cl">  lowess children yrborn if cograd==1,generate(yhatlowess1) nograph  
+</span></span><span class="line"><span class="cl">  graph twoway line yhatlowess0 yhatlowess1 yrborn,sort
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.10.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong> Lowess smoothed values of number of children by year of birth, separated by college graduation status</strong></figcaption>
+</figure>
+<p>The graph in figure suggests that the relationship between year of birth and number of children may show a cubic trend. Furthermore, the cubic trend may differ based on whether the woman graduated college, suggesting an interaction of the cubic trend for year of birth and whether the woman graduated college.</p>
+<p>Let’s fit a model using a separate slope and separate intercept strategy that allows us to compare the cubic trend in year of birth for college graduates with non-college graduates.</p>
+<p>Such a model is fit using the regress command below. The first term in the model is ibn.cograd. When specified in combination with noconstant option, the model fits separate intercepts by college graduation status.</p>
+<p>The model also includes ibn.cograd interacted with the linear term for year of birth, the quadratic term for year of birth, and the cubic term for year of birth. This yields separate estimates of these terms by college graduation status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg children ibn.cograd ibn.cograd#(c.yrborn40 c.yrborn40#c.yrborn40 c.yrborn40#c.yrborn40#c.yrborn40) i.race,noconstant noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>Note：the centered variable, yrborn40, is used to represent year of birth to reduce collinearity.</p>
+</blockquote>
+<pre><code>          Source |       SS           df       MS      Number of obs   =     5,037
+    -------------+----------------------------------   F(10, 5027)     =   1223.60
+           Model |  34370.3789        10  3437.03789   Prob &gt; F        =    0.0000
+        Residual |  14120.6211     5,027  2.80895585   R-squared       =    0.7088
+    -------------+----------------------------------   Adj R-squared   =    0.7082
+           Total |       48491     5,037  9.62696049   Root MSE        =     1.676
+    
+    --------------------------------------------------------------------------------
+                                   children | Coefficient  Std. err.      t    P&gt;|t|
+    ----------------------------------------+---------------------------------------
+                                     cograd |
+                               Not CO Grad  |       2.80       0.04    65.64   0.000
+                                   CO Grad  |       1.96       0.09    22.43   0.000
+                                            |
+                          cograd#c.yrborn40 |
+                               Not CO Grad  |      -0.09       0.01   -15.21   0.000
+                                   CO Grad  |      -0.06       0.01    -5.35   0.000
+                                            |
+               cograd#c.yrborn40#c.yrborn40 |
+                               Not CO Grad  |      -0.00       0.00    -4.07   0.000
+                                   CO Grad  |       0.00       0.00     0.41   0.685
+                                            |
+    cograd#c.yrborn40#c.yrborn40#c.yrborn40 |
+                               Not CO Grad  |       0.00       0.00     9.42   0.000
+                                   CO Grad  |       0.00       0.00     1.88   0.060
+                                            |
+                                       race |
+                                     black  |       0.57       0.07     8.49   0.000
+                                     other  |       0.67       0.13     5.26   0.000
+    --------------------------------------------------------------------------------
+</code></pre>
+<p>The regression equation are devided to two part as shown below:</p>
+<p>\begin{align}
+Non-college-grad:\widehat{children} = -2.8 - 0.088yrborn40 + -0.00093yrborn40^2  \notag\
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad  \
++0.00021yrborn40^3 + 0.57black + 0.67other \notag \
+\end{align}</p>
+<p>\begin{align}
+College-grad:\widehat{children} = 1.96 + -0.063yrborn + 0.00024yrborn40^2   \notag\
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad  \quad \quad \quad \quad \quad \quad \quad \quad \quad  \
++0.00009yrborn40^3 + 0.57black + 0.67other \notag \
+\end{align}</p>
+<p>let’s create a graph of the fitted values using the margins and marginsplot commands. The margins command is used to calculate the adjusted means for years of birth from 1920 to 1960 in one-year increments, separately for college graduates and noncollege graduates. Then, the marginsplot command is used to graph these adjusted means</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins cograd,at(yrborn40=(-20(1)20))
+</span></span><span class="line"><span class="cl">  marginsplot,noci recast(line)scheme(s1mono)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.11.11.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Fitted values of cubic by three-level categorical model</strong></figcaption>
+</figure>
+<p>We can test the cubic trend for the college graduates compared with the noncollege graduates. The contrast command below compares the cubic trend for the college graduates with the noncollege graduates.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast cograd#c.yrborn40#c.yrborn40#c.yrborn40
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The cubic trend is significantly different comparing noncollege graduates with college graduates.</p>
+<pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ---------------------------------------------------------------------------
+                                            |         df           F        P&gt;F
+    ----------------------------------------+----------------------------------
+    cograd#c.yrborn40#c.yrborn40#c.yrborn40 |          1        4.86     0.0276
+                                            |
+                                Denominator |       5027
+    ---------------------------------------------------------------------------
+</code></pre>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/11.chapter11polynomial-by-categorical-interactions/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/interaction/">Interaction</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/10.chapter10linear-by-categorical-interactions/" class="prev" rel="prev" title="Chapter10 ：Linear by categorical interactions"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter10 ：Linear by categorical interactions</a>
+            <a href="/13.chapter13continuous-by-continuous-by-categorical-interactions/" class="next" rel="next" title="Chapter13 ：Continuous by continuous by categorical interactions">Chapter13 ：Continuous by continuous by categorical interactions<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter15 ：Multilevel models - Alex_Wang</title><meta name="Description" content="One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable. "><meta property="og:title" content="Chapter15 ：Multilevel models" />
+<meta property="og:description" content="One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable. " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/15.chapter15multilevel-models/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-13T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-13T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter15 ：Multilevel models"/>
+<meta name="twitter:description" content="One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable. "/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/15.chapter15multilevel-models/" /><link rel="prev" href="https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/" /><link rel="next" href="https://forest293.github.io/14.chapter14continuous-by-categorical-by-categorical-interactions/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter15 ：Multilevel models",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/15.chapter15multilevel-models\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Multilevel, Interaction, stata","wordcount":  2508 ,
+        "url": "https:\/\/forest293.github.io\/15.chapter15multilevel-models\/","datePublished": "2024-01-13T16:29:41+08:00","dateModified": "2024-01-13T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable. "
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/15.chapter15multilevel-models/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/15.chapter15multilevel-models/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter15 ：Multilevel models</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-13">2024-01-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2508 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id="/15.chapter15multilevel-models/" class="leancloud_visitors" data-flag-title="Chapter15 ：Multilevel models">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-chapter-overview">1 Chapter overview</a></li>
+    <li><a href="#2--example-1-continuous-by-continuous-interaction">2  Example 1: Continuous by continuous interaction</a></li>
+    <li><a href="#3--example-2-continuous-by-categorical-interaction">3  Example 2: Continuous by categorical interaction</a></li>
+    <li><a href="#4-example-3-categorical-by-continuous-interaction">4 Example 3: Categorical by continuous interaction</a></li>
+    <li><a href="#5-example-4-categorical-by-continuous-interaction">5 Example 4: Categorical by continuous interaction</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable.</p>
+<h2 id="1-chapter-overview">1 Chapter overview</h2>
+<p>This chapter contains four examples, all illustrating multilevel models where students are nested within schools.</p>
+<p>These four examples provide the opportunity to explore four kinds of crosslevel interactions:</p>
+<ul>
+<li>continuous by continuous (example 1)</li>
+<li>continuous by categorical (example 2)</li>
+<li>categorical by continuous (example 3)</li>
+<li>categorical by categorical (example 4)</li>
+</ul>
+<p>All of these examples are completely hypothetical and have been constructed to simplify the interpretation and visualization of the results.</p>
+<h2 id="2--example-1-continuous-by-continuous-interaction">2  Example 1: Continuous by continuous interaction</h2>
+<p>Consider a two-level multilevel model where students are nested within schools. One hundred schools were randomly sampled from a population of schools, and students were randomly sampled from each of the schools.</p>
+<p>Two student-level variables were measured: socioeconomic status (ses) and a standardized writing test score (write). Furthermore, a school-level variable was measured: the number students per computer within the school, stucomp</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use school_write.dta
+</span></span><span class="line"><span class="cl">  sum
+</span></span><span class="line"><span class="cl">  list in 1/5,abbreviate(30)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>        Variable |        Obs        Mean    Std. dev.       Min        Max
+    -------------+---------------------------------------------------------
+        schoolid |      3,026    50.71481    29.01184          1        100
+           stuid |      3,026    17.08824    10.81501          1         52
+           write |      3,026    542.1325    191.3663          0       1200
+             ses |      3,026    49.78352    10.18169    14.1897   85.06909
+         stucomp |      3,026    5.857066    3.533295   1.149443   16.50701
+
+         +------------------------------------------------+
+         | schoolid   stuid   write        ses    stucomp |
+         |------------------------------------------------|
+      1. |        1       1     553   55.38129   3.350059 |
+      2. |        1       2     530   61.13125   3.350059 |
+      3. |        1       3     604   47.61407   3.350059 |
+      4. |        1       4     433   48.26278   3.350059 |
+      5. |        1       5     370    47.9762   3.350059 |
+         +------------------------------------------------+
+</code></pre>
+<p>The aim of this hypothetical study is to determine if the greater availability of computers at a school reduces the strength of the relationship between socioeconomic status and writing test scores. In other words, the goal is to determine if there is a cross-level interaction of ses and stucomp in the prediction of write.</p>
+<p>The mixed command predicts write from c.ses, c.stucomp, and the interaction c.stucomp#c.ses. The random-effects portion of the model indicates that ses is a random effect across levels of schoolid. The covariance(un) (un is short for unstructured) option permits the random intercept and ses slope to be correlated. (In this and all subsequent examples in this chapter, the nolog and noheader options are used to save space.These options suppress the iteration log and the header information.)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mixed write c.stucomp##c.ses || schoolid:ses,covariance(un)nolog noheader
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    ---------------------------------------------------------------------------------
+              write | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    ----------------+----------------------------------------------------------------
+            stucomp |     -26.75       2.69    -9.95   0.000       -32.01      -21.48
+                ses |       0.36       0.68     0.53   0.597        -0.97        1.69
+                    |
+    c.stucomp#c.ses |       0.24       0.10     2.28   0.023         0.03        0.44
+                    |
+              _cons |     602.29      18.18    33.12   0.000       566.65      637.93
+    ---------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+      Random-effects parameters  |   Estimate   Std. err.     [95% conf. interval]
+    -----------------------------+------------------------------------------------
+    schoolid: Unstructured       |
+                        var(ses) |       8.92       1.73          6.09       13.05
+                      var(_cons) |     372.35    1229.73          0.58   241085.03
+                  cov(ses,_cons) |      19.20      35.82        -51.01       89.40
+    -----------------------------+------------------------------------------------
+                   var(Residual) |    9820.89     261.13       9322.20    10346.25
+    ------------------------------------------------------------------------------
+    LR test vs. linear model: chi2(3) = 3253.82               Prob &gt; chi2 = 0.0000
+    
+    Note: LR test is conservative and provided only for reference.
+</code></pre>
+<blockquote>
+<p>Note! Fixed and random effects</p>
+<blockquote>
+<p>The fixed effects are specified after the dependent variable and before the ||. The random effects are specified after the ||.</p>
+</blockquote>
+</blockquote>
+<p>As expected, the c.stucomp#c.ses interaction is significant. We can use themargins command below with the dydx(ses) option to compute the ses slope for schools that have between one and eight students per computer.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,dydx(ses) at(stucomp=(1(1)8)) vsquish 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Average marginal effects                                 Number of obs = 3,026
+    
+    Expression: Linear prediction, fixed portion, predict()
+    dy/dx wrt:  ses
+    1._at: stucomp = 1
+    2._at: stucomp = 2
+    3._at: stucomp = 3
+    4._at: stucomp = 4
+    5._at: stucomp = 5
+    6._at: stucomp = 6
+    7._at: stucomp = 7
+    8._at: stucomp = 8
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |      dy/dx   std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+    ses          |
+             _at |
+              1  |       0.59       0.59     1.01   0.315        -0.56        1.75
+              2  |       0.83       0.51     1.62   0.104        -0.17        1.83
+              3  |       1.07       0.44     2.42   0.016         0.20        1.93
+              4  |       1.30       0.39     3.37   0.001         0.54        2.06
+              5  |       1.54       0.35     4.34   0.000         0.84        2.23
+              6  |       1.77       0.35     5.05   0.000         1.08        2.46
+              7  |       2.01       0.38     5.32   0.000         1.27        2.75
+              8  |       2.24       0.43     5.24   0.000         1.40        3.08
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>Writing score by socioeconomic status and students per computer</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,at(stucomp=(1(1)8) ses=(20(5)80))
+</span></span><span class="line"><span class="cl">  marginsplot,noci xdimension(ses) plotdimension(stucomp, allsimple)legend(subtitle(Students per computer) rows(2)) recast(line) scheme(s1mono) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.13.6.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Writing score by socioeconomic status and students per computer</strong></figcaption>
+</figure>
+<p>We can see that as the number of students per computer increases (that is, as the availability of computers decreases), the ses slope increases.</p>
+<h2 id="3--example-2-continuous-by-categorical-interaction">3  Example 2: Continuous by categorical interaction</h2>
+<p>In this study, standardized reading scores were measured as well as the socioeconomic status of the student. Of the 100 schools, 35 were private (non-Catholic), 35 were public, and 30 were Catholic schools</p>
+<p>The goal of this hypothetical study is to examine the relationship between socioeconomic status (ses) and reading scores (read), and to determine if the strength of that relationship varies as a function of the type of school (private, public, or Catholic). This involves examining the cross-level interaction of ses and schtype.</p>
+<p>The mixed command for performing this analysis is shown below. The variable read is predicted from ses, schtype, and the interaction of these two variables. The variable ses is specified as a random coefficient that varies across schools.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use school_read.dta
+</span></span><span class="line"><span class="cl">  sum
+</span></span><span class="line"><span class="cl">  list in 1/5,abbreviate(30)
+</span></span><span class="line"><span class="cl">  mixed read i.schtype##c.ses || schoolid:ses,covariance(un) nolog noheader 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    --------------------------------------------------------------------------------
+              read | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    ---------------+----------------------------------------------------------------
+           schtype |
+           Public  |      41.97      23.27     1.80   0.071        -3.64       87.57
+         Catholic  |     152.48      23.79     6.41   0.000       105.86      199.10
+                   |
+               ses |       4.04       0.67     6.00   0.000         2.72        5.36
+                   |
+     schtype#c.ses |
+           Public  |      -1.24       0.95    -1.30   0.192        -3.11        0.62
+         Catholic  |      -3.37       0.99    -3.41   0.001        -5.30       -1.44
+                   |
+             _cons |     519.28      16.57    31.33   0.000       486.80      551.77
+    --------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+      Random-effects parameters  |   Estimate   Std. err.     [95% conf. interval]
+    -----------------------------+------------------------------------------------
+    schoolid: Unstructured       |
+                        var(ses) |      12.13       2.12          8.61       17.10
+                      var(_cons) |       4.90      82.77          0.00    1.14e+15
+                  cov(ses,_cons) |       6.75      31.24        -54.47       67.97
+    -----------------------------+------------------------------------------------
+                   var(Residual) |   10015.68     264.26       9510.90    10547.24
+    ------------------------------------------------------------------------------
+    LR test vs. linear model: chi2(3) = 4052.81               Prob &gt; chi2 = 0.0000
+    
+    Note: LR test is conservative and provided only for reference.
+</code></pre>
+<p>The contrast command is used below to test the overall schtype#c.ses interaction. This tests the following null hypothesis:</p>
+<p>$H\tiny 0$:$\beta\tiny 1$ = $\beta\tiny 2$ = $\beta\tiny 3$</p>
+<p>$\beta\tiny 1$ is the average ses slope for private schools,$\beta\tiny 2$ is the average ses slope for public schools, and $\beta\tiny 3$ is the average ses slope for Catholic schools. This test is significant, indicating that the ses slopes differ by schtype.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast schtype#c.ses
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Margins: asbalanced
+    
+    -------------------------------------------------
+                  |         df        chi2     P&gt;chi2
+    --------------+----------------------------------
+    read          |
+    schtype#c.ses |          2       11.82     0.0027
+    -------------------------------------------------
+</code></pre>
+<p>Let’s create a graph that illustrates the ses slopes by schtype. We do this using the margins command to compute the adjusted means of reading scores as a function of ses and schtype, and then graphing these adjusted means using the marginsplot.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins schtype, at(ses=(20(5)80))
+</span></span><span class="line"><span class="cl">  marginsplot,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.13.7.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Reading score by socioeconomic status and school type</strong></figcaption>
+</figure>
+<p>Let’s now use the margins command combined with the dydx(ses) option to estimate the ses slope for each of the three different types of schools.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins,dydx(ses) over(schtype) vsquish 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Average marginal effects                                 Number of obs = 2,973
+    
+    Expression: Linear prediction, fixed portion, predict()
+    dy/dx wrt:  ses
+    Over:       schtype
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |      dy/dx   std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+    ses          |
+         schtype |
+        Private  |       4.04       0.67     6.00   0.000         2.72        5.36
+         Public  |       2.80       0.67     4.17   0.000         1.48        4.12
+       Catholic  |       0.67       0.72     0.93   0.350        -0.74        2.09
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>The ses slope is 4.04 for private schools, and this slope is significantly different from 0. The ses slope is 2.80 for public schools, and this slope is also significantly different from 0. The ses slope is 0.67 for Catholic schools, but this slope is not significantly different from 0.</p>
+<p>Let’s now use the contrast command to form contrasts among the ses slopes for the three different school types. Let’s compare the ses slope for each group with group 2 (public schools)—that is, comparing private schools with public schools; and comparing Catholic schools with public schools.</p>
+<p>Note that the rb2. contrast operator compares each group with group 2 (that is, public schools).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast rb2.schtype#c.ses,pveffects nowald
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------------
+                          |   Contrast   Std. err.      z    P&gt;|z|
+    ----------------------+---------------------------------------
+    read                  |
+            schtype#c.ses |
+     (Private vs Public)  |       1.24       0.95     1.30   0.192
+    (Catholic vs Public)  |      -2.13       0.99    -2.16   0.031
+    --------------------------------------------------------------
+</code></pre>
+<h2 id="4-example-3-categorical-by-continuous-interaction">4 Example 3: Categorical by continuous interaction</h2>
+<p>The aim of this study is to look at gender differences in math performance and to determine if smaller class sizes are associated with smaller gender differences in math scores. In other words, the aim is to determine if there is a cross-level interaction between gender (a level-1 predictor) and class size (a level-2 predictor).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use school_math.dta
+</span></span><span class="line"><span class="cl">  summarize
+</span></span><span class="line"><span class="cl">  list in 1/5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The mixed command is used to predict math from gender, clsize, and the interaction of these variables. The variable gender is specified as a random coefficient at the school level.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  mixed math i.gender##c.clsize ||schoolid:gender,covariance(un) nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Mixed-effects ML regression                          Number of obs    =  2,926
+    Group variable: schoolid                             Number of groups =    100
+                                                         Obs per group:
+                                                                      min =      8
+                                                                      avg =   29.3
+                                                                      max =     52
+                                                         Wald chi2(3)     =  59.38
+    Log likelihood = -17691.732                          Prob &gt; chi2      = 0.0000
+    
+    -----------------------------------------------------------------------------------
+                 math | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    ------------------+----------------------------------------------------------------
+               gender |
+              Female  |      13.83      12.41     1.11   0.265       -10.49       38.16
+               clsize |      -1.34       0.32    -4.15   0.000        -1.97       -0.71
+                      |
+      gender#c.clsize |
+              Female  |      -1.10       0.48    -2.30   0.021        -2.04       -0.16
+                      |
+                _cons |     451.94       8.34    54.18   0.000       435.59      468.29
+    -----------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+      Random-effects parameters  |   Estimate   Std. err.     [95% conf. interval]
+    -----------------------------+------------------------------------------------
+    schoolid: Unstructured       |
+                     var(gender) |     244.79     231.45         38.37     1561.80
+                      var(_cons) |      35.46      96.33          0.17     7273.92
+               cov(gender,_cons) |      78.98     115.00       -146.42      304.37
+    -----------------------------+------------------------------------------------
+                   var(Residual) |   10273.41     277.07       9744.46    10831.07
+    ------------------------------------------------------------------------------
+    LR test vs. linear model: chi2(3) = 15.08                 Prob &gt; chi2 = 0.0018
+    
+    Note: LR test is conservative and provided only for reference.
+</code></pre>
+<p>To help interpret this effect, we can graph the results using the margins and marginsplot commands</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender, at(clsize=(15(5)40))
+</span></span><span class="line"><span class="cl">  marginsplot,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.13.8.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong> Math scores by gender and average class size</strong></figcaption>
+</figure>
+<p>Let’s assess the significance of the gender difference for class sizes ranging from 15 to 40 in five-student increments using the margins command below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.gender,at(clsize=(15(5)40)) contrast(pveffects nowald) vsquish
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of adjusted predictions                        Number of obs = 2,926
+    
+    Expression: Linear prediction, fixed portion, predict()
+    1._at: clsize = 15
+    2._at: clsize = 20
+    3._at: clsize = 25
+    4._at: clsize = 30
+    5._at: clsize = 35
+    6._at: clsize = 40
+    
+    ------------------------------------------------------------
+                        |            Delta-method
+                        |   Contrast   std. err.      z    P&gt;|z|
+    --------------------+---------------------------------------
+             gender@_at |
+    (Female vs Male) 1  |      -2.72       6.10    -0.45   0.656
+    (Female vs Male) 2  |      -8.24       4.61    -1.79   0.074
+    (Female vs Male) 3  |     -13.76       4.10    -3.35   0.001
+    (Female vs Male) 4  |     -19.27       4.88    -3.95   0.000
+    (Female vs Male) 5  |     -24.79       6.51    -3.81   0.000
+    (Female vs Male) 6  |     -30.31       8.51    -3.56   0.000
+    ------------------------------------------------------------
+</code></pre>
+<p>The margins command is repeated below for 15 to 40 students per class in onestudent increments (the output is omitted to save space). The marginsplot command is then used to visualize the gender differences (with a confidence interval) across the entire spectrum of class sizes</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.gender,at(clsize=(15(1)40)) contrast(effects)
+</span></span><span class="line"><span class="cl">  marginsplot,recastci(rarea) ciopts(fcolor(%20)) yline(0)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.13.9.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Gender difference in reading score by average class size</strong></figcaption>
+</figure>
+<h2 id="5-example-4-categorical-by-continuous-interaction">5 Example 4: Categorical by continuous interaction</h2>
+<p>This study focuses on gender differences in standardized science scores, and whether such differences vary by school size. In this study, each school is classified into one of three sizes: small, medium, or large. Thus, the focus of this study is on the cross-level interaction of gender by school size, where both gender and school size are categorical variables.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use school_science.dta
+</span></span><span class="line"><span class="cl">  summarize
+</span></span><span class="line"><span class="cl">  list in 1/5
+</span></span><span class="line"><span class="cl">  mixed science i.gender##i.schsize || schoolid: gender,covariance(un) nolog noheader
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    -----------------------------------------------------------------------------------
+              science | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    ------------------+----------------------------------------------------------------
+               gender |
+              Female  |     -19.65       6.65    -2.96   0.003       -32.68       -6.62
+                      |
+              schsize |
+              Medium  |      18.56       7.36     2.52   0.012         4.13       32.99
+               Large  |      40.16       7.20     5.58   0.000        26.06       54.27
+                      |
+       gender#schsize |
+       Female#Medium  |       1.47       9.54     0.15   0.878       -17.23       20.17
+        Female#Large  |      22.24       9.29     2.39   0.017         4.03       40.45
+                      |
+                _cons |     394.97       5.14    76.89   0.000       384.90      405.04
+    -----------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------
+      Random-effects parameters  |   Estimate   Std. err.     [95% conf. interval]
+    -----------------------------+------------------------------------------------
+    schoolid: Unstructured       |
+                     var(gender) |      38.52     205.24          0.00    1.32e+06
+                      var(_cons) |     155.78     115.88         36.25      669.43
+               cov(gender,_cons) |      17.52     128.51       -234.35      269.38
+    -----------------------------+------------------------------------------------
+                   var(Residual) |    9772.30     271.33       9254.71    10318.83
+    ------------------------------------------------------------------------------
+    LR test vs. linear model: chi2(3) = 12.15                 Prob &gt; chi2 = 0.0069
+    
+    Note: LR test is conservative and provided only for reference.
+</code></pre>
+<p>The contrast command is used to test the overall gender#schsize interaction. This test is significant.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast gender#schsize 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------
+                   |         df        chi2     P&gt;chi2
+    ---------------+----------------------------------
+    science        |
+    gender#schsize |          2        7.17     0.0278
+    --------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast gender#schsize 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To help interpret this interaction, we can use the margins command to display the adjusted mean of science scores as a function of gender and schsize</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins schsize#gender,nopvalues vsquish  
+</span></span><span class="line"><span class="cl">  marginsplot,noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                     Number of obs = 2,764
+    
+    Expression: Linear prediction, fixed portion, predict()
+    
+    ----------------------------------------------------------------
+                   |            Delta-method
+                   |     Margin   std. err.     [95% conf. interval]
+    ---------------+------------------------------------------------
+    schsize#gender |
+       Small#Male  |     394.97       5.14        384.90      405.04
+     Small#Female  |     375.32       5.46        364.62      386.03
+      Medium#Male  |     413.53       5.27        403.20      423.86
+    Medium#Female  |     395.36       5.56        384.45      406.26
+       Large#Male  |     435.14       5.04        425.26      445.01
+     Large#Female  |     437.73       5.36        427.23      448.23
+    ----------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.13.10.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong>Science scores by gender and school size</strong></figcaption>
+</figure>
+<p>One way to further understand this interaction is by testing the simple effect of gender for each school size. This is performed using the contrast command, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast gender@schsize,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    -----------------------------------------------------------------
+                             |   Contrast   Std. err.      z    P&gt;|z|
+    -------------------------+---------------------------------------
+    science                  |
+              gender@schsize |
+     (Female vs base) Small  |     -19.65       6.65    -2.96   0.003
+    (Female vs base) Medium  |     -18.18       6.84    -2.66   0.008
+     (Female vs base) Large  |       2.59       6.49     0.40   0.690
+    -----------------------------------------------------------------
+</code></pre>
+<p>We can also further probe the interaction by using partial interaction tests. Let’s apply the ar. contrast operator to school size (comparing each group with the previous group) and interact that with gender.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast gender#ar.schsize,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ----------------------------------------------------------------------------
+                                        |   Contrast   Std. err.      z    P&gt;|z|
+    ------------------------------------+---------------------------------------
+    science                             |
+                         gender#schsize |
+    (Female vs base) (Medium vs Small)  |       1.47       9.54     0.15   0.878
+    (Female vs base) (Large vs Medium)  |      20.77       9.43     2.20   0.028
+    ----------------------------------------------------------------------------
+</code></pre>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-13</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/15.chapter15multilevel-models/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/multilevel/">Multilevel</a>,&nbsp;<a href="/tags/interaction/">Interaction</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/16.chapter16time-as-a-continuous-predictor/" class="prev" rel="prev" title="Chapter16 ：Time as a continuous predictor"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter16 ：Time as a continuous predictor</a>
+            <a href="/14.chapter14continuous-by-categorical-by-categorical-interactions/" class="next" rel="next" title="Chapter14 ：Continuous by continuous by categorical interactions">Chapter14 ：Continuous by continuous by categorical interactions<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

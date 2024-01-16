@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter9 ：Categorical by categorical by categorical interactions - Alex_Wang</title><meta name="Description" content="This chapter illustrates models involving interactions of three categorical variables, with an emphasis on how to interpret the interaction of the three categorical variables."><meta property="og:title" content="Chapter9 ：Categorical by categorical by categorical interactions" />
+<meta property="og:description" content="This chapter illustrates models involving interactions of three categorical variables, with an emphasis on how to interpret the interaction of the three categorical variables." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/9.chapter9categorical-by-categorical-by-categorical-interactions/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-07T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-07T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter9 ：Categorical by categorical by categorical interactions"/>
+<meta name="twitter:description" content="This chapter illustrates models involving interactions of three categorical variables, with an emphasis on how to interpret the interaction of the three categorical variables."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/9.chapter9categorical-by-categorical-by-categorical-interactions/" /><link rel="prev" href="https://forest293.github.io/8.chapter8categorical-by-categorical-interactions/" /><link rel="next" href="https://forest293.github.io/10.chapter10linear-by-categorical-interactions/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter9 ：Categorical by categorical by categorical interactions",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/9.chapter9categorical-by-categorical-by-categorical-interactions\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Categorical, Interaction, stata","wordcount":  3419 ,
+        "url": "https:\/\/forest293.github.io\/9.chapter9categorical-by-categorical-by-categorical-interactions\/","datePublished": "2024-01-07T16:29:41+08:00","dateModified": "2024-01-07T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter illustrates models involving interactions of three categorical variables, with an emphasis on how to interpret the interaction of the three categorical variables."
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/9.chapter9categorical-by-categorical-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/9.chapter9categorical-by-categorical-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter9 ：Categorical by categorical by categorical interactions</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-07">2024-01-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3419 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 7 分钟&nbsp;<span id="/9.chapter9categorical-by-categorical-by-categorical-interactions/" class="leancloud_visitors" data-flag-title="Chapter9 ：Categorical by categorical by categorical interactions">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-two-by-two-by-two-models">1 Two by two by two models</a>
+      <ul>
+        <li><a href="#11-simple-interactions-by-season">1.1 Simple interactions by season</a></li>
+        <li><a href="#12-simple-interactions-by-depression-status">1.2 Simple interactions by depression status</a></li>
+        <li><a href="#13-simple-effects">1.3 Simple effects</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-two-by-two-by-three-models">2 Two by two by three models</a>
+      <ul>
+        <li><a href="#21-simple-interactions-by-depression-status">2.1 Simple interactions by depression status</a></li>
+        <li><a href="#22-simple-partial-interaction-by-depression-status">2.2 Simple partial interaction by depression status</a></li>
+        <li><a href="#23-simple-contrasts">2.3 Simple contrasts</a></li>
+        <li><a href="#24-partial-interactions">2.4 Partial interactions</a></li>
+      </ul>
+    </li>
+    <li><a href="#3--three-by-three-by-three-models-and-beyond">3  Three by three by three models and beyond</a>
+      <ul>
+        <li><a href="#31-partial-interactions-and-interaction-contrasts">3.1 Partial interactions and interaction contrasts</a></li>
+        <li><a href="#32-simple-interactions">3.2 Simple interactions</a></li>
+        <li><a href="#33-simple-effects-and-simple-comparisons">3.3 Simple effects and simple comparisons</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This chapter illustrates models involving interactions of three categorical variables, with an emphasis on how to interpret the interaction of the three categorical variables.</p>
+<p>This chapter focuses on three types of interactions:</p>
+<ol>
+<li><strong>two by two by two model</strong></li>
+<li><strong>two by two by three model</strong></li>
+<li><strong>three by three by four model</strong></li>
+</ol>
+<h2 id="1-two-by-two-by-two-models">1 Two by two by two models</h2>
+<p>a new study using a two by two by two model in which treatment has two levels (control group versus happiness therapy), depression status has two levels (nondepressed versus mildly depressed), and season has two levels (winter and summer).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  opt-2by2by2.dta
+</span></span><span class="line"><span class="cl">  anova opt depstat##treat##season
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                     Number of obs =        240    R-squared     =  0.5677
+                     Root MSE      =    8.01794    Adj R-squared =  0.5546
+
+              Source | Partial SS         df         MS        F    Prob&gt;F
+---------------------+----------------------------------------------------
+               Model |  19584.517          7   2797.7881     43.52  0.0000
+                     |
+             depstat |  1601.6667          1   1601.6667     24.91  0.0000
+               treat |  13470.017          1   13470.017    209.53  0.0000
+       depstat#treat |  35.266667          1   35.266667      0.55  0.4596
+              season |  3713.0667          1   3713.0667     57.76  0.0000
+      depstat#season |  220.41667          1   220.41667      3.43  0.0653
+        treat#season |  112.06667          1   112.06667      1.74  0.1880
+depstat#treat#season |  432.01667          1   432.01667      6.72  0.0101
+                     |
+            Residual |  14914.667        232   64.287356  
+---------------------+----------------------------------------------------
+               Total |  34499.183        239   144.34805  
+</code></pre>
+<blockquote>
+<p>Note! Three-way interaction shortcut</p>
+<blockquote>
+<p><strong>Specifying depstat##treat##season is a shortcut for specifying all main effects, two-way interactions, and the three-way interaction of depstat, treat, and season.</strong> This both saves time and helps ensure that you include all lower order effects. Even if not significant, these lower order effects should be included in the model.</p>
+</blockquote>
+</blockquote>
+<p>The depstat#treat#season interaction is significant ($F = 6.72$,$p = 0.0101$). Let’s use the margins command to show the mean of optimism broken down by these three factors.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins depstat#treat#season,nopvalues
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                       Number of obs = 240
+    
+    Expression: Linear prediction, predict()
+    
+    ----------------------------------------------------------------------
+                         |            Delta-method
+                         |     Margin   std. err.     [95% conf. interval]
+    ---------------------+------------------------------------------------
+    depstat#treat#season |
+         Non#Con#Winter  |      44.40       1.46         41.52       47.28
+         Non#Con#Summer  |      51.67       1.46         48.78       54.55
+          Non#HT#Winter  |      59.93       1.46         57.05       62.82
+          Non#HT#Summer  |      64.57       1.46         61.68       67.45
+        Mild#Con#Winter  |      39.23       1.46         36.35       42.12
+        Mild#Con#Summer  |      44.97       1.46         42.08       47.85
+         Mild#HT#Winter  |      50.93       1.46         48.05       53.82
+         Mild#HT#Summer  |      64.77       1.46         61.88       67.65
+    ----------------------------------------------------------------------
+</code></pre>
+<p>Let’s then use the marginsplot command to make a graph of the means, showing treat on the $x$ axis and the different seasons in separate panels.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  marginsplot,xdimension(treat) bydimension(season)noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.8.1.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Optimism by treatment, depression status, and season</strong></figcaption>
+</figure>
+<h3 id="11-simple-interactions-by-season">1.1 Simple interactions by season</h3>
+<p>One way that we can dissect the three-way interaction is by looking at the simple interactions of treatment by depression status at each season.</p>
+<p>Looking at figure，it appears that the interaction is not significant during the winter and is significant during the summer. We test this using the contrast command, which tests the treat#depstat interaction at each level of season.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat#depstat@season 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------
+                         |         df           F        P&gt;F
+    ---------------------+----------------------------------
+    treat#depstat@season |
+                 Winter  |          1        1.71     0.1917
+                 Summer  |          1        5.55     0.0193
+                  Joint  |          2        3.63     0.0279
+                         |
+             Denominator |        232
+    --------------------------------------------------------
+</code></pre>
+<h3 id="12-simple-interactions-by-depression-status">1.2 Simple interactions by depression status</h3>
+<p>Another way to dissect this three-way interaction is by looking at the simple interaction of treatment by season at each level of depression status.</p>
+<p>To visualize this, let’s rerun the margins command and then use the marginsplot command to graph the means showing treat on the $x$ axis and separate panels for those who are nondepressed and mildly depressed.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins depstat#treat#season
+</span></span><span class="line"><span class="cl">  marginsplot,xdimension(treat)bydimension(depstat) noci 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                       Number of obs = 240
+    
+    Expression: Linear prediction, predict()
+    
+    --------------------------------------------------------------------------------------
+                         |            Delta-method
+                         |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+    ---------------------+----------------------------------------------------------------
+    depstat#treat#season |
+         Non#Con#Winter  |      44.40       1.46    30.33   0.000        41.52       47.28
+         Non#Con#Summer  |      51.67       1.46    35.29   0.000        48.78       54.55
+          Non#HT#Winter  |      59.93       1.46    40.94   0.000        57.05       62.82
+          Non#HT#Summer  |      64.57       1.46    44.11   0.000        61.68       67.45
+        Mild#Con#Winter  |      39.23       1.46    26.80   0.000        36.35       42.12
+        Mild#Con#Summer  |      44.97       1.46    30.72   0.000        42.08       47.85
+         Mild#HT#Winter  |      50.93       1.46    34.79   0.000        48.05       53.82
+         Mild#HT#Summer  |      64.77       1.46    44.24   0.000        61.88       67.65
+    --------------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.8.2.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Optimism by treatment, season, and depression status</strong></figcaption>
+</figure>
+<p>There is an interaction of treatment by season for those who are mildly depressed, but no such interaction for those who are not depressed. We can test the interaction of treatment by season at each level of depression status using the following contrast command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat#season@depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------
+                         |         df           F        P&gt;F
+    ---------------------+----------------------------------
+    treat#season@depstat |
+                    Non  |          1        0.81     0.3693
+                   Mild  |          1        7.65     0.0061
+                  Joint  |          2        4.23     0.0157
+                         |
+             Denominator |        232
+    --------------------------------------------------------
+</code></pre>
+<h3 id="13-simple-effects">1.3 Simple effects</h3>
+<p>We might want to know whether the effect of happiness therapy is significant for each combination of season and depression status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat@season#depstat,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ------------------------------------------------------------------
+                              |   Contrast   Std. err.      t    P&gt;|t|
+    --------------------------+---------------------------------------
+         treat@season#depstat |
+     (HT vs base) Winter#Non  |      15.53       2.07     7.50   0.000
+    (HT vs base) Winter#Mild  |      11.70       2.07     5.65   0.000
+     (HT vs base) Summer#Non  |      12.90       2.07     6.23   0.000
+    (HT vs base) Summer#Mild  |      19.80       2.07     9.56   0.000
+    ------------------------------------------------------------------
+</code></pre>
+<p>The mean optimism for those in the happiness therapy group is always greater than the control group at each level of season and at each level of depression status.</p>
+<h2 id="2-two-by-two-by-three-models">2 Two by two by three models</h2>
+<p>Let’s now consider an example with three factors, two of which have two levels and one of which has three levels. In this example, the treatment variable now has three levels: 1.control group, 2. traditional therapy, and 3. happiness therapy.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use opt-3by2by2.dta
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let’s now use the anova command to predict opt from depstat, treat, season, all two-way interactions of these variables, and the three-way interaction.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  anova opt depstat##treat##season
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                             Number of obs =        360    R-squared     =  0.4912
+                             Root MSE      =     7.9879    Adj R-squared =  0.4751
+    
+                      Source | Partial SS         df         MS        F    Prob&gt;F
+        ---------------------+----------------------------------------------------
+                       Model |  21435.233         11   1948.6576     30.54  0.0000
+                             |
+                     depstat |  2423.2111          1   2423.2111     37.98  0.0000
+                       treat |  13811.217          2   6905.6083    108.23  0.0000
+               depstat#treat |  3.9055556          2   1.9527778      0.03  0.9699
+                      season |     3960.1          1      3960.1     62.06  0.0000
+              depstat#season |  253.34444          1   253.34444      3.97  0.0471
+                treat#season |  469.11667          2   234.55833      3.68  0.0263
+        depstat#treat#season |  514.33889          2   257.16944      4.03  0.0186
+                             |
+                    Residual |  22204.667        348   63.806513  
+        ---------------------+----------------------------------------------------
+                       Total |    43639.9        359   121.55961  
+</code></pre>
+<p>The three-way interaction is significant ( $F = 4.03$ , $p = 0.0186$ ). Let’s use the margins and marginsplot commands to display and graph the means by each of these categorical variables.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins depstat#treat#season,nopvalues
+</span></span><span class="line"><span class="cl">  marginsplot,bydimension(depstat) noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                       Number of obs = 360
+    
+    Expression: Linear prediction, predict()
+    
+    -----------------------------------------------------------------------
+                          |            Delta-method
+                          |     Margin   std. err.     [95% conf. interval]
+    ----------------------+------------------------------------------------
+     depstat#treat#season |
+     Non#Con#Winter (S1)  |      44.70       1.46         41.83       47.57
+     Non#Con#Summer (S2)  |      49.70       1.46         46.83       52.57
+      Non#TT#Winter (S1)  |      54.33       1.46         51.46       57.20
+      Non#TT#Summer (S2)  |      59.40       1.46         56.53       62.27
+      Non#HT#Winter (S1)  |      59.77       1.46         56.90       62.64
+      Non#HT#Summer (S2)  |      64.57       1.46         61.70       67.44
+    Mild#Con#Winter (S1)  |      39.63       1.46         36.76       42.50
+    Mild#Con#Summer (S2)  |      44.20       1.46         41.33       47.07
+     Mild#TT#Winter (S1)  |      49.23       1.46         46.36       52.10
+     Mild#TT#Summer (S2)  |      54.70       1.46         51.83       57.57
+     Mild#HT#Winter (S1)  |      49.33       1.46         46.46       52.20
+     Mild#HT#Summer (S2)  |      64.23       1.46         61.36       67.10
+    -----------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.1.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Optimism by treatment, season, and depression status</strong></figcaption>
+</figure>
+<h3 id="21-simple-interactions-by-depression-status">2.1 Simple interactions by depression status</h3>
+<p>It appears that the treat#season interaction might not be significant for those who are not depressed (see the left panel of figure) but might be significant for those who are mildly depressed (see the right panel of figure ). We can explore this by assessing the treat#season interaction at each level of depstat using the contrastcommand below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat#season@depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------
+                         |         df           F        P&gt;F
+    ---------------------+----------------------------------
+    treat#season@depstat |
+                    Non  |          2        0.00     0.9955
+                   Mild  |          2        7.70     0.0005
+                  Joint  |          4        3.85     0.0044
+                         |
+             Denominator |        348
+    --------------------------------------------------------
+</code></pre>
+<p>Let’s further dissect this simple interaction by applying contrasts to the treatment
+factor through the use of simple partial interactions.</p>
+<h3 id="22-simple-partial-interaction-by-depression-status">2.2 Simple partial interaction by depression status</h3>
+<p>Say that we want to form two comparisons with respect to treat, comparing group 2 versus 1 (traditional therapy versus control group) and comparing group 3 versus 2 (happiness therapy versus traditional therapy).</p>
+<p>The interaction of treatment (traditional therapy versus control group) by season for those who are mildly depressed is visualized in the left panel of figure below, and the interaction of treatment (happiness therapy versus traditional therapy) by season for those who are mildly depressed is visualized in the right panel of figure below.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.2.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Simple partial interactions</strong></figcaption>
+</figure>
+<p>To understand this, let’s break it into two parts. The first part, ar.treat#season, creates the interactions of treatment (traditional therapy versus control group) by season, and treatment (happiness therapy versus traditional therapy) by season. The second part, @2.depstat indicates the contrasts will be performed only for level 2 of depstat (the mildly depressed group)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast ar.treat#season@2.depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    -------------------------------------------------------------
+                              |         df           F        P&gt;F
+    --------------------------+----------------------------------
+         treat#season@depstat |
+    (TT vs Con) (joint) Mild  |          1        0.10     0.7578
+     (HT vs TT) (joint) Mild  |          1       10.46     0.0013
+                       Joint  |          2        7.70     0.0005
+                              |
+                  Denominator |        348
+    -------------------------------------------------------------
+</code></pre>
+<p>Let’s now further understand this simple partial interaction through the use of
+simple contrasts.</p>
+<h3 id="23-simple-contrasts">2.3 Simple contrasts</h3>
+<p>In particular, let’s ask whether there is a difference between happiness therapy and traditional therapy separately for each season focusing only on those who are mildly depressed. We can perform this test by specifying ar3.treat@season#2.depstat on the contrast command.</p>
+<p>Let’s break this into two parts. The first part, ar3.treat, requests the comparison of treatment group 3 versus 2 (happiness therapy versus traditional therapy).</p>
+<p>The second part, @season#2.depstat, requests that the contrasts be performed at each level of season and at level 2 of depression status (mildly depressed)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast ar3.treat@season#2.depstat,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ---------------------------------------------------------------------
+                                 |   Contrast   Std. err.      t    P&gt;|t|
+    -----------------------------+---------------------------------------
+            treat@season#depstat |
+    (HT vs TT) Winter (S1)#Mild  |       0.10       2.06     0.05   0.961
+    (HT vs TT) Summer (S2)#Mild  |       9.53       2.06     4.62   0.000
+    ---------------------------------------------------------------------
+</code></pre>
+<h3 id="24-partial-interactions">2.4 Partial interactions</h3>
+<p>Say that we wanted to further understand this interaction by applying adjacent group contrasts to the treatment factor. These contrasts compare group 2 versus 1 (traditional therapy versus control group) and group 3 versus 2 (happiness therapy versus traditional therapy). We could interact these contrasts with season and depression status.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.3.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong> Simple partial interaction: T2 vs. T1 by season by depstat</strong></figcaption>
+</figure>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.4.png" style="width:550px;height:350px;" alt="图片描述">
+  <figcaption><strong>Simple partial interaction: T3 vs. T2 by season by depstat</strong></figcaption>
+</figure>
+<p>We can test each of these partial interactions using the contrast command below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast ar.treat#season#depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ----------------------------------------------------------------
+                                 |         df           F        P&gt;F
+    -----------------------------+----------------------------------
+            treat#season#depstat |
+    (TT vs Con) (joint) (joint)  |          1        0.04     0.8400
+     (HT vs TT) (joint) (joint)  |          1        5.53     0.0193
+                          Joint  |          2        4.03     0.0186
+                                 |
+                     Denominator |        348
+    ----------------------------------------------------------------
+</code></pre>
+<h2 id="3--three-by-three-by-three-models-and-beyond">3  Three by three by three models and beyond</h2>
+<p>Let’s consider an extension of the example involving the factors treat, depstat, and season, except that these factors have three, three and four levels, respectively.</p>
+<p>The three levels of treat are 1) control group, 2) traditional therapy, and 3) happiness therapy.</p>
+<p>The three levels of depstat are 1) nondepressed, 2) mildly depressed, and 3) severely depressed.</p>
+<p>The four levels of season are 1) winter, 2) spring, 3) summer, and 4)fall.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use opt-3by3by4.dta
+</span></span><span class="line"><span class="cl">  anova opt depstat##treat##season
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                             Number of obs =      1,080    R-squared     =  0.6172
+                             Root MSE      =    6.00663    Adj R-squared =  0.6043
+    
+                      Source | Partial SS         df         MS        F    Prob&gt;F
+        ---------------------+----------------------------------------------------
+                       Model |    60718.9         35   1734.8257     48.08  0.0000
+                             |
+                     depstat |  18782.039          2   9391.0194    260.29  0.0000
+                       treat |  34636.039          2   17318.019    480.00  0.0000
+               depstat#treat |  1702.0056          4   425.50139     11.79  0.0000
+                      season |  3522.8333          3   1174.2778     32.55  0.0000
+              depstat#season |  1004.2722          6    167.3787      4.64  0.0001
+                treat#season |  185.11667          6   30.852778      0.86  0.5275
+        depstat#treat#season |  886.59444         12    73.88287      2.05  0.0179
+                             |
+                    Residual |  37667.067      1,044   36.079566  
+        ---------------------+----------------------------------------------------
+                       Total |  98385.967      1,079   91.182546  
+</code></pre>
+<p>The three-way interaction of depstat#treat#season is significant ( $F = 2.05$ , $p=0.0179$ ).</p>
+<p>To begin to understand the nature of this interaction, let’s first graph the interaction using the margins and marginsplot commands.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins depstat#treat#season
+</span></span><span class="line"><span class="cl">  marginsplot,xdimension(treat)bydimension(season) noci legend(rows(1))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Adjusted predictions                                     Number of obs = 1,080
+    
+    Expression: Linear prediction, predict()
+    
+    --------------------------------------------------------------------------------------
+                         |            Delta-method
+                         |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+    ---------------------+----------------------------------------------------------------
+    depstat#treat#season |
+         Non#Con#Winter  |      44.63       1.10    40.70   0.000        42.48       46.79
+         Non#Con#Spring  |      47.53       1.10    43.34   0.000        45.38       49.69
+         Non#Con#Summer  |      49.70       1.10    45.32   0.000        47.55       51.85
+           Non#Con#Fall  |      47.83       1.10    43.62   0.000        45.68       49.99
+          Non#TT#Winter  |      54.30       1.10    49.51   0.000        52.15       56.45
+          Non#TT#Spring  |      57.33       1.10    52.28   0.000        55.18       59.49
+          Non#TT#Summer  |      60.37       1.10    55.05   0.000        58.21       62.52
+            Non#TT#Fall  |      57.03       1.10    52.01   0.000        54.88       59.19
+          Non#HT#Winter  |      61.30       1.10    55.90   0.000        59.15       63.45
+          Non#HT#Spring  |      62.70       1.10    57.17   0.000        60.55       64.85
+          Non#HT#Summer  |      64.70       1.10    59.00   0.000        62.55       66.85
+            Non#HT#Fall  |      62.87       1.10    57.33   0.000        60.71       65.02
+        Mild#Con#Winter  |      39.60       1.10    36.11   0.000        37.45       41.75
+        Mild#Con#Spring  |      42.73       1.10    38.97   0.000        40.58       44.89
+        Mild#Con#Summer  |      44.50       1.10    40.58   0.000        42.35       46.65
+          Mild#Con#Fall  |      42.73       1.10    38.97   0.000        40.58       44.89
+         Mild#TT#Winter  |      49.17       1.10    44.83   0.000        47.01       51.32
+         Mild#TT#Spring  |      52.20       1.10    47.60   0.000        50.05       54.35
+         Mild#TT#Summer  |      54.10       1.10    49.33   0.000        51.95       56.25
+           Mild#TT#Fall  |      52.03       1.10    47.45   0.000        49.88       54.19
+         Mild#HT#Winter  |      51.20       1.10    46.69   0.000        49.05       53.35
+         Mild#HT#Spring  |      56.37       1.10    51.40   0.000        54.21       58.52
+         Mild#HT#Summer  |      65.33       1.10    59.58   0.000        63.18       67.49
+           Mild#HT#Fall  |      56.17       1.10    51.22   0.000        54.01       58.32
+      Severe#Con#Winter  |      36.67       1.10    33.44   0.000        34.51       38.82
+      Severe#Con#Spring  |      39.67       1.10    36.17   0.000        37.51       41.82
+      Severe#Con#Summer  |      39.60       1.10    36.11   0.000        37.45       41.75
+        Severe#Con#Fall  |      39.97       1.10    36.44   0.000        37.81       42.12
+       Severe#TT#Winter  |      47.20       1.10    43.04   0.000        45.05       49.35
+       Severe#TT#Spring  |      50.23       1.10    45.81   0.000        48.08       52.39
+       Severe#TT#Summer  |      49.23       1.10    44.89   0.000        47.08       51.39
+         Severe#TT#Fall  |      50.00       1.10    45.59   0.000        47.85       52.15
+       Severe#HT#Winter  |      46.67       1.10    42.55   0.000        44.51       48.82
+       Severe#HT#Spring  |      49.77       1.10    45.38   0.000        47.61       51.92
+       Severe#HT#Summer  |      48.57       1.10    44.29   0.000        46.41       50.72
+         Severe#HT#Fall  |      50.20       1.10    45.78   0.000        48.05       52.35
+    --------------------------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.5.png" style="width:650px;height:350px;" alt="图片描述">
+  <figcaption><strong>Optimism by treatment, season, and depression status</strong></figcaption>
+</figure>
+<h3 id="31-partial-interactions-and-interaction-contrasts">3.1 Partial interactions and interaction contrasts</h3>
+<p>Let’s explore ways to dissect the three-way interaction of depstat#treat#season by applying contrasts to one or more of the factors.</p>
+<p>Let’s begin by testing whether the interaction of treat#depstat is the same for each season compared with winter (season 1). This is performed by applying the <strong>r. contrast</strong> operator to season and interacting that with treat and depstat.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r.season#treat#depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    -----------------------------------------------------------------------
+                                        |         df           F        P&gt;F
+    ------------------------------------+----------------------------------
+                   season#treat#depstat |
+    (Spring vs Winter) (joint) (joint)  |          4        0.46     0.7619
+    (Summer vs Winter) (joint) (joint)  |          4        5.36     0.0003
+      (Fall vs Winter) (joint) (joint)  |          4        0.40     0.8115
+                                 Joint  |         12        2.05     0.0179
+                                        |
+                            Denominator |       1044
+    -----------------------------------------------------------------------
+</code></pre>
+<blockquote>
+<p>Note! Fall versus spring</p>
+<blockquote>
+<p>A custom contrast is applied to season to obtain the comparison of fall versus spring (season 4 versus 2).[ contrast {season 0 -1 0 1}#treat#depstat ]</p>
+</blockquote>
+</blockquote>
+<p>The contrast command below performs this comparison by applying the r3. contrast to season to compare summer with winter (season 3 versus 1) and the r2. contrast on depstat to compare those who are mildly depressed with those who are nondepressed (levels 2 versus 1). These terms are all interacted (that is, r3.season#r2.depstat#treat) yielding a test of summer versus winter (season 3 versus 1) by mildly depressed versus nondepressed (levels 2 versus 1) by treatment.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  *Season(winter vs. summer) by depstat(nondepressed vs. mildly depressed)by treat
+</span></span><span class="line"><span class="cl">  contrast r3.season#r2.depstat#treat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------
+                         |         df           F        P&gt;F
+    ---------------------+----------------------------------
+    season#depstat#treat |          2        9.03     0.0001
+                         |
+             Denominator |       1044
+    --------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.6.png" style="width:650px;height:350px;" alt="图片描述">
+  <figcaption><strong>Interaction contrast of season (winter versus summer) by depression status (mildly depressed versus nondepressed) by treatment</strong></figcaption>
+</figure>
+<p>This significant test indicates that the two-way interaction formed by interacting depression status (nondepressed versus mildly depressed) by treatment differs by season (winter versus summer)</p>
+<p>Say that we wanted to take this test and focus on the contrast of happiness therapy versus traditional therapy (group 3 versus 2).1 This yields an interaction of season (winter versus summer) by depression status (nondepressed versus mildly depressed) by treatment (happiness therapy versus traditional therapy).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  *season(winter vs. summer) by depstat (nondepressed vs mildly depressed) by treat(HT vs. TT)
+</span></span><span class="line"><span class="cl">  contrast r3.season#r2.depstat#r3b2.treat,noeffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------
+                         |         df           F        P&gt;F
+    ---------------------+----------------------------------
+    season#depstat#treat |          1       14.64     0.0001
+                         |
+             Denominator |       1044
+    --------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.7.png" style="width:650px;height:350px;" alt="图片描述">
+  <figcaption><strong>Interaction contrast of season (winter versus summer) by depression status (mildly depressed versus nondepressed) by treatment (HT versus TT)</strong></figcaption>
+</figure>
+<h3 id="32-simple-interactions">3.2 Simple interactions</h3>
+<p>Let’s now explore a different way to dissect the three-way interaction through the use of simple interaction tests.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast depstat#treat@season
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------
+                         |         df           F        P&gt;F
+    ---------------------+----------------------------------
+    depstat#treat@season |
+                 Winter  |          4        3.75     0.0049
+                 Spring  |          4        2.29     0.0575
+                 Summer  |          4        9.88     0.0000
+                   Fall  |          4        2.01     0.0904
+                  Joint  |         16        4.48     0.0000
+                         |
+             Denominator |       1044
+    --------------------------------------------------------
+</code></pre>
+<p>The treat#depstat interaction is significant for winter (season 1) and summer (season 3). The treat#depstat interaction is not significant in the spring (season 2) or fall (season 4)</p>
+<p>Let’s perform this same contrast command, but apply the r2. contrast to depstat that compares those who are nondepressed versus mildly depressed. This yields four partial interactions of depression status (nondepressed versus mildly depressed) by treatment at each level of season.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r2.depstat#treat@season
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    -----------------------------------------------------------------
+                                  |         df           F        P&gt;F
+    ------------------------------+----------------------------------
+             depstat#treat@season |
+    (Mild vs Non) (joint) Winter  |          2        3.49     0.0309
+    (Mild vs Non) (joint) Spring  |          2        0.27     0.7631
+    (Mild vs Non) (joint) Summer  |          2        5.74     0.0033
+      (Mild vs Non) (joint) Fall  |          2        0.38     0.6851
+                           Joint  |          8        2.47     0.0119
+                                  |
+                      Denominator |       1044
+    -----------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.8.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Optimism by treatment and season focusing on mildly depressed versus nondepressed</strong></figcaption>
+</figure>
+<p>Let’s also apply the r3b2. contrast to treat, comparing group 3 with group 2 (happiness therapy to traditional therapy). This yields an interaction contrast of depression status (mildly depressed versus nondepressed) by treatment (happiness therapy versus traditional therapy) performed at each of the four seasons.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r2.depstat#r3b2.treat@season,noeffects  //r2 means non-dep vs mild-dep
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    --------------------------------------------------------------------
+                                     |         df           F        P&gt;F
+    ---------------------------------+----------------------------------
+                depstat#treat@season |
+    (Mild vs Non) (HT vs TT) Winter  |          1        5.13     0.0238
+    (Mild vs Non) (HT vs TT) Spring  |          1        0.30     0.5844
+    (Mild vs Non) (HT vs TT) Summer  |          1        9.90     0.0017
+      (Mild vs Non) (HT vs TT) Fall  |          1        0.60     0.4385
+                              Joint  |          4        3.98     0.0033
+                                     |
+                         Denominator |       1044
+    --------------------------------------------------------------------
+</code></pre>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.9.9.png" style="width:450px;height:350px;" alt="图片描述">
+  <figcaption><strong>Simple interaction contrast of depression status by treatment at each season</strong></figcaption>
+</figure>
+<h3 id="33-simple-effects-and-simple-comparisons">3.3 Simple effects and simple comparisons</h3>
+<p>We might be interested in focusing on the simple effects of treatment across the levels of season and depression status.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast treat@season#depstat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We could further refine this test by focusing on the comparison of happiness therapy versus traditional therapy (group 3 versus 2) by applying the r3b2. contrast operator to treat, as shown below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast r3b2.treat@season#depstat,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>this contrast is specified as r3b2.treat,which indicates to compare group 3 with group2.  This could have also been specified as a custom contrast,{treat 0 -1 1}</p>
+</blockquote>
+<pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ------------------------------------------------------------------
+                              |   Contrast   Std. err.      t    P&gt;|t|
+    --------------------------+---------------------------------------
+         treat@season#depstat |
+       (HT vs TT) Winter#Non  |       7.00       1.55     4.51   0.000
+      (HT vs TT) Winter#Mild  |       2.03       1.55     1.31   0.190
+    (HT vs TT) Winter#Severe  |      -0.53       1.55    -0.34   0.731
+       (HT vs TT) Spring#Non  |       5.37       1.55     3.46   0.001
+      (HT vs TT) Spring#Mild  |       4.17       1.55     2.69   0.007
+    (HT vs TT) Spring#Severe  |      -0.47       1.55    -0.30   0.764
+       (HT vs TT) Summer#Non  |       4.33       1.55     2.79   0.005
+      (HT vs TT) Summer#Mild  |      11.23       1.55     7.24   0.000
+    (HT vs TT) Summer#Severe  |      -0.67       1.55    -0.43   0.667
+         (HT vs TT) Fall#Non  |       5.83       1.55     3.76   0.000
+        (HT vs TT) Fall#Mild  |       4.13       1.55     2.67   0.008
+      (HT vs TT) Fall#Severe  |       0.20       1.55     0.13   0.897
+    ------------------------------------------------------------------
+</code></pre>
+<p>This shows that for some combinations of season and depstat, the difference between happiness and traditional therapy is significant.</p>
+<p>For example, in season 1 (winter) and depression status 1 (nondepressed), the difference between happiness and traditional therapy is significant, with happiness therapy yielding optimism scores that are 7 points greater than traditional therapy</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-07</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/9.chapter9categorical-by-categorical-by-categorical-interactions/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/categorical/">Categorical</a>,&nbsp;<a href="/tags/interaction/">Interaction</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/8.chapter8categorical-by-categorical-interactions/" class="prev" rel="prev" title="Chapter8 ：Categorical by categorical interactions"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter8 ：Categorical by categorical interactions</a>
+            <a href="/10.chapter10linear-by-categorical-interactions/" class="next" rel="next" title="Chapter10 ：Linear by categorical interactions">Chapter10 ：Linear by categorical interactions<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

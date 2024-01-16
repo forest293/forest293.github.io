@@ -4,94 +4,85 @@
         <link>https://forest293.github.io/posts/</link>
         <description>所有文章 | Alex_Wang</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 06 Jan 2024 16:29:41 &#43;0800</lastBuildDate><atom:link href="https://forest293.github.io/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>Chapter8 ：Categorical by categorical interactions</title>
-    <link>https://forest293.github.io/8.chapter8categorical-by-categorical-interactions/</link>
-    <pubDate>Sat, 06 Jan 2024 16:29:41 &#43;0800</pubDate>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 16 Jan 2024 06:29:41 &#43;0800</lastBuildDate><atom:link href="https://forest293.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Chapter19 ：Complex survey data</title>
+    <link>https://forest293.github.io/19.chapter19complex-survey-data/</link>
+    <pubDate>Tue, 16 Jan 2024 06:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/8.chapter8categorical-by-categorical-interactions/</guid>
-    <description><![CDATA[This chapter illustrates models that involve the interaction of two categorical variables.The emphasis of this chapter is not only how to test for interactions between factor variables but also how to understand and dissect those interactions. This chapter focuses on three types of interactions: two by two interactions. two by three interactions. three by three interactions. 1 Two by two models: Example 1 In this first hypothetical study, she seeks]]></description>
+    <guid>https://forest293.github.io/19.chapter19complex-survey-data/</guid>
+    <description><![CDATA[The chapter briefly illustrates the mechanics of using these commands in the context of a complex survey The example dataset used in this chapter is the nhanes2.dta dataset. This is one of the Stata example datasets and is used via the Internet with the webuse command, shown below. 1 2 webuse nhanes2 svyset The svyset command has already been used to declare the design for this survey, naming the primary]]></description>
 </item>
 <item>
-    <title>Chapter7 ：Categorical predictors</title>
-    <link>https://forest293.github.io/7.chapter7categorical-predictors/</link>
-    <pubDate>Fri, 05 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <title>Chapter18 ：Nonlinear models</title>
+    <link>https://forest293.github.io/18.chapter18nonlinear-models/</link>
+    <pubDate>Mon, 15 Jan 2024 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/7.chapter7categorical-predictors/</guid>
-    <description><![CDATA[This chapter covers models that involve categorical predictors. The emphasis is on how to make contrasts among levels of the categorical predictor to answer interesting questions regarding the differences among the categories. 1 Comparing two groups using a t test The simplest kind of categorical predictor has two levels. Examples of such twolevel predictors include gender (male versus female), treatment assignment (treatment group versus control group), or whether one is]]></description>
+    <guid>https://forest293.github.io/18.chapter18nonlinear-models/</guid>
+    <description><![CDATA[The chapter begins with a discussion of logistic regression models(most detailed) 1 Binary logistic regression 1.1 A logistic model with one categorical predictor Let’s consider a simple logistic regression model that predicts whether a person smokes (smoke) by the person’s self-reported social class (class). The variable class is a categorical variable that is coded: 1 = lower class, 2]]></description>
 </item>
 <item>
-    <title>Chapter6 ：Continuous by continuous by continuous interactions</title>
-    <link>https://forest293.github.io/6.continuous-by-continuous-by-continuous-interactions/</link>
-    <pubDate>Thu, 04 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <title>Chapter17 ：Time as a categorical predictor</title>
+    <link>https://forest293.github.io/17.chapter17time-as-a-categorical-predictor/</link>
+    <pubDate>Sun, 14 Jan 2024 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/6.continuous-by-continuous-by-continuous-interactions/</guid>
-    <description><![CDATA[This chapter explores models that involve the interaction of three continuous linear predictors. 1 Overview Let’s first consider a hypothetical example looking at income (adjusted for inflation) as a function of age, education, and year born. To illustrate the meaning of an interaction of these three continuous predictor, let’s first consider a model that does not include a three-way interaction. $$ \widehat{realrin}=3365394]]></description>
+    <guid>https://forest293.github.io/17.chapter17time-as-a-categorical-predictor/</guid>
+    <description><![CDATA[This chapter considers models where time is treated as a categorical variable The models presented in this chapter will use the mixed command to fit a model that is a hybrid of a traditional repeated-measures analysis of variance (ANOVA) and a mixed model. Like the repeated-measures ANOVA, there will be one fixed intercept (rather than having random intercepts that we commonly see when using the mixed command). By specifying the]]></description>
 </item>
 <item>
-    <title>Chapter5 ：Continuous by continuous interactions</title>
-    <link>https://forest293.github.io/5.continuous-by-continuous-interactions/</link>
-    <pubDate>Mon, 01 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <title>Chapter14 ：Continuous by continuous by categorical interactions</title>
+    <link>https://forest293.github.io/14.chapter14continuous-by-categorical-by-categorical-interactions/</link>
+    <pubDate>Sat, 13 Jan 2024 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/5.continuous-by-continuous-interactions/</guid>
-    <description><![CDATA[This chapter illustrates how to interpret interactions of two continuous predictors. 1 Linear by linear interactions A linear by linear interaction implies that the slope of the relationship between one of the predictors and the outcome changes as a linear function of the other predictor. Let’s begin with a hypothetical example in which we predict income (realrinc) from age (age) and education (educ) without an interaction.]]></description>
+    <guid>https://forest293.github.io/14.chapter14continuous-by-categorical-by-categorical-interactions/</guid>
+    <description><![CDATA[This chapter considers models that involve the interaction of two categorical predictors with a linear continuous predictor. 1 Chapter overview This chapter blends these two modeling techniques by exploring how the slope of the continuous variable varies as a function of the interaction of the two categorical variables. Let’s consider a hypothetical example of a model with income as the outcome variable. The predictors include gender]]></description>
 </item>
 <item>
-    <title>Chapter4 ：Continuous predictors: Piecewise models</title>
-    <link>https://forest293.github.io/3.continuous-predictors_piecewise-models/</link>
-    <pubDate>Fri, 29 Dec 2023 16:29:41 &#43;0800</pubDate>
+    <title>Chapter15 ：Multilevel models</title>
+    <link>https://forest293.github.io/15.chapter15multilevel-models/</link>
+    <pubDate>Sat, 13 Jan 2024 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/3.continuous-predictors_piecewise-models/</guid>
-    <description><![CDATA[This chapter illustrates the use of piecewise regression. This involves fitting separate line segments, demarcated by knots, that account for the nonlinearity between the predictor and outcome.
-1 Introduction to piecewise regression models A piecewise regression goes by several names, including spline regression,broken line regression, broken stick regression, and even hockey stick models.
-Consider the example, predicting annual income from education, shown in the figure below
-A knot can signify a change of slope and a change of intercept, yielding an increase (or decrease) in the outcome upon attaining a particular milestone.]]></description>
+    <guid>https://forest293.github.io/15.chapter15multilevel-models/</guid>
+    <description><![CDATA[One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable. 1 Chapter overview This chapter contains four examples, all]]></description>
 </item>
 <item>
-    <title>Chapter3 ：Continuous predictors: Polynomials</title>
-    <link>https://forest293.github.io/2.continuous-predictors_polynomials/</link>
-    <pubDate>Thu, 28 Dec 2023 16:29:41 &#43;0800</pubDate>
+    <title>Chapter16 ：Time as a continuous predictor</title>
+    <link>https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/</link>
+    <pubDate>Sat, 13 Jan 2024 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/2.continuous-predictors_polynomials/</guid>
-    <description><![CDATA[This Chapter focuses on how to interpret the coefficient of a continuous predictor in a linear regression model.
-1 Quadratic (squared) terms A quadratic (squared) term can be used to model curved relationships, accounting for one bend in the relationship between the predictor and outcome.
-Let’s relate the nature of the curve to the regression equation predicting income (realrinc) from age (age), shown below.
-$$ \widehat{realrinc}=-30000 + 2500age + (-25age^{2}) $$ For an inverted U-shaped curve, we can compute the value of x that corresponds to the maximum value of y.]]></description>
+    <guid>https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/</guid>
+    <description><![CDATA[This chapter considers models involving the analysis of longitudinal data. Such designs involve participants that are observed at more than one time point and time is generally treated as one of the important predictors in the model. Like any predictor, we need to ask ourselves how we want to model the relationship between time and the outcome. A key distinction is whether time will be treated as a continuous variable]]></description>
 </item>
 <item>
-    <title>Chapter2 ：Continuous predictors:Linear</title>
-    <link>https://forest293.github.io/1.continuous-predictors_linear/</link>
-    <pubDate>Sat, 09 Dec 2023 16:29:41 &#43;0800</pubDate>
+    <title>Chapter12 ：Piecewise by categorical interactions</title>
+    <link>https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/</link>
+    <pubDate>Thu, 11 Jan 2024 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/1.continuous-predictors_linear/</guid>
-    <description><![CDATA[This Chapter focuses on how to interpret the coefficient of a continuous predictor in a linear regression model.
-1 Simple linear regression This section illustrates the use of a continuous predictor for predicting a continuous outcome using ordinary least-squares regression.
-Terminology: Continuous and categorical variables
-When I use the termcontinuous variable, I am referring to a variable that is measured on an interval or ratio scale. By contrast, when I speak of a categorical variable,I am referring to either a nominal variable or an ordinal/interval/ratio variable that we wish to treat as though it were a nominal variable.]]></description>
+    <guid>https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/</guid>
+    <description><![CDATA[This chapter illustrates how to fit models in which a continuous variable, fit in a piecewise manner, is interacted with a categorical variable. 1 One knot and one jump For example, education was modeled in a piecewise manner including one knot at 12 years of education. This knot signifies both a change of slope and change in intercept (jump). The model also includes gender as a categorical variable and estimates]]></description>
 </item>
 <item>
-    <title>主题文档 - 基本概念</title>
-    <link>https://forest293.github.io/theme-documentation-basics/</link>
-    <pubDate>Fri, 06 Mar 2020 21:40:32 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://forest293.github.io/theme-documentation-basics/</guid>
-    <description><![CDATA[<p>探索 Hugo - <strong>LoveIt</strong> 主题的全部内容和背后的核心概念.</p>]]></description>
+    <title>Chapter13 ：Continuous by continuous by categorical interactions</title>
+    <link>https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/</link>
+    <pubDate>Thu, 11 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/</guid>
+    <description><![CDATA[This chapter explores models that include a categorical variable interacted with two continuous variables. 1 Linear by linear by categorical interactions In this section, we will explore whether the size of the c.age##c.educ interaction depends on gender. 1.1 Fitting separate models for males and females To get a general sense of the size of the c.age#c.educ interaction separately for males and females, let’s fit separate models]]></description>
 </item>
 <item>
-    <title>主题文档 - 内容</title>
-    <link>https://forest293.github.io/theme-documentation-content/</link>
-    <pubDate>Thu, 05 Mar 2020 16:30:05 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://forest293.github.io/theme-documentation-content/</guid>
-    <description><![CDATA[<p>了解如何在 <strong>LoveIt</strong> 主题中快速, 直观地创建和组织内容.</p>]]></description>
+    <title>Chapter11 ：Polynomial by categorical interactions</title>
+    <link>https://forest293.github.io/11.chapter11polynomial-by-categorical-interactions/</link>
+    <pubDate>Wed, 10 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/11.chapter11polynomial-by-categorical-interactions/</guid>
+    <description><![CDATA[This chapter illustrates models that involve a continuous variable modeled using a polynomial term interacted with a categorical variable. This chapter covers two types of polynomial terms: quadratic and cubic. 1 Quadratic by categorical interactions 1.1 Quadratic by two-level categorical Let’s now use the GSS dataset to fit a model predicting income from age (modeled using a quadratic term), whether one is a college graduate, as]]></description>
 </item>
 <item>
-    <title>主题文档 - 内置 Shortcodes</title>
-    <link>https://forest293.github.io/theme-documentation-built-in-shortcodes/</link>
-    <pubDate>Wed, 04 Mar 2020 16:29:59 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://forest293.github.io/theme-documentation-built-in-shortcodes/</guid>
-    <description><![CDATA[<p><strong>Hugo</strong> 提供了多个内置的 Shortcodes, 以方便作者保持 Markdown 内容的整洁.</p>]]></description>
+    <title>Chapter10 ：Linear by categorical interactions</title>
+    <link>https://forest293.github.io/10.chapter10linear-by-categorical-interactions/</link>
+    <pubDate>Tue, 09 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/10.chapter10linear-by-categorical-interactions/</guid>
+    <description><![CDATA[This chapter illustrates models that involve interactions of categorical and continuous variables. 1 Linear and two-level categorical: No interaction 1.1 Overview This section introduces the concepts involving models that combine continuous and categorical predictors with no interaction. Let’s begin by considering a hypothetical simple regression model predicting income from age, focusing on people who are aged 22 to 55. $$ \widehat{realrinc}=9000 + 400age $$ Simple linear]]></description>
 </item>
 </channel>
 </rss>

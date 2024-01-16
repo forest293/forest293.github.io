@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Chapter13 ：Continuous by continuous by categorical interactions - Alex_Wang</title><meta name="Description" content="This chapter explores models that include a categorical variable interacted with two continuous variables. "><meta property="og:title" content="Chapter13 ：Continuous by continuous by categorical interactions" />
+<meta property="og:description" content="This chapter explores models that include a categorical variable interacted with two continuous variables. " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-11T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-11T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Chapter13 ：Continuous by continuous by categorical interactions"/>
+<meta name="twitter:description" content="This chapter explores models that include a categorical variable interacted with two continuous variables. "/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/" /><link rel="prev" href="https://forest293.github.io/11.chapter11polynomial-by-categorical-interactions/" /><link rel="next" href="https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chapter13 ：Continuous by continuous by categorical interactions",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/13.chapter13continuous-by-continuous-by-categorical-interactions\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Interaction, stata","wordcount":  3665 ,
+        "url": "https:\/\/forest293.github.io\/13.chapter13continuous-by-continuous-by-categorical-interactions\/","datePublished": "2024-01-11T16:29:41+08:00","dateModified": "2024-01-11T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "This chapter explores models that include a categorical variable interacted with two continuous variables. "
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/13.chapter13continuous-by-continuous-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/13.chapter13continuous-by-continuous-by-categorical-interactions/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Chapter13 ：Continuous by continuous by categorical interactions</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/interpreting-and-visualizing-regression-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Interpreting and Visualizing Regression Models Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-11">2024-01-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 3665 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 8 分钟&nbsp;<span id="/13.chapter13continuous-by-continuous-by-categorical-interactions/" class="leancloud_visitors" data-flag-title="Chapter13 ：Continuous by continuous by categorical interactions">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-linear-by-linear-by-categorical-interactions">1 Linear by linear by categorical interactions</a>
+      <ul>
+        <li><a href="#11-fitting-separate-models-for-males-and-females">1.1 Fitting separate models for males and females</a></li>
+        <li><a href="#12-fitting-a-combined-model-for-males-and-females">1.2 Fitting a combined model for males and females</a></li>
+        <li><a href="#13-interpreting-the-interaction-focusing-in-the-age-slope">1.3 Interpreting the interaction focusing in the age slope</a></li>
+        <li><a href="#14-interpreting-the-interaction-focusing-on-the-educ-slope">1.4 Interpreting the interaction focusing on the educ slope</a></li>
+        <li><a href="#15-estimating-and-comparing-adjusted-means-by-gender">1.5 Estimating and comparing adjusted means by gender</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-linear-by-quadratic-by-categorical-interactions">2 Linear by quadratic by categorical interactions</a>
+      <ul>
+        <li><a href="#21-fitting-separate-models-for-males-and-females">2.1 Fitting separate models for males and females</a></li>
+        <li><a href="#22-fitting-a-common-model-for-males-and-females">2.2 Fitting a common model for males and females</a></li>
+        <li><a href="#23-interpreting-the-interaction">2.3 Interpreting the interaction</a></li>
+        <li><a href="#24-estimating-and-comparing-adjusted-means-by-gender">2.4 Estimating and comparing adjusted means by gender</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This chapter explores models that include a categorical variable interacted with two continuous variables.</p>
+<h2 id="1-linear-by-linear-by-categorical-interactions">1 Linear by linear by categorical interactions</h2>
+<p>In this section, we will explore whether the size of the c.age##c.educ interaction depends on gender.</p>
+<h3 id="11-fitting-separate-models-for-males-and-females">1.1 Fitting separate models for males and females</h3>
+<p>To get a general sense of the size of the c.age#c.educ interaction separately for males and females, let’s fit separate models for males and females.</p>
+<p>Doing so separately for each level of gender by including the by gender, sort: prefix. (The vsquish and noheader options are used to save space.) The first set of results is restricted to analyzing only males, and the second set is restricted to analyzing only females.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if (age&gt;=22 &amp; age&lt;=55) &amp; (educ&gt;=12)
+</span></span><span class="line"><span class="cl">  by gender,sort:regress realrinc c.age##c.educ,vce(robust)vsquish noheader
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    --------------------------------------------------------------------------------------------------------------
+    -&gt; gender = Male
+    ------------------------------------------------------------------------------
+                 |               Robust
+        realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+             age |   -1092.29     195.71    -5.58   0.000     -1475.92     -708.65
+            educ |   -1831.07     526.01    -3.48   0.001     -2862.14     -799.99
+    c.age#c.educ |     134.46      14.35     9.37   0.000       106.33      162.60
+           _cons |   25275.91    7128.77     3.55   0.000     11302.24    39249.58
+    ------------------------------------------------------------------------------
+    
+    --------------------------------------------------------------------------------------------------------------
+    -&gt; gender = Female
+    ------------------------------------------------------------------------------
+                 |               Robust
+        realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+             age |    -876.56     158.24    -5.54   0.000     -1186.74     -566.39
+            educ |    -966.11     426.78    -2.26   0.024     -1802.69     -129.54
+    c.age#c.educ |      87.95      11.97     7.34   0.000        64.47      111.42
+           _cons |   17020.70    5661.95     3.01   0.003      5922.30    28119.10
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>We can visualize this in two different ways, by focusing on the slope in the direction of age or by focusing on the slope in the direction of educ. Let’s begin by making a graph that focuses on the slope in the direction of age by placing age on the $x$ axis, with separate lines for educ.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.12.3.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Fitted values for age by education interaction for males (left) and females (right)</strong></figcaption>
+</figure>
+<p>Among males, the age slope increases by 134.46 units for every oneyear increase in educ. Among females, the age slope increases by 87.95 units for every one-year increase in educ.</p>
+<p>We can visualize the c.age#c.educ interaction another way, focusing on the educ slope by placing educ on the $x$ axis, with separate lines for age.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.12.4.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong> Fitted values for age by education interaction for males (left) and females (right) with education on the $x$ axis</strong></figcaption>
+</figure>
+<p>For males, the educ slope increases by 134.46 units for every one-year increase in age. For females, the educ slope increases by 87.95 units for every oneyear increase in age.</p>
+<p>To summarize, the coefficient for c.age#c.educ is 134.46 for males and is 87.95 for females. This suggests that the size of the c.age#c.educ coefficient may be significantly greater for males than for females. Let’s test this by analyzing males and females together in a single model.</p>
+<h3 id="12-fitting-a-combined-model-for-males-and-females">1.2 Fitting a combined model for males and females</h3>
+<p>We now create a regression model that includes both males and females and predicts realrinc from age, educ, and the interaction of these two continuous variables.</p>
+<p>By specifying ibn.gender in conjunction with the noconstant option, the model fits separate intercepts by gender. By specifying the interaction of ibn.gender with c.age, with c.educ, and with c.age#c.educ, the model fits separate estimates of age, educ, and age#educ by gender.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg realrinc ibn.gender ibn.gender#(c.age c.educ c.age#c.educ)i.race,vce(robust) noconstant noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Linear regression                               Number of obs     =     22,367
+                                                    F(10, 22357)      =    3126.19
+                                                    Prob &gt; F          =     0.0000
+                                                    R-squared         =     0.5339
+                                                    Root MSE          =      24543
+    
+    ------------------------------------------------------------
+                        |               Robust
+               realrinc | Coefficient  std. err.      t    P&gt;|t|
+    --------------------+---------------------------------------
+                 gender |
+                  Male  |   27044.09    7125.42     3.80   0.000
+                Female  |   19020.31    5695.44     3.34   0.001
+                        |
+           gender#c.age |
+                  Male  |   -1116.24     195.43    -5.71   0.000
+                Female  |    -903.50     158.76    -5.69   0.000
+                        |
+          gender#c.educ |
+                  Male  |   -1929.04     526.08    -3.67   0.000
+                Female  |   -1063.55     428.25    -2.48   0.013
+                        |
+    gender#c.age#c.educ |
+                  Male  |     136.00      14.34     9.48   0.000
+                Female  |      89.52      12.01     7.46   0.000
+                        |
+                   race |
+                 black  |   -3067.11     305.07   -10.05   0.000
+                 other  |     493.01    1192.16     0.41   0.679
+    ------------------------------------------------------------
+</code></pre>
+<p>We can express these results as two though there are two regression equations, one for males and one for females.</p>
+<p>\begin{align}
+Males:\widehat{realrinc} = 27044.09 + - 1116.24age + - 1929.04educ  \notag\
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad  \
++136.00age*educ + -3067.11black + 493.01other  \notag \
+\end{align}</p>
+<p>\begin{align}
+Females:\widehat{realrinc} = 19020.31 + - 903.50age + - 1063.55educ  \notag\
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad   \
++89.52age*educ + -3067.11black + 493.01other  \notag \
+\end{align}</p>
+<p>Let’s now test the difference of the c.age#c.educ interaction for females versus males using the contrast command below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  contrast gender#c.age#c.educ,nowald pveffects
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of marginal linear predictions
+    
+    Margins: asbalanced
+    
+    ------------------------------------------------------------
+                        |   Contrast   Std. err.      t    P&gt;|t|
+    --------------------+---------------------------------------
+    gender#c.age#c.educ |
+      (Female vs base)  |     -46.48      18.71    -2.48   0.013
+    ------------------------------------------------------------
+</code></pre>
+<p>This test is significant,This means that the c.age#c.educ interaction is significantly lower for females than for males. Let’s explore how to interpret this interaction.</p>
+<blockquote>
+<p>Note! What about the lower order effects?</p>
+<blockquote>
+<p>We have been focusing on the gender#c.age#c.educ interaction, but you might wonder about the lower order effects, such as gender#c.age or gender#c.educ. It is important to include these effects in the model to preserve the interpretation of the gender#c.age#c.educ interaction. However, there is little to gain by trying to interpret these effects.</p>
+</blockquote>
+</blockquote>
+<h3 id="13-interpreting-the-interaction-focusing-in-the-age-slope">1.3 Interpreting the interaction focusing in the age slope</h3>
+<p>To help interpret this interaction, let’s visualize it by making a graph that focuses on the age slope.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender, at(age=(22 55) educ=(12(2)20))
+</span></span><span class="line"><span class="cl">  marginsplot,bydimension(gender) plotdimension(educ,allsimple)legend(subtitle(Education) rows(2)) noci 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.12.5.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong> Fitted values by age ( axis), education (separate lines), and gender (separate panels)</strong></figcaption>
+</figure>
+<p>For males, the age slope increases by 136.00 units for every one-unit increase in education. For females, the age slope increases by 89.52 units for every one-unit increase in education. The test of the gender#c.age#c.educ effect represents the difference in these interaction terms and this graph shows one way to visualize this.</p>
+<p>The margins command can be used to show the size of the age slope by specifying the dydx(age) option. Let’s use the margins command to estimate the age slope for each of the levels of education expressed as a separate line in figure</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender,at(educ=(12(2)20)) dydx(age)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Average marginal effects                                Number of obs = 22,367
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    dy/dx wrt:  age
+    1._at: educ = 12
+    2._at: educ = 14
+    3._at: educ = 16
+    4._at: educ = 18
+    5._at: educ = 20
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+    age          |
+      _at#gender |
+         1#Male  |     515.76      34.61    14.90   0.000       447.93      583.60
+       1#Female  |     170.70      19.56     8.73   0.000       132.36      209.03
+         2#Male  |     787.76      28.15    27.98   0.000       732.58      842.94
+       2#Female  |     349.73      16.77    20.85   0.000       316.85      382.61
+         3#Male  |    1059.76      45.09    23.50   0.000       971.38     1148.14
+       3#Female  |     528.76      36.51    14.48   0.000       457.19      600.33
+         4#Male  |    1331.76      70.14    18.99   0.000      1194.28     1469.24
+       4#Female  |     707.80      59.48    11.90   0.000       591.20      824.39
+         5#Male  |    1603.76      97.22    16.50   0.000      1413.20     1794.32
+       5#Female  |     886.83      83.05    10.68   0.000       724.06     1049.60
+    ------------------------------------------------------------------------------
+</code></pre>
+<h3 id="14-interpreting-the-interaction-focusing-on-the-educ-slope">1.4 Interpreting the interaction focusing on the educ slope</h3>
+<p>Now, let’s visualize this interaction by making a graph that focuses on the educ slope.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender, at(age=(25(10)55) educ=(12 20)) 
+</span></span><span class="line"><span class="cl">  marginsplot, bydimension(gender) xdimension(educ) noci legend(rows(2)subtitle(Age))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.12.6.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Fitted values by education ( axis), age (separate lines), and gender (separate panels)</strong></figcaption>
+</figure>
+<p>This graph illustrates the gender#c.age#c.educ interaction by showing how the educ slope increases more rapidly as a function of age for males than for females.</p>
+<p>The dydx(educ) option can be used with the margins command to compute the educ slope for each of the lines displayed in figure</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender,at(age=(25(10)55)) dydx(educ) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Average marginal effects                                Number of obs = 22,367
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    dy/dx wrt:  educ
+    1._at: age = 25
+    2._at: age = 35
+    3._at: age = 45
+    4._at: age = 55
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |      dy/dx   std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+    educ         |
+      _at#gender |
+         1#Male  |    1470.96     206.19     7.13   0.000      1066.82     1875.10
+       1#Female  |    1174.36     155.32     7.56   0.000       869.91     1478.81
+         2#Male  |    2830.96     144.29    19.62   0.000      2548.14     3113.78
+       2#Female  |    2069.52     104.23    19.85   0.000      1865.22     2273.83
+         3#Male  |    4190.97     200.68    20.88   0.000      3797.61     4584.32
+       3#Female  |    2964.69     162.58    18.24   0.000      2646.02     3283.35
+         4#Male  |    5550.97     317.61    17.48   0.000      4928.43     6173.50
+       4#Female  |    3859.85     266.13    14.50   0.000      3338.21     4381.49
+    ------------------------------------------------------------------------------
+</code></pre>
+<h3 id="15-estimating-and-comparing-adjusted-means-by-gender">1.5 Estimating and comparing adjusted means by gender</h3>
+<p>The difference in the adjusted means by gender varies as a function of age and educ due to the interaction of gender with c.age#c.educ. Thus, any comparisons by gender should be performed by specifying a particular value of age and educ.</p>
+<p>The size of the difference (as well as the significance of the difference) between males and females depends on both educ and age. You could repeat the margins commands above to obtain comparisons between males and females for a variety ofvalues of age and educ. Or you can specify multiple values at once within the margins command.</p>
+<p>or example, the margins command below estimates the adjusted mean for males and females for the combinations of 12, 15, and 20 years of education and 30, 40, and 50 years of age</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender,at(educ=(12 16 20)age=(30 40 50))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Predictive margins                                      Number of obs = 22,367
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    1._at: age  = 30
+           educ = 12
+    2._at: age  = 30
+           educ = 16
+    3._at: age  = 30
+           educ = 20
+    4._at: age  = 40
+           educ = 12
+    5._at: age  = 40
+           educ = 16
+    6._at: age  = 40
+           educ = 20
+    7._at: age  = 50
+           educ = 12
+    8._at: age  = 50
+           educ = 16
+    9._at: age  = 50
+           educ = 20
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+      _at#gender |
+         1#Male  |   18995.85     290.94    65.29   0.000     18425.60    19566.10
+       1#Female  |   11006.03     210.47    52.29   0.000     10593.50    11418.57
+         2#Male  |   27599.71     480.25    57.47   0.000     26658.37    28541.04
+       2#Female  |   17493.80     332.35    52.64   0.000     16842.37    18145.22
+         3#Male  |   36203.56    1106.97    32.71   0.000     34033.83    38373.29
+       3#Female  |   23981.56     788.13    30.43   0.000     22436.77    25526.36
+         4#Male  |   24153.48     377.11    64.05   0.000     23414.31    24892.64
+       4#Female  |   12713.02     213.38    59.58   0.000     12294.77    13131.26
+         5#Male  |   38197.33     507.34    75.29   0.000     37202.92    39191.75
+       5#Female  |   22781.44     373.68    60.96   0.000     22048.99    23513.88
+         6#Male  |   52241.19    1088.80    47.98   0.000     50107.08    54375.31
+       6#Female  |   32849.85     845.68    38.84   0.000     31192.26    34507.45
+         7#Male  |   29311.10     662.83    44.22   0.000     28011.91    30610.30
+       7#Female  |   14420.00     351.09    41.07   0.000     13731.84    15108.17
+         8#Male  |   48794.96     831.12    58.71   0.000     47165.91    50424.02
+       8#Female  |   28069.07     659.91    42.53   0.000     26775.61    29362.54
+         9#Male  |   68278.83    1742.40    39.19   0.000     64863.60    71694.06
+       9#Female  |   41718.15    1479.36    28.20   0.000     38818.50    44617.79
+    ------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.gender,at(educ=(12 16 20) age=(30 40 50))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of predictive margins                         Number of obs = 22,367
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    1._at: age  = 30
+           educ = 12
+    2._at: age  = 30
+           educ = 16
+    3._at: age  = 30
+           educ = 20
+    4._at: age  = 40
+           educ = 12
+    5._at: age  = 40
+           educ = 16
+    6._at: age  = 40
+           educ = 20
+    7._at: age  = 50
+           educ = 12
+    8._at: age  = 50
+           educ = 16
+    9._at: age  = 50
+           educ = 20
+    
+    -------------------------------------------------------
+                        |         df           F        P&gt;F
+    --------------------+----------------------------------
+             gender@_at |
+    (Female vs Male) 1  |          1      499.54     0.0000
+    (Female vs Male) 2  |          1      296.57     0.0000
+    (Female vs Male) 3  |          1       80.27     0.0000
+    (Female vs Male) 4  |          1      701.62     0.0000
+    (Female vs Male) 5  |          1      595.57     0.0000
+    (Female vs Male) 6  |          1      196.14     0.0000
+    (Female vs Male) 7  |          1      395.11     0.0000
+    (Female vs Male) 8  |          1      381.32     0.0000
+    (Female vs Male) 9  |          1      134.57     0.0000
+                 Joint  |          4      483.36     0.0000
+                        |
+            Denominator |      22357
+    -------------------------------------------------------
+    
+    ---------------------------------------------------------------------
+                        |            Delta-method
+                        |   Contrast   std. err.     [95% conf. interval]
+    --------------------+------------------------------------------------
+             gender@_at |
+    (Female vs Male) 1  |   -7989.82     357.48      -8690.50    -7289.14
+    (Female vs Male) 2  |  -10105.91     586.83     -11256.13    -8955.68
+    (Female vs Male) 3  |  -12222.00    1364.16     -14895.84    -9548.16
+    (Female vs Male) 4  |  -11440.46     431.91     -12287.03   -10593.89
+    (Female vs Male) 5  |  -15415.90     631.69     -16654.05   -14177.75
+    (Female vs Male) 6  |  -19391.34    1384.60     -22105.24   -16677.44
+    (Female vs Male) 7  |  -14891.10     749.15     -16359.48   -13422.72
+    (Female vs Male) 8  |  -20725.89    1061.37     -22806.25   -18645.53
+    (Female vs Male) 9  |  -26560.68    2289.64     -31048.54   -22072.82
+    ---------------------------------------------------------------------
+</code></pre>
+<h2 id="2-linear-by-quadratic-by-categorical-interactions">2 Linear by quadratic by categorical interactions</h2>
+<p>In this section, we will explore whether the size of the c.educ#c.age#c.age interaction depends on gender.</p>
+<h3 id="21-fitting-separate-models-for-males-and-females">2.1 Fitting separate models for males and females</h3>
+<p>Let’s begin by fitting a model that estimates the c.educ#c.age#c.age interaction in two separate models: one fit for males and another fit for females. This is performed by using the by gender, sort: prefix before the regress command that predicts realrinc from c.educ#c.age#c.age.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use gss_ivrm.dta
+</span></span><span class="line"><span class="cl">  keep if (age&gt;=22 &amp; age&lt;=80) &amp; (educ&gt;=12)
+</span></span><span class="line"><span class="cl">  by gender,sort:reg realrinc c.educ##c.age##c.age,vce(robust)vsquish noheader
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    ------------------------------------------------------------------------------------
+    -&gt; gender = Male
+    ------------------------------------------------------------------------------------
+                       |               Robust
+              realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------------+----------------------------------------------------------------
+                  educ |  -12420.54    1305.49    -9.51   0.000    -14979.50    -9861.58
+                   age |   -6160.36     876.56    -7.03   0.000     -7878.55    -4442.17
+          c.educ#c.age |     661.99      65.00    10.18   0.000       534.57      789.41
+           c.age#c.age |      56.96       9.96     5.72   0.000        37.43       76.48
+    c.educ#c.age#c.age |      -6.21       0.74    -8.43   0.000        -7.66       -4.77
+                 _cons |  131388.59   17570.69     7.48   0.000     96947.42   165829.75
+    ------------------------------------------------------------------------------------
+    
+    ------------------------------------------------------------------------------------
+    -&gt; gender = Female
+    ------------------------------------------------------------------------------------
+                       |               Robust
+              realrinc | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------------+----------------------------------------------------------------
+                  educ |   -6103.40     867.43    -7.04   0.000     -7803.68    -4403.12
+                   age |   -3703.10     599.49    -6.18   0.000     -4878.18    -2528.02
+          c.educ#c.age |     366.29      45.81     8.00   0.000       276.49      456.08
+           c.age#c.age |      35.83       7.23     4.95   0.000        21.65       50.00
+    c.educ#c.age#c.age |      -3.57       0.56    -6.43   0.000        -4.66       -2.48
+                 _cons |   69959.52   11406.57     6.13   0.000     47600.98    92318.06
+    ------------------------------------------------------------------------------------
+</code></pre>
+<p>This suggests that the size of this interaction might be more negative for males than for females. Before pursuing whether this difference is significant, let’s first visualize the c.educ#c.age#c.age interaction by gender to gain a further understanding of what this interaction means.</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.12.7.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Fitted values for education by age-squared interaction for males (left) and females (right)</strong></figcaption>
+</figure>
+<p>the male exhibit a greater increase in the curvature in the relationship between age and income as a function of education than do females.</p>
+<p>Let’s test whether the c.educ#c.age#c.age interaction is significantly different for males versus females. To do this, we fit a combined model that includes both males and females to permit a statistical test of c.educ#c.age#c.age by gender.</p>
+<h3 id="22-fitting-a-common-model-for-males-and-females">2.2 Fitting a common model for males and females</h3>
+<p>Let’s fit one model for males and females together using a separate intercept and separate slopes coding system that provides separate intercept and slope estimates for males and females. Separate intercepts by gender are obtained by specifying ibn.gender in conjunction with the noconstant option. Then, the model uses the shortcut notation to interact ibn.gender with each term created by c.educ#c.age#c.age.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  reg realrinc ibn.gender ibn.gender#(c.educ##c.age##c.age) i.race,vce(robust)noconstant noci
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Linear regression                               Number of obs     =     25,964
+                                                    F(14, 25950)      =    2544.34
+                                                    Prob &gt; F          =     0.0000
+                                                    R-squared         =     0.5263
+                                                    Root MSE          =      25748
+    
+    ------------------------------------------------------------------
+                              |               Robust
+                     realrinc | Coefficient  std. err.      t    P&gt;|t|
+    --------------------------+---------------------------------------
+                       gender |
+                        Male  |  133604.98   17548.76     7.61   0.000
+                      Female  |   73711.44   11412.10     6.46   0.000
+                              |
+                gender#c.educ |
+                        Male  |  -12550.64    1305.36    -9.61   0.000
+                      Female  |   -6329.01     867.97    -7.29   0.000
+                              |
+                 gender#c.age |
+                        Male  |   -6202.10     875.06    -7.09   0.000
+                      Female  |   -3809.82     598.99    -6.36   0.000
+                              |
+          gender#c.educ#c.age |
+                        Male  |     665.21      64.93    10.24   0.000
+                      Female  |     374.24      45.78     8.17   0.000
+                              |
+           gender#c.age#c.age |
+                        Male  |      57.18       9.95     5.75   0.000
+                      Female  |      36.76       7.22     5.09   0.000
+                              |
+    gender#c.educ#c.age#c.age |
+                        Male  |      -6.23       0.74    -8.47   0.000
+                      Female  |      -3.65       0.55    -6.58   0.000
+                              |
+                         race |
+                       black  |   -3474.03     291.35   -11.92   0.000
+                       other  |    -299.12    1110.20    -0.27   0.788
+    ------------------------------------------------------------------
+</code></pre>
+<p>We can express results as separate regression equations for males and females, as shown below</p>
+<p>\begin{align}
+Males:\widehat{realrinc} = 133605 + -12550.64educ + -6202.10age  \notag\
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad  \
++665.21educ × age + 57.18age^2+-6.23educ × age^2 \notag \
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad   \
++-3474.03black + -299.12other  \notag \
+\end{align}</p>
+<p>\begin{align}
+Females:\widehat{realrinc} = 73711.44 + -6329.01educ + -3809.82age  \notag\
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad \quad  \
++665.21educ × age + 57.18age^2+-6.23educ × age^2 \notag \
+\end{align}</p>
+<p>\begin{align}
+\quad \quad \quad \quad   \
++-3474.03black + -299.12other  \notag \
+\end{align}</p>
+<p>The coefficient for the c.educ#c.age#c.age interaction is $-6.23$ for males and is $-3.65$ for females. We can compare these coefficients using the contrast command, as shown below.</p>
+<h3 id="23-interpreting-the-interaction">2.3 Interpreting the interaction</h3>
+<p>To help us understand this interaction, let’s visualize it by making a graph showing the c.educ#c.age#c.age interaction separately for males and females.</p>
+<p>compute adjusted means for age 22 to 90(in one-year increments) and for 12 to 20 years of education (in two-year increments),separately for males and females.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender,at(age=(22(1)80) educ=(12(2)20))
+</span></span><span class="line"><span class="cl">  marginsplot,bydimension(gender) xdimension(age)plotdimension(educ,allsimp) noci recast(line) scheme(s1mono)legend(subtitle(Education)rows(1))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.12.8.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong>Fitted values by age ( axis), education (separate lines), and gender (separate panels)</strong></figcaption>
+</figure>
+<p>We see a similar pattern for both males and females; as educ increases, the inverted U-shape for the relationship between income and age becomes more pronounced. However, this effect appears stronger for males than for females. This is confirmed by the significant gender#c.educ#c.age#c.age interaction. In other words, this interaction shows that the degree to which the quadratic effect of age changes as a function of educ is stronger for males than it is for females.</p>
+<h3 id="24-estimating-and-comparing-adjusted-means-by-gender">2.4 Estimating and comparing adjusted means by gender</h3>
+<p>The difference in income for males and females depends on both age and gender. The margins command can be used to compute estimates of, and differences in, the adjusted means by gender.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender,at(educ=16 age=30)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Predictive margins                                      Number of obs = 25,964
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    At: educ = 16
+        age  = 30
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+          gender |
+           Male  |   27288.24     430.84    63.34   0.000     26443.78    28132.71
+         Female  |   17867.20     303.52    58.87   0.000     17272.28    18462.12
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>By adding the r. contrast operator to gender, we estimate the difference in these adjusted means, comparing females with males. This difference is significant.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.gender,at(educ=16 age=30) contrast(nowald pveffects)  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of predictive margins                         Number of obs = 25,964
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    At: educ = 16
+        age  = 30
+    
+    ----------------------------------------------------------
+                      |            Delta-method
+                      |   Contrast   std. err.      t    P&gt;|t|
+    ------------------+---------------------------------------
+               gender |
+    (Female vs Male)  |   -9421.04     529.92   -17.78   0.000
+    ----------------------------------------------------------
+</code></pre>
+<p>We can specify multiple values in the at() option to estimate the mean for males and females for various combinations of age and educ. The margins command below estimates the mean for males and females for the combinations of 12, 16, and 20 years of education and 30, 40, and 50 years of age.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins gender,at(educ=(12 16 20) age=(30 40 50)) 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Predictive margins                                      Number of obs = 25,964
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    1._at: educ = 12
+           age  = 30
+    2._at: educ = 12
+           age  = 40
+    3._at: educ = 12
+           age  = 50
+    4._at: educ = 16
+           age  = 30
+    5._at: educ = 16
+           age  = 40
+    6._at: educ = 16
+           age  = 50
+    7._at: educ = 20
+           age  = 30
+    8._at: educ = 20
+           age  = 40
+    9._at: educ = 20
+           age  = 50
+    
+    ------------------------------------------------------------------------------
+                 |            Delta-method
+                 |     Margin   std. err.      t    P&gt;|t|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+      _at#gender |
+         1#Male  |   20106.88     284.18    70.75   0.000     19549.88    20663.89
+       1#Female  |   11414.41     198.42    57.53   0.000     11025.50    11803.33
+         2#Male  |   25574.42     439.87    58.14   0.000     24712.25    26436.58
+       2#Female  |   13294.97     249.62    53.26   0.000     12805.70    13784.24
+         3#Male  |   27517.24     502.91    54.72   0.000     26531.51    28502.98
+       3#Female  |   13767.08     273.95    50.25   0.000     13230.11    14304.04
+         4#Male  |   27288.24     430.84    63.34   0.000     26443.78    28132.71
+       4#Female  |   17867.20     303.52    58.87   0.000     17272.28    18462.12
+         5#Male  |   41909.91     621.06    67.48   0.000     40692.60    43127.22
+       5#Female  |   24497.60     435.14    56.30   0.000     23644.71    25350.50
+         6#Male  |   48019.96     712.27    67.42   0.000     46623.87    49416.06
+       6#Female  |   26799.67     508.67    52.69   0.000     25802.64    27796.70
+         7#Male  |   34469.61     988.60    34.87   0.000     32531.90    36407.31
+       7#Female  |   24319.99     710.54    34.23   0.000     22927.30    25712.68
+         8#Male  |   58245.41    1334.69    43.64   0.000     55629.34    60861.49
+       8#Female  |   35700.24     981.01    36.39   0.000     33777.40    37623.07
+         9#Male  |   68522.68    1525.11    44.93   0.000     65533.38    71511.98
+       9#Female  |   39832.27    1144.65    34.80   0.000     37588.69    42075.85
+    ------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  margins r.gender,at(educ=(12 16 20)age=(30 40 50))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Contrasts of predictive margins                         Number of obs = 25,964
+    Model VCE: Robust
+    
+    Expression: Linear prediction, predict()
+    1._at: educ = 12
+           age  = 30
+    2._at: educ = 12
+           age  = 40
+    3._at: educ = 12
+           age  = 50
+    4._at: educ = 16
+           age  = 30
+    5._at: educ = 16
+           age  = 40
+    6._at: educ = 16
+           age  = 50
+    7._at: educ = 20
+           age  = 30
+    8._at: educ = 20
+           age  = 40
+    9._at: educ = 20
+           age  = 50
+    
+    -------------------------------------------------------
+                        |         df           F        P&gt;F
+    --------------------+----------------------------------
+             gender@_at |
+    (Female vs Male) 1  |          1      637.88     0.0000
+    (Female vs Male) 2  |          1      592.48     0.0000
+    (Female vs Male) 3  |          1      577.96     0.0000
+    (Female vs Male) 4  |          1      316.07     0.0000
+    (Female vs Male) 5  |          1      523.91     0.0000
+    (Female vs Male) 6  |          1      587.04     0.0000
+    (Female vs Male) 7  |          1       68.93     0.0000
+    (Female vs Male) 8  |          1      183.57     0.0000
+    (Female vs Male) 9  |          1      225.32     0.0000
+                 Joint  |          6      375.91     0.0000
+                        |
+            Denominator |      25950
+    -------------------------------------------------------
+    
+    ---------------------------------------------------------------------
+                        |            Delta-method
+                        |   Contrast   std. err.     [95% conf. interval]
+    --------------------+------------------------------------------------
+             gender@_at |
+    (Female vs Male) 1  |   -8692.47     344.17      -9367.07    -8017.88
+    (Female vs Male) 2  |  -12279.45     504.48     -13268.25   -11290.65
+    (Female vs Male) 3  |  -13750.17     571.95     -14871.23   -12629.11
+    (Female vs Male) 4  |   -9421.04     529.92     -10459.72    -8382.37
+    (Female vs Male) 5  |  -17412.31     760.72     -18903.37   -15921.25
+    (Female vs Male) 6  |  -21220.29     875.82     -22936.95   -19503.62
+    (Female vs Male) 7  |  -10149.62    1222.46     -12545.71    -7753.52
+    (Female vs Male) 8  |  -22545.17    1664.01     -25806.73   -19283.61
+    (Female vs Male) 9  |  -28690.41    1911.35     -32436.76   -24944.05
+    ---------------------------------------------------------------------
+</code></pre>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-11</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/13.chapter13continuous-by-continuous-by-categorical-interactions/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/interaction/">Interaction</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/11.chapter11polynomial-by-categorical-interactions/" class="prev" rel="prev" title="Chapter11 ：Polynomial by categorical interactions"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter11 ：Polynomial by categorical interactions</a>
+            <a href="/12.chapter12piecewise-by-categorical-interactions/" class="next" rel="next" title="Chapter12 ：Piecewise by categorical interactions">Chapter12 ：Piecewise by categorical interactions<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

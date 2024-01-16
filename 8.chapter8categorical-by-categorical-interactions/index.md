@@ -23,7 +23,7 @@ Let’s now run an analysis that predicts opt based on treat, depstat, and the i
 This analysis uses the anova command (instead of the regress command) because **the anova command directly shows the significance tests for each of the main effects as well as the interaction.**
 
 ```
-  use opt-2by2.dta"
+  use opt-2by2.dta
   anova opt depstat##treat
 ```
 
