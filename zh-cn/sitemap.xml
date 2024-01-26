@@ -2,23 +2,25 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://forest293.github.io/19.chapter19complex-survey-data/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/18.chapter18nonlinear-models/</loc><lastmod>2024-01-15T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/17.chapter17time-as-a-categorical-predictor/</loc><lastmod>2024-01-14T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/14.chapter14continuous-by-categorical-by-categorical-interactions/</loc><lastmod>2024-01-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/15.chapter15multilevel-models/</loc><lastmod>2024-01-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/</loc><lastmod>2024-01-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/</loc><lastmod>2024-01-11T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/</loc><lastmod>2024-01-11T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/11.chapter11polynomial-by-categorical-interactions/</loc><lastmod>2024-01-10T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/10.chapter10linear-by-categorical-interactions/</loc><lastmod>2024-01-09T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/9.chapter9categorical-by-categorical-by-categorical-interactions/</loc><lastmod>2024-01-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>https://forest293.github.io/8.chapter8categorical-by-categorical-interactions/</loc><lastmod>2024-01-06T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>https://forest293.github.io/7.chapter7categorical-predictors/</loc><lastmod>2024-01-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>https://forest293.github.io/6.continuous-by-continuous-by-continuous-interactions/</loc><lastmod>2024-01-04T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>https://forest293.github.io/5.continuous-by-continuous-interactions/</loc><lastmod>2024-01-01T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
-            <loc>https://forest293.github.io/3.continuous-predictors_piecewise-models/</loc><lastmod>2023-12-31T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
-            <loc>https://forest293.github.io/2.continuous-predictors_polynomials/</loc><lastmod>2023-12-29T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/chapter_4-methods-of-interpretation/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://forest293.github.io/chapter_3-estimation-testing-and-fit/</loc><lastmod>2024-01-16T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/19.chapter19complex-survey-data/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/18.chapter18nonlinear-models/</loc><lastmod>2024-01-15T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/17.chapter17time-as-a-categorical-predictor/</loc><lastmod>2024-01-14T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/14.chapter14continuous-by-categorical-by-categorical-interactions/</loc><lastmod>2024-01-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/15.chapter15multilevel-models/</loc><lastmod>2024-01-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/</loc><lastmod>2024-01-13T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/</loc><lastmod>2024-01-11T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/</loc><lastmod>2024-01-11T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/11.chapter11polynomial-by-categorical-interactions/</loc><lastmod>2024-01-10T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/10.chapter10linear-by-categorical-interactions/</loc><lastmod>2024-01-09T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/9.chapter9categorical-by-categorical-by-categorical-interactions/</loc><lastmod>2024-01-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/8.chapter8categorical-by-categorical-interactions/</loc><lastmod>2024-01-06T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/7.chapter7categorical-predictors/</loc><lastmod>2024-01-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/6.continuous-by-continuous-by-continuous-interactions/</loc><lastmod>2024-01-04T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://forest293.github.io/5.continuous-by-continuous-interactions/</loc><lastmod>2024-01-01T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://forest293.github.io/3.continuous-predictors_piecewise-models/</loc><lastmod>2023-12-31T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://forest293.github.io/2.continuous-predictors_polynomials/</loc><lastmod>2023-12-29T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://forest293.github.io/1.continuous-predictors_linear/</loc><lastmod>2023-12-09T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://forest293.github.io/theme-documentation-basics/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
@@ -128,7 +130,7 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/theme-documentation-typeit-shortcode/"
                     /></url><url>
-            <loc>https://forest293.github.io/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://forest293.github.io/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/"
@@ -137,7 +139,8 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/"
                     /></url><url>
-            <loc>https://forest293.github.io/categories/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://forest293.github.io/tags/categorical-dependent-variables/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://forest293.github.io/categories/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/categories/"
@@ -146,9 +149,7 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/categories/"
                     /></url><url>
-            <loc>https://forest293.github.io/tags/interaction/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/categories/interpreting-and-visualizing-regression-models-using-stata/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/posts/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://forest293.github.io/posts/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/posts/"
@@ -157,8 +158,9 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/posts/"
                     /></url><url>
-            <loc>https://forest293.github.io/tags/stata/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/tags/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
+            <loc>https://forest293.github.io/categories/regression-models-for-categorical-dependents-variables-using-stata/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://forest293.github.io/tags/stata/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://forest293.github.io/tags/</loc><lastmod>2024-01-21T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"
                         href="https://forest293.github.io/en/tags/"
@@ -167,9 +169,11 @@
                     hreflang="zh-cn"
                     href="https://forest293.github.io/tags/"
                     /></url><url>
-            <loc>https://forest293.github.io/tags/multilevel/</loc><lastmod>2024-01-14T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://forest293.github.io/tags/categorical/</loc><lastmod>2024-01-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
-            <loc>https://forest293.github.io/tags/continuous-predictors/</loc><lastmod>2024-01-04T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/tags/interaction/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/categories/interpreting-and-visualizing-regression-models-using-stata/</loc><lastmod>2024-01-16T07:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/tags/multilevel/</loc><lastmod>2024-01-14T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url><url>
+            <loc>https://forest293.github.io/tags/categorical/</loc><lastmod>2024-01-07T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://forest293.github.io/tags/continuous-predictors/</loc><lastmod>2024-01-04T23:45:40&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://forest293.github.io/tags/installation/</loc><lastmod>2020-03-06T21:40:32&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="en"

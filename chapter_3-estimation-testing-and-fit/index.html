@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Categorical Dependent Var] Chapter_3 ：Estimation, testing, and fit - Alex_Wang</title><meta name="Description" content="Reviews Stata commands for fitting models,testing hypotheses,and computing measures of model fit"><meta property="og:title" content="[Categorical Dependent Var] Chapter_3 ：Estimation, testing, and fit" />
+<meta property="og:description" content="Reviews Stata commands for fitting models,testing hypotheses,and computing measures of model fit" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/chapter_3-estimation-testing-and-fit/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-16T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-01-16T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Categorical Dependent Var] Chapter_3 ：Estimation, testing, and fit"/>
+<meta name="twitter:description" content="Reviews Stata commands for fitting models,testing hypotheses,and computing measures of model fit"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/chapter_3-estimation-testing-and-fit/" /><link rel="prev" href="https://forest293.github.io/19.chapter19complex-survey-data/" /><link rel="next" href="https://forest293.github.io/chapter_4-methods-of-interpretation/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Categorical Dependent Var] Chapter_3 ：Estimation, testing, and fit",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/chapter_3-estimation-testing-and-fit\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Categorical dependent variables, stata","wordcount":  15755 ,
+        "url": "https:\/\/forest293.github.io\/chapter_3-estimation-testing-and-fit\/","datePublished": "2024-01-16T16:29:41+08:00","dateModified": "2024-01-16T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "Reviews Stata commands for fitting models,testing hypotheses,and computing measures of model fit"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/chapter_3-estimation-testing-and-fit/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/chapter_3-estimation-testing-and-fit/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Categorical Dependent Var] Chapter_3 ：Estimation, testing, and fit</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/regression-models-for-categorical-dependents-variables-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Regression Models for Categorical Dependents variables Using Stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-01-16">2024-01-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 15755 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 32 分钟&nbsp;<span id="/chapter_3-estimation-testing-and-fit/" class="leancloud_visitors" data-flag-title="[Categorical Dependent Var] Chapter_3 ：Estimation, testing, and fit">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-estimation">1 Estimation</a>
+      <ul>
+        <li><a href="#11-statas-output-for-ml-estimation">1.1 Stata’s output for ML estimation</a></li>
+        <li><a href="#12-ml-and-sample-size">1.2 ML and sample size</a></li>
+        <li><a href="#13-problems-in-obtaining-ml-estimates">1.3 Problems in obtaining ML estimates</a></li>
+        <li><a href="#14-syntax-of-estimation-commands">1.4 Syntax of estimation commands</a></li>
+        <li><a href="#15-variable-lists">1.5 Variable lists</a></li>
+        <li><a href="#16-specifying-the-estimation-sample">1.6 Specifying the estimation sample</a>
+          <ul>
+            <li><a href="#161-missing-data">1.6.1 Missing data</a></li>
+            <li><a href="#162-information-about-missing-values">1.6.2 Information about missing values</a></li>
+            <li><a href="#163-postestimation-commands-and-the-estimation-sample">1.6.3 Postestimation commands and the estimation sample</a></li>
+          </ul>
+        </li>
+        <li><a href="#17-weights-and-survey-data">1.7 Weights and survey data</a>
+          <ul>
+            <li><a href="#171-complex-survey-desighs">1.7.1 complex survey desighs</a></li>
+          </ul>
+        </li>
+        <li><a href="#18-options-for-regression-models">1.8 Options for regression models</a></li>
+        <li><a href="#19-robust-standard-errors">1.9 Robust standard errors</a></li>
+        <li><a href="#110-reading-the-estimation-output">1.10 Reading the estimation output</a>
+          <ul>
+            <li><a href="#1101-header">1.10.1 Header</a></li>
+            <li><a href="#1102-estimates-and-standard-errors">1.10.2 Estimates and standard errors</a></li>
+            <li><a href="#1103-differences-in-output-for-svy-estimation">1.10.3 Differences in output for svy estimation</a></li>
+          </ul>
+        </li>
+        <li><a href="#111-storing-estimation-results">1.11 Storing estimation results</a>
+          <ul>
+            <li><a href="#1111-advanced-saving-estimates-to-a-file">1.11.1 (Advanced) Saving estimates to a file</a></li>
+          </ul>
+        </li>
+        <li><a href="#112-reformatting-output-with-estimates-table">1.12 Reformatting output with estimates table</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-testing">2 Testing</a></li>
+    <li><a href="#21-one-tailed-and-two-tailed-tests">2.1 One-tailed and two-tailed tests</a></li>
+    <li><a href="#22-wald-and-likelihood-ratio-tests">2.2 Wald and likelihood-ratio tests</a></li>
+    <li><a href="#23-wald-tests-with-test-and-testparm">2.3 Wald tests with test and testparm</a>
+      <ul>
+        <li><a href="#231-the-accumulate-option">2.3.1 The accumulate option</a></li>
+      </ul>
+    </li>
+    <li><a href="#24-lr-tests-with-irtest">2.4 LR tests with Irtest</a>
+      <ul>
+        <li><a href="#241-avoiding-invalid-lr-tests">2.4.1 Avoiding invalid LR tests</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-measures-of-fit">3 Measures of fit</a>
+      <ul>
+        <li><a href="#31-syntax-of-fitstat">3.1 Syntax of fitstat</a></li>
+        <li><a href="#32-methods-and-formulas-used-by-fitstat">3.2 Methods and formulas used by fitstat</a>
+          <ul>
+            <li><a href="#321-quantities-used-in-other-measures">3.2.1 Quantities used in other measures</a></li>
+            <li><a href="#322-information-criteria">3.2.2 Information criteria</a></li>
+            <li><a href="#322-example-of-information-criteria">3.2.2 Example of information criteria.</a></li>
+            <li><a href="#323-r2-in-the-linear-regression-model">3.2.3 $R^2$ in the linear regression model</a></li>
+            <li><a href="#324-pseudo-r2primes">3.2.4 $Pseudo-R2^{\prime}s$</a></li>
+          </ul>
+        </li>
+        <li><a href="#33-example-of-fitstat">3.3 Example of fitstat</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-estat-postestimation-commands">4 estat postestimation commands</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><strong>Reviews Stata commands for fitting models,testing hypotheses,and computing measures of model fit</strong>*</p>
+<p>Our book deals with what we think are the most fundamental and useful cross-sectional regression models for categorical and count outcomes: binary logit and probit, ordinal logit and probit, multinomial logit, Poisson regression, and negative binomial regression. We also explore several less common models, such as the stereotype logistic regression model and the zero-inflated and zero-truncated count models. Although these models differ in many respects, they generally share common features:</p>
+<ol>
+<li><strong>Each model is fit by maximum likelihood, and many can be fit when data is collected using a complex sample survey design.</strong></li>
+<li><strong>Hypotheses about the parameters can be tested with Wald and likelihood-ratio tests.</strong></li>
+<li><strong>Measures of fit can be computed.</strong></li>
+<li><strong>The models can be interpreted by examining predicted values of the outcomes, a topic that is considered in chapter 4.</strong></li>
+</ol>
+<p>Because of these similarities, the same principles and many of the same commands can be applied to each model.</p>
+<h2 id="1-estimation">1 Estimation</h2>
+<p>Each of the models we consider is fit using maximum likelihood (ML). <strong>ML estimates are the values of the parameters that have the greatest likelihood of generating the observed sample of data if the assumptions of the model are true.</strong></p>
+<p><strong>To obtain the ML estimates, a likelihood function calculates how likely it is that w e would observe the set of outcome values we actually observed if a given set of parameter estimates were the true parameters.</strong></p>
+<p>If we imagine a surface in which the range of possible values of a makes up one axis and the range of  $\beta$ makes up another axis, the resulting graph of the likelihood function would look like a hill; the ML estimates would be the parameter values corresponding to the top of this hill. The variance of the estim ates corresponds roughly to how quickly the slope is changing near the top of the hill.</p>
+<h3 id="11-statas-output-for-ml-estimation">1.1 Stata’s output for ML estimation</h3>
+<p><strong>The process of iteration is reflected in the initial lines of Stata’s output.</strong> Below are the first lines of the output from the logit model of labor force participation th at we use as an example in chapters 5 and 6:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">  use binlfp4, clear
+</span></span><span class="line"><span class="cl">  logit lfp k5 k618 agecat wc hc lwg inc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Iteration 0:  Log likelihood =  -514.8732  
+Iteration 1:  Log likelihood = -453.09301  
+Iteration 2:  Log likelihood = -452.72688  
+Iteration 3:  Log likelihood = -452.72649  
+Iteration 4:  Log likelihood = -452.72649  
+
+Logistic regression                                     Number of obs =    753
+                                                        LR chi2(7)    = 124.29
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -452.72649                             Pseudo R2     = 0.1207
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          k5 |      -1.39       0.19    -7.39   0.000        -1.76       -1.02
+        k618 |      -0.07       0.07    -0.96   0.338        -0.20        0.07
+      agecat |      -0.64       0.13    -4.92   0.000        -0.89       -0.38
+          wc |       0.80       0.23     3.48   0.001         0.35        1.25
+          hc |       0.14       0.21     0.66   0.510        -0.27        0.54
+         lwg |       0.61       0.15     4.06   0.000         0.32        0.91
+         inc |      -0.03       0.01    -4.25   0.000        -0.05       -0.02
+       _cons |       1.66       0.37     4.45   0.000         0.93        2.39
+------------------------------------------------------------------------------
+</code></pre>
+<p><strong>The results begin with the iteration log, where the first, line, iteration 0, reports the value of the log likelihood at the start value.</strong> Whereas earlier we talked about maximizing the likelihood function, in practice, programs maximize the log of the likelihood, which simplifies the computations and yields the same result. Here the log likelihood at the start is —514.8732. The next four lines show the progress in maximizing the log likelihood, converging to the value of —452.72649. The rest of the output, which is omitted here, is discussed later in this section.</p>
+<h3 id="12-ml-and-sample-size">1.2 ML and sample size</h3>
+<p>Under the usual assumptions, the ML estimator is consistent, efficient, and asymptotically normal. These properties hold as the sample size approaches infinity (see Cameron and Trivedi [2005]; Cramer [1986]; and Eliason [1993] for details). Although ML estimators are not necessarily bad estimators in small samples, the small-sample behavior of ML estim ators for the models we consider is largely unknown. Except for the logit and Poisson regression, which can be fit using exact perm utation methods with exlogistic or expoisson, alternative estimators with known small-sample properties are generally not available. With this in mind, Long (1997, 54) proposed the following guidelines for the use of ML in small samples:</p>
+<p><strong>It is risky to use ML with samples smaller than 100, while samples over 500 seem adequate. These values should be raised depending on characteristics of the model and the data.</strong></p>
+<p>First, if there are many parameters, more observations are needed A rule of at least 10 observations per parameter seems reasonable This does not imply that a minimum of 100 is not needed if you have only two parameters.</p>
+<p>Second, if the data are ill-conditioned (for example, independent variables are highly collinear) or if there is little variation in the dependent variable (for example, nearly all the outcomes are 1), a larger sample is required.</p>
+<p>Third, some models seem to require more observations (such as the ordinal regression model or the zero-inflated count models).</p>
+<h3 id="13-problems-in-obtaining-ml-estimates">1.3 Problems in obtaining ML estimates</h3>
+<p>Although the numerical methods used by S tata to fit models with ML are highly refined and generally work extremely well, you can encounter problems. If your sample size is adequate, but you cannot get a solution or you get estimates th at appear to not make substantive sense, one common cause is th at <strong>the data have not been properly “cleaned”.</strong></p>
+<p>In addition to mistakes in constructing variables and selecting observations, the scaling of variables can cause problems. <strong>The larger the ratio between the largest and smallest standard deviations among variables in the model, the more problems you are likely to encounter with numerical m ethods due to rounding.</strong> For example, if income is measured in units of $1$, income is likely to have a very large standard deviation relative to other variables. Recoding income to units of $1,000$ can solve the problem. For a detailed technical discussion of maximum likelihood estim ation in Stata, see Gould, Pitblado, and Poi (2010)</p>
+<p><strong>Overall, however, numerical methods for ML estimation work well when your model is appropriate for your data.</strong> Still, Cramer’s (1986, 10) advice about the need for care in estimation should be taken seriously:</p>
+<p><strong>Check the data, check their transfer into the computer, check the actual computations (preferably by repeating at least a sample by a rival program), and always remain suspicious of the results, regardless of the appeal.</strong></p>
+<h3 id="14-syntax-of-estimation-commands">1.4 Syntax of estimation commands</h3>
+<p>All single-equation estimation commands that we consider in this book have the same syntax:</p>
+<p>command depvar [ indepvars ] [if] [ in ] [ weight ] [ , options ]</p>
+<p>Here are a few examples for a lo g it model with lfp as the dependent variable:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 k618 age wc lwg
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 age wc lwg if hc == 1
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 age wc lwg if hc == 1, level(90)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The syntax diagram here uses 1) variable lists, 2) i f and in conditions, 3) weights, and 4) options.</p>
+<h3 id="15-variable-lists">1.5 Variable lists</h3>
+<p>Stata automatically corrects some mistakes you may make when specifying independent variables. For example, if you include wc as an independent variable when th e sample is restricted to a single value of wc, such as logit lfp k5 age he wc if wc==l. then Stata drops wc from the model. Or <strong>suppose that you recode a k-category variable into a set of k indicator variables. Recall that one of the indicator variables must be excluded to avoid perfect collinearity. If you included all k indicator variables in indepvars, Stata automatically excludes one of them.</strong></p>
+<p><strong>Using factor-variable notation in the variable list</strong></p>
+<p>In Stata 11 and later, you can specify a k-category variable as a set of indicator variables using Stata’s factor-variable notation. Prefixing a variable name with i.tells Stata to do this. In our previous example, suppose th at instead of age being measured in years, it was measured using three age groups with the variable agecat:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">tabulate agecat, missing
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> Wife's age |
+      group |      Freq.     Percent        Cum.
+------------+-----------------------------------
+      30-39 |        298       39.58       39.58
+      40-49 |        290       38.51       78.09
+        50+ |        165       21.91      100.00
+------------+-----------------------------------
+      Total |        753      100.00
+</code></pre>
+<p>Variable agecat equals 1 for ages 30- 39, 2 for 40 49, and 3 for 50 or older. If we were not using factor variables, we could recode the three categories of ag ecat to generate three dummy variables:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">generate age3039 = (agecat==1) if agecat &lt; .
+</span></span><span class="line"><span class="cl">label var age3039 &#34;Age 30 to 39?&#34;
+</span></span><span class="line"><span class="cl">generate age4049 = (agecat==2) if agecat &lt; .
+</span></span><span class="line"><span class="cl">label var age4049 &#34;Age 40 to 49?&#34;
+</span></span><span class="line"><span class="cl">generate age50plus = (agecat==3) &amp; agecat &lt; .
+</span></span><span class="line"><span class="cl">label var age50plus &#34;Age 50 or older?&#34;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Next, we fit a model using these variables, where age3039 is the excluded base category:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 k618 age4049 age50plus wc hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Using factor-variable notation, we can fit the exact same model but let S tata automatically create the indicator variables:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 k618 i.agecat wc hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>By default, Stata uses the lowest value of the source variable as the base or omitted category in the model. Accordingly,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 k618 i.agecat wc hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>If you want a different base category, specify the base with the prefix ib#. , where # is the value of the base category. In our example, to treat women ages 50 or older as our base category instead of women ages 30-39, we would specify the model as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 k618 ib3.agecat wc hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>By default, any variable not specified with i. is treated as a continuous variable. For example, in the specification</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 k618 agecat wc hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><strong>More on factor-variable notation</strong></p>
+<p>sometimes factor variables can be confusing. First, the name of the variables automatically generated by Stata when fitting a model using factor variables might not be obvious. This is important because some postestimation commands, such as test and lincom, require the exact, symbolic name of the variable associated with a coefficient.</p>
+<p>To obtain the names associated with each coefficient, referred to as symbolic names, one can simply type the name of the last estimation command with the option coeflegend, such as logit, coefleg end.The model is not fit again, but the names associated with the estimates are listed. For example, fitting a model where factor-variable notation creates indicator variables and interactions produces output like this:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp i.agecat c.age##c.age, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =    753
+                                                            LR chi2(4)    =  11.17
+                                                            Prob &gt; chi2   = 0.0248
+    Log likelihood = -509.29034                             Pseudo R2     = 0.0108
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+          agecat |
+          40-49  |      -0.37       0.35    -1.05   0.296        -1.05        0.32
+            50+  |      -0.56       0.56    -1.00   0.319        -1.66        0.54
+                 |
+             age |       0.26       0.14     1.77   0.077        -0.03        0.54
+                 |
+     c.age#c.age |      -0.00       0.00    -1.74   0.082        -0.01        0.00
+                 |
+           _cons |      -4.90       3.03    -1.62   0.106       -10.85        1.04
+    ------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit, coeflegend
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    753
+                                                        LR chi2(4)    =  11.17
+                                                        Prob &gt; chi2   = 0.0248
+Log likelihood = -509.29034                             Pseudo R2     = 0.0108
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Legend
+-------------+----------------------------------------------------------------
+      agecat |
+      40-49  |      -0.37  _b[2.agecat]
+        50+  |      -0.56  _b[3.agecat]
+             |
+         age |       0.26  _b[age]
+             |
+ c.age#c.age |      -0.00  _b[c.age#c.age]
+             |
+       _cons |      -4.90  _b[_cons]
+------------------------------------------------------------------------------
+</code></pre>
+<p>Sometimes you might not be sure if your specification of the model using factor variable notation produces the model you want. <strong>One trick that we find useful——especially with large datasets, when fitting a model can take a long time—— is to use summarize to decode your variable list.</strong></p>
+<p>In this example, summarize decodes the factor-variable notation i.agec at into two indicator variables and c.age##c.age into age and age-squared:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">summarize i.agecat c.inc##c.inc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>        Variable |        Obs        Mean    Std. dev.       Min        Max
+    -------------+---------------------------------------------------------
+          agecat |
+          30-39  |        753    .3957503    .4893363          0          1
+          40-49  |        753    .3851262    .4869486          0          1
+            50+  |        753    .2191235    .4139274          0          1
+                 |
+             inc |        753    20.12897     11.6348  -.0290001         96
+                 |
+     c.inc#c.inc |        753     540.364    830.3907    .000841       9216
+</code></pre>
+<p>value labels are used to label categories of an indicator variable, such as 40-49 above. To see the values rather than the labels, you can add the <strong>nofvlabel</strong> option:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">summarize i.agecat c.inc##c.inc, nofvlabel
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>        Variable |        Obs        Mean    Std. dev.       Min        Max
+    -------------+---------------------------------------------------------
+          agecat |
+              1  |        753    .3957503    .4893363          0          1
+              2  |        753    .3851262    .4869486          0          1
+              3  |        753    .2191235    .4139274          0          1
+                 |
+             inc |        753    20.12897     11.6348  -.0290001         96
+                 |
+     c.inc#c.inc |        753     540.364    830.3907    .000841       9216
+</code></pre>
+<h3 id="16-specifying-the-estimation-sample">1.6 Specifying the estimation sample</h3>
+<p>if and in restrictions can be used to define the sample of observations used to fit the model, referred to as the estimation sample, where the syntax for if and in conditions follows the guidelines in chapter 2, page 45.</p>
+<h4 id="161-missing-data">1.6.1 Missing data</h4>
+<p>Estimation commands use <strong>listwise deletion to exclude cases in which there are missing values for any of the variables in the model.</strong> Accordingly, if two models are fit using the same dataset but have different sets of independent variables, it is possible to have different samples.</p>
+<p>Suppose th at among the 753 cases in the sample, 23 have missing data for at least one variable. If we fit a model using all variables, we would obtain</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4-missing, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    730
+                                                        LR chi2(8)    = 113.28
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -441.33862                             Pseudo R2     = 0.1137
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          k5 |      -1.40       0.19    -7.22   0.000        -1.78       -1.02
+        k618 |      -0.07       0.07    -0.95   0.340        -0.20        0.07
+             |
+      agecat |
+      40-49  |      -0.66       0.21    -3.11   0.002        -1.07       -0.24
+        50+  |      -1.26       0.26    -4.76   0.000        -1.77       -0.74
+             |
+          wc |
+    college  |       0.74       0.23     3.23   0.001         0.29        1.20
+             |
+          hc |
+    college  |       0.16       0.21     0.77   0.439        -0.25        0.57
+         lwg |       0.59       0.15     3.88   0.000         0.29        0.88
+         inc |      -0.03       0.01    -3.82   0.000        -0.05       -0.02
+       _cons |       1.02       0.29     3.51   0.000         0.45        1.60
+------------------------------------------------------------------------------
+</code></pre>
+<p>Suppose that seven of the missing cases were missing only for k618 and that we fit a second model excluding k618:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 i.agecat i.wc i.hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    737
+                                                        LR chi2(7)    = 116.53
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -444.78964                             Pseudo R2     = 0.1158
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          k5 |      -1.38       0.19    -7.23   0.000        -1.75       -1.01
+             |
+      agecat |
+      40-49  |      -0.60       0.21    -2.92   0.003        -1.00       -0.20
+        50+  |      -1.15       0.24    -4.87   0.000        -1.62       -0.69
+             |
+          wc |
+    college  |       0.78       0.23     3.38   0.001         0.33        1.23
+             |
+          hc |
+    college  |       0.14       0.21     0.67   0.505        -0.27        0.54
+         lwg |       0.61       0.15     4.03   0.000         0.31        0.90
+         inc |      -0.03       0.01    -3.89   0.000        -0.05       -0.02
+       _cons |       0.87       0.25     3.48   0.000         0.38        1.36
+------------------------------------------------------------------------------
+</code></pre>
+<p>Thus we cannot, use a likelihood ratio test or information criteria to compare the two models (see sections 3.2 and 3.3 for details), because <strong>changes in the estimates could be due either to changes in the model specification or to the use of different samples to fit the models. When you compare coefficients across models, you want the samples to be the same.</strong></p>
+<p>Although Stata uses listwise deletion when fitting models, this is rarely the best way to handle missing data. <strong>We recommend that you make explicit decisions about which cases to include in your analyses rather than let cases be dropped implicitly.</strong> Indeed, we would prefer th at Stata issue an error rather than automatically drop cases.</p>
+<p><strong>The mark and markout commands make it simple to explicitly exclude missing data,</strong> mark markvar generates the new variable markvar that equals 1 for all cases, markout mnrkvar varlist changes the values of markvar to 0 for any cases in which values of any of the variables in varlist are missing. The following example, where we have artificially created the missing data, illustrates how this works:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4-missing, clear
+</span></span><span class="line"><span class="cl">mark nomiss
+</span></span><span class="line"><span class="cl">markout nomiss lfp k5 k618 agecat wc hc lwg inc
+</span></span><span class="line"><span class="cl">tab nomiss
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>         nomiss |      Freq.     Percent        Cum.
+    ------------+-----------------------------------
+              0 |         23        3.05        3.05
+              1 |        730       96.95      100.00
+    ------------+-----------------------------------
+          Total |        753      100.00
+</code></pre>
+<p>Because nomiss is 1 for cases where none of the variables in our models is missing, to use the same sample when fitting both models, we add the condition if nomiss==l:</p>
+<p>logit lfp k5 k618 i.agecat i.wc i.hc lwg inc if nomiss==1, nolog</p>
+<pre><code>    Logistic regression                                     Number of obs =    730
+                                                            LR chi2(8)    = 113.28
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -441.33862                             Pseudo R2     = 0.1137
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+              k5 |      -1.40       0.19    -7.22   0.000        -1.78       -1.02
+            k618 |      -0.07       0.07    -0.95   0.340        -0.20        0.07
+                 |
+          agecat |
+          40-49  |      -0.66       0.21    -3.11   0.002        -1.07       -0.24
+            50+  |      -1.26       0.26    -4.76   0.000        -1.77       -0.74
+                 |
+              wc |
+        college  |       0.74       0.23     3.23   0.001         0.29        1.20
+                 |
+              hc |
+        college  |       0.16       0.21     0.77   0.439        -0.25        0.57
+             lwg |       0.59       0.15     3.88   0.000         0.29        0.88
+             inc |      -0.03       0.01    -3.82   0.000        -0.05       -0.02
+           _cons |       1.02       0.29     3.51   0.000         0.45        1.60
+    ------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 i.agecat i.wc i.hc lwg inc if nomiss==1, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    730
+                                                        LR chi2(7)    = 112.37
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -441.79452                             Pseudo R2     = 0.1128
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          k5 |      -1.38       0.19    -7.19   0.000        -1.76       -1.00
+             |
+      agecat |
+      40-49  |      -0.62       0.21    -2.98   0.003        -1.02       -0.21
+        50+  |      -1.15       0.24    -4.84   0.000        -1.61       -0.68
+             |
+          wc |
+    college  |       0.76       0.23     3.28   0.001         0.30        1.21
+             |
+          hc |
+    college  |       0.16       0.21     0.76   0.447        -0.25        0.56
+         lwg |       0.60       0.15     3.96   0.000         0.30        0.89
+         inc |      -0.03       0.01    -3.87   0.000        -0.05       -0.02
+       _cons |       0.88       0.25     3.53   0.000         0.39        1.38
+------------------------------------------------------------------------------
+</code></pre>
+<p><strong>Instead of selecting cases in each model with if, we could have used drop if nomiss==0 to delete observations with missing values before fitting the models</strong></p>
+<blockquote>
+<p>Aside: Analysis with missing data</p>
+<blockquote>
+<p>We do want to make two brief points.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>First, **a sophisticated but increasingly common approach to missing data involves multiple imputations, and S tata has an excellent suite of commands to make working with multiply imputed data simpler than it would be without it.**What Stata does not have, at this writing, is a way of using margins with its multiple imputation suite. Because our prim ary methods of interpretation use the margins command, these cannot be used with multiply imputed data.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>Second, <strong>one way that d ata may be missing in a dataset is called missing at random (MAR.). The name can be misleading: it does not mean missing completely at random but instead means that data are missing in a way that unbiased predictions of missing values can be made from other variables in the dataset itself.</strong> Even in the situation where missing at random data does not bias estimates (a matter outside the scope of our discussion), the techniques of interpretation that comprise much of our book involve using either the mean of a variable or the m ean of an estimated effect size calculated over all observations. In either case, missing data can cause problems for computation of these averages even in cases in which the estimation of coefficients is unbiased</p>
+</blockquote>
+</blockquote>
+<h4 id="162-information-about-missing-values">1.6.2 Information about missing values</h4>
+<p>Although mark and markout work well for determining which observations have missing values for a set of variables, these commands do not provide information on the patterns of missing data among these variables. There are three types of questions that we might ask:</p>
+<ol>
+<li>How many observations have no missing values? How many have missing data for one variable? For two variables? And so on.</li>
+<li>What percentage of cases are missing for each variable?</li>
+<li>What patterns of missing data are there among the variables? For example, do missing values on one variable tend to occur when there are missing values on some other variable?</li>
+</ol>
+<p>We will consider each of these questions in turn. First, to determine the number of observations with a given number of missing values on a set of variables, the easiest way is to use the <strong>egen command with the row miss(varlist) function.This creates a new variable that contains the number of missing values for each observation, for which we can use tabulate to view the frequency distribution.</strong> For example,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use gsskidvalue4, clear
+</span></span><span class="line"><span class="cl">egen missing = rowmiss(age anykids black degree female kidvalue othrrace year income91 income)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>        missing |      Freq.     Percent        Cum.
+    ------------+-----------------------------------
+              0 |      2,684       58.37       58.37
+              1 |      1,709       37.17       95.54
+              2 |        195        4.24       99.78
+              3 |          7        0.15       99.93
+              4 |          3        0.07      100.00
+    ------------+-----------------------------------
+          Total |      4,598      100.00
+</code></pre>
+<p>Next, we could generate a variable,<strong>nomiss</strong>, that equals 1 if an observation has no missing values and 0 if an observation has any missing values: <strong>gen nomiss = (missing==0)</strong>. This is an alternative to using mark and markout to create an indicator variable for whether an observation has missing values for any variable in a list.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">misstable summarize age anykids black degree female kidvalue othrrace ///
+</span></span><span class="line"><span class="cl">                    year income91 income, all showzero
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>               |                                | Unique
+      Variable |     Obs=.     Obs&gt;.     Obs&lt;.  | values        Min         Max
+  -------------+--------------------------------+------------------------------
+           age |         0         0     4,598  |     73         18          99
+       anykids |        14         0     4,584  |      2          0           1
+         black |         0         0     4,598  |      2          0           1
+        degree |        14         0     4,584  |      5          0           4
+        female |         0         0     4,598  |      2          0           1
+      kidvalue |     1,609         0     2,989  |      4          1           4
+      othrrace |         0         0     4,598  |      2          0           1
+          year |         0         0     4,598  |      2       1993        1994
+      income91 |         0         0     4,598  |     24          1          99
+        income |       495         0     4,103  |     21       1000       75000
+  -----------------------------------------------------------------------------
+</code></pre>
+<p>The <strong>all</strong> option prints information for all the variables in the variable list. Otherwise, only those variables with at least one missing value are displayed. The <strong>showzero</strong> option displays each 0 in the table as 0 rather than as a blank space. These options make the output clearer for didactic purposes, although you may prefer to omit them in practice.</p>
+<p><strong>The output for misstable summarize distinguishes between missing values that are coded with the system missing value (.) and those coded with extended missing values (.a through .z).</strong> Some datasets use extended missing values to distinguish why different cases have missing values, like coding people who respond “don’t know” to a survey question as .d and coding those for whom the question is inapplicable as .i. <strong>In the misstable summarize output, the first column of numbers is the number of cases with missing values coded as the system missing value (.), the second is the number of cases with extended missing values, and the third is the number of cases with no missing values.</strong></p>
+<p>To understand the labels for these columns, you need to know that Stata considers missing values to be numerically larger than nonmissing values and th at extended m issing values are considered larger than the system missing value. Accordingly, Obs&lt;. indicates nonmissing values and Obs&gt;. indicates extended missing values that are larger than ., the system-missing value. In this example, we see that only four variables have missing values: anykids (14 cases), degree (14), kid value (1609), and income (495).</p>
+<p>Third, to obtain information on the patterns of missing data, we use <strong>misstable</strong> patterns :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">misstable patterns age anykids black degree female kidvalue othrrace ///
+</span></span><span class="line"><span class="cl">                   year income91 income, freq
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>   Missing-value patterns
+     (1 means complete)
+
+              |   Pattern
+    Frequency |  1  2  3  4
+  ------------+-------------
+        2,684 |  1  1  1  1
+              |
+        1,410 |  1  1  1  0
+          294 |  1  1  0  1
+          185 |  1  1  0  0
+            6 |  0  1  0  0
+            5 |  1  0  0  1
+            4 |  1  0  1  1
+            3 |  0  0  0  0
+            3 |  0  1  1  0
+            1 |  0  1  0  1
+            1 |  0  1  1  1
+            1 |  1  0  0  0
+            1 |  1  0  1  0
+  ------------+-------------
+        4,598 |
+
+  Variables are  (1) anykids  (2) degree  (3) income  (4) kidvalue
+</code></pre>
+<p>The <strong>freq</strong> option displays <strong>results as frequencies rather than as percentages.</strong> Each row of the output represents a unique pattern of missing values, <strong>where 0 indicates a missing value and 1 indicates a nonmissing value.</strong></p>
+<ul>
+<li>In the top row, the pattern is all 1s, showing th at 2,684 cases had no missing values for any variable.</li>
+<li>In the second row, we see the most common pattern of missing values was where there were no missing values for variables 1, 2, and 3, with missing values for variable 4.</li>
+<li>At the bottom of the table, we see which number corresponds to which variable; for example, variable 1 is anykids. Only 4 variables are included even though 10 variables were in the variable list. This is because only variables with some missing values are included in the table.</li>
+</ul>
+<p>The misstable summarize command has a generate <strong>(stubname)</strong> option <strong>to generate new variables that indicate whether observations are missing for a particular variable. For each variable that has missing data, a new variable is created whose name is stubname followed by the name of the variable with missing data.</strong> The new variable is assigned a value of 1 if the variable is missing for an observation and 0 if it is not missing</p>
+<p>These new variables could be used, for example, in a binary logit model of the sort we describe in chapters 5 and 6 using basic demographics as predictors of whether observations are missing. First, we create the indicator variables:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">misstable summarize age anykids black degree female kidvalue othrrace ///
+</span></span><span class="line"><span class="cl">                    year income91 income, gen(m_)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                                                               Obs&lt;.
+                                                +------------------------------
+               |                                | Unique
+      Variable |     Obs=.     Obs&gt;.     Obs&lt;.  | values        Min         Max
+  -------------+--------------------------------+------------------------------
+       anykids |        14               4,584  |      2          0           1
+        degree |        14               4,584  |      5          0           4
+      kidvalue |     1,609               2,989  |      4          1           4
+        income |       495               4,103  |     21       1000       75000
+  -----------------------------------------------------------------------------
+</code></pre>
+<p>Then, we fit a logit model:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit m_income female black othrrace age, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =  4,598
+                                                            LR chi2(4)    = 100.88
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -1520.1691                             Pseudo R2     = 0.0321
+    
+    ------------------------------------------------------------------------------
+        m_income | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+          female |       0.48       0.10     4.67   0.000         0.28        0.68
+           black |       0.51       0.13     3.93   0.000         0.26        0.77
+        othrrace |       0.25       0.24     1.07   0.285        -0.21        0.71
+             age |       0.02       0.00     7.92   0.000         0.02        0.03
+           _cons |      -3.52       0.16   -21.83   0.000        -3.84       -3.21
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>Although this is only an informal assessment of the missing data, it suggests th at missing values on income are associated with being female, black, and older.</p>
+<h4 id="163-postestimation-commands-and-the-estimation-sample">1.6.3 Postestimation commands and the estimation sample</h4>
+<p>Excepting predict, postestimation commands for testing, assessing fit, and making predictions use the observations from the estimation sample, unless you specify otherwise.Accordingly, with these commands you do not need to worry about dropping cases that were deleted because of missing data during estimation. <strong>Stata automatically selects cases from the estimation sample by using a special variable named e (sam ple) that is created by every estimation command. This variable equals 1 for cases used to fit the model and equals 0 otherwise.</strong> You can use this variable to select cases with if conditions, as in <strong>sum female if e(sample).</strong> But you cannot otherwise use this variable as if it was an ordinary variable in your dataset. For example, you cannot use a command like <strong>tabulate female e(sample).</strong> Instead, you need to generate an ordinary variable equal to <strong>e(sample)</strong>, which then allows you to tabulate the variable or do anything else with it.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit m_income female black othrrace age i.degree, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =  4,584
+                                                            LR chi2(8)    = 102.94
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -1498.4489                             Pseudo R2     = 0.0332
+    
+    ---------------------------------------------------------------------------------
+           m_income | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    ----------------+----------------------------------------------------------------
+             female |       0.48       0.10     4.60   0.000         0.27        0.68
+              black |       0.46       0.13     3.44   0.001         0.20        0.73
+           othrrace |       0.27       0.24     1.16   0.247        -0.19        0.74
+                age |       0.02       0.00     6.92   0.000         0.01        0.02
+                    |
+             degree |
+       high school  |      -0.10       0.13    -0.79   0.430        -0.35        0.15
+    junior college  |      -0.65       0.28    -2.35   0.019        -1.19       -0.11
+          bachelor  |      -0.23       0.17    -1.34   0.182        -0.56        0.11
+          graduate  |      -0.31       0.23    -1.37   0.171        -0.76        0.13
+                    |
+              _cons |      -3.30       0.21   -15.72   0.000        -3.71       -2.89
+    ---------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">gen included = e(sample)
+</span></span><span class="line"><span class="cl">label var included &#34;Cases included in logit on m_income&#34;
+</span></span><span class="line"><span class="cl">tab included
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>      Cases |
+included in |
+   logit on |
+   m_income |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |         14        0.30        0.30
+          1 |      4,584       99.70      100.00
+------------+-----------------------------------
+      Total |      4,598      100.00
+</code></pre>
+<p>The generated variable included has 4,584 cases equal to 1, which is the same as the number of cases used to fit our model. The remaining 14 cases are 0, which corresponds with the 14 cases missing on the degree variable th at we showed in the output from m isstab le above.</p>
+<h3 id="17-weights-and-survey-data">1.7 Weights and survey data</h3>
+<p><strong>Weights indicate that some observations should be given more weight than others when computing estimates.</strong> The syntax for specifying weights is <em>[type=vamame]</em> , where the square brackets are part of the command, type is the type of weight to be used, and vamame is the variable containing the weights. Stata recognizes four types of weights:</p>
+<ol>
+<li>fweights (frequency weights) indicate that an observation represents multiple observations with identical values. For example, if an observation has an fweight of 5, this is equivalent to having five identical, duplicate observations. If you do not include a weight modifier in your estim ation command, this is equivalent to specifying [fweight= l].</li>
+<li>pweights (sampling weights) denote the inverse of the probability that the observation is included because of the sampling design. For example, if a case has a pweight of 1,200, that case had a 1 in 1,200 chance of being selected into the sample and in th at sense represents 1,200 observations in the population.</li>
+<li>aweights (analytic weights) are inversely proportional to the variance of an observation. The variance of the <em>j</em>th observation is assumed to be $\frac{\sigma^2}{\omega_{j}}$, where $\omega_{j}$ is the analytic weight. Analytic weights are used most often when observations are averages and the weights are the num ber of elements that gave rise to the average. For example, if each observation is the cell mean from a larger dataset, the data are heteroskedastic because the variance of the means decreases as the number of observations used to calculate them increases.</li>
+<li>iw eights (importance weights) have no formal statistical definition. They are used by programmers to facilitate certain types of computations</li>
+</ol>
+<p>Frequency weights differ notably from the other types because a dataset th at includes an fw eight variable can be used to create a new dataset that yields equivalent results without frequency weights by simply repeating observations with duplicate values. As a result, frequency weights pose no issues for various techniques we consider in this book</p>
+<p>The use of weights is a complex topic, and it is easy to apply weights incorrectly. If you need to use weights, we encourage you to read the discussions in [u] 11.1.6 weight and [u] 20.23 Weighted estimation . Winship and Radbill (1994) have an accessible introduction to weights in the linear regression model. Heeringa, West, and Berglund (2010) provide an in-depth treatment along with examples using Stata in their excellent book on complex survey design, a topic we consider next.</p>
+<h4 id="171-complex-survey-desighs">1.7.1 complex survey desighs</h4>
+<p>Complex survey designs have three major features.</p>
+<p>First, <strong>samples can be divided into strata within which observations are selected separately.</strong> For example, a sample might be stratified by region of the country so th at the researchers can achieve precisely the number of respondents they want from each region.</p>
+<p>Second, <strong>samples can use clustering in which higher levels of aggregation, called primary sampling units, are selected first and then individuals are sampled from within these clusters.</strong> A survey of adolescents might use schools as its prim ary sampling unit and then sample students from within each school. Observations within clusters often share similarities leading to violations of the assumption of independent observations. Accordingly, when there is clustering, the usual standard errors will be incorrect because they do not adjust for the lack of independence.</p>
+<p>Third, <strong>individuals can have different probabilities of selection.</strong> For example, the design might oversample minority populations. Such oversampling allows more precise estimates of subgroup characteristics, but probability weights must be used to obtain accurate estimates for the population as a whole.</p>
+<p><strong>Stata’s svy commands for samples with complex survey designs (see the Stata Survey Data Manual for details) provide estimates where the standard errors are adjusted for stratification, clustering, and weights.</strong> If the sample design involves weights or clustering, but not stratification, then models can be fit using standard regression commands with the [pweight = weight-variable] and vce (cluster cluster-variable) options. The results will be identical to those from <strong>svy</strong>. If the sample design involves stratification, then svy commands must be used to get the correct standard errors.</p>
+<p>The first step in using commands for complex samples is <strong>to specify the key features of the survey design by using the svyset command.</strong> To illustrate this, we use an example from Heeringa, West, and Berglund (2010) based on the Health and Retirement Study, a representative sample of American adults over age 50. The primary sampling units (PSUs). another name for clusters, are defined by the variable <strong>secu</strong>, the strata by the variable <strong>stratum</strong> , and the probability weights by the variable <strong>kwgtr</strong>. We use svyset as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use svyhrs4, clear
+</span></span><span class="line"><span class="cl">svyset secu [pweight=kwgtr], strata(stratum)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Sampling weights: kwgtr
+                 VCE: linearized
+         Single unit: missing
+            Strata 1: stratum
+     Sampling unit 1: secu
+               FPC 1: &lt;zero&gt;
+</code></pre>
+<p><strong>Stata will use this information automatically when a subsequent command that supports survey estimation is prefixed by <strong>svy</strong> :.</strong> In our example, the outcome is whether th e respondent has arthritis, and the independent variables are gender, education, and age. To fit a logit model, discussed in detail in chapter 5, we begin the command with the prefix svy: and afterward specify the logit command as we otherwise would.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">svy: logit arthritis male i.ed3cat age
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Sampling weights: kwgtr
+VCE: linearized
+Single unit: missing
+Strata 1: stratum
+Sampling unit 1: secu
+FPC 1: <zero></p>
+<p>.
+end of do-file</p>
+<p>. do &ldquo;C:\Users\lenovo\AppData\Local\Temp\STD4f8_000000.tmp&rdquo;</p>
+<p>. svy: logit arthritis male i.ed3cat age
+(running logit on estimation sample)</p>
+<pre><code>Survey: Logistic regression
+
+Number of strata =  56                            Number of obs   =     18,375
+Number of PSUs   = 112                            Population size = 76,085,117
+                                                  Design df       =         56
+                                                  F(4, 53)        =     204.28
+                                                  Prob &gt; F        =     0.0000
+
+------------------------------------------------------------------------------
+             |             Linearized
+   arthritis | Coefficient  std. err.      t    P&gt;|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        male |      -0.58       0.04   -13.05   0.000        -0.67       -0.49
+             |
+      ed3cat |
+12-15 years  |      -0.21       0.06    -3.81   0.000        -0.33       -0.10
+  16+ years  |      -0.64       0.07    -9.78   0.000        -0.77       -0.51
+             |
+         age |       0.05       0.00    21.96   0.000         0.04        0.05
+       _cons |      -2.32       0.15   -15.03   0.000        -2.63       -2.01
+------------------------------------------------------------------------------
+</code></pre>
+<p>Two differences merit noting between the information provided in the above results and those provided when svy: is not used.</p>
+<p>First, the svy results indicate both the number of strata and the number of PSUs in the sample.</p>
+<p>Second, in addition to the sample size, the results present the population size implied by the probability weights. In this example, the size of the target population is over 76 million.</p>
+<p>Models fit using complex survey methods pose two problems for the postestimation techniques used in this book.</p>
+<p>First, measures of fit are often based on the model’s likelihood. With survey estimation, the “likelihood” on which model estimates are based is not a true likelihood (Sribney 1997), so any technique that requires a value for the likelihood is not available.6</p>
+<p>Second, some methods of interpretation that we use require estimates of the standard deviation of one or more variables in the model, which are not always available with survey estimation</p>
+<p>Stata supports survey estimation for nearly all the models we discuss in this book. If the model you are using does not work with the svy: prefix, remember that <strong>nearly all regression commands in Stata allow weights and clustering;</strong> although not ideal, this is a reasonable way to proceed if the regression command you are using does not support the svy: prefix.</p>
+<h3 id="18-options-for-regression-models">1.8 Options for regression models</h3>
+<p>The following options apply to most regression models. Unique options for specific models are considered in later chapters.</p>
+<ul>
+<li><strong>noconstant</strong> constrains the intercept to equal 0. For example, in a linear regression, the command <strong>regress y xl x2, noconstant</strong> would fit the model $y = \beta_{1} X_{1} + \beta_{2} X_{2} + \varepsilon$</li>
+<li><strong>nolog</strong> suppresses the iteration history, which shortens the output. If you use this option, which we often do, and have problems obtaining estimates, it is a good idea to refit the model w ithout this option and with the trace option.</li>
+</ul>
+<p><strong>trace</strong> lets you see the values of the parameters for each step of th e iteration. This can be useful for determining which variables may be causing a problem if your model has difficulty converging.</p>
+<p><strong>level(#)</strong> specifies the level of the confidence interval. By default, Stata provides 95% confidence intervals for estimated coefficients, meaning that the interval around the estimated $\hat{\beta}$
+would capture the true value of $\beta$ 95% of the time if repeated samples were drawn, level () allows you to specify other intervals. For example, level (90) specifies a 90% interval. You can also change the default level with the command set level. For example, set level 90 specifies 90% confidence intervals.</p>
+<p><strong>vce (cluster cluster-variable)</strong> specifies that the observations are independent across the clusters th at are defined by unique values of cluster-variable but are not necessarily independent within clusters. Specifying this option leads to robust standard errors, as discussed below, with additional corrections for the effects of clustered data. See Hosmer, Lemeshow, and Sturdivant (2013, chap. 9) for a detailed discussion of logit models with clustered data. <strong>Using vce ( cluster cluster-variable) does not affect the coefficient estimates but can have a large impact on the standard errors.</strong></p>
+<p><strong>vce(vcetype)</strong> specifies the type of standard errors th at are reported, vce (robust) replaces traditional standard errors with robust standard errors, which are also known as Huber, White, or sandwich standard errors. These are discussed further next, in section 3.1.9. Gould, Pitblado, and Poi (2010) provide details on how robust standard errors are computed in Stata. <strong>Robust standard errors are automatically used if the vce ( cluster cluster-variable) option is specified, if probability weights are used, or if a model is fit using svy.</strong> In earlier versions of Stata, this option was simply robust.</p>
+<p><strong>Option vce (bootstrap) estimates the variance-covariance matrix by bootstrap, which involves repeated reestimation on samples drawn with replacement from the original estimation sample.</strong></p>
+<p><strong>Option vce(jackknife) uses the jackknife method, which involves refitting the model N times, each time leaving out a single observation.</strong> Type help vce option for further details.</p>
+<p><strong>vsquish</strong> eliminates the blank lines in output that are inserted when factor-variable notation is used. We sometimes use nolog and vsquish in this book to save space.</p>
+<h3 id="19-robust-standard-errors">1.9 Robust standard errors</h3>
+<p>Robust standard errors, which are computed by Stata when the robust option is specified, go by a variety of names, including Huber-Eicker-White, clustered, White, heteroskedasticity-consistent, HCCM, and sandwich standard errors. In the last decade, their use has become increasingly common. For example, King and Roberts (2014) conducted a survey of articles in the American Political Science Review and found that 66% of the articles using regression models reported robust standard errors.</p>
+<p><strong>Robust standard errors are considered robust in the sense that they are correct in the presence of some types of violations of the assumptions of the model.</strong> For example, if the correct model is a binary logit model but a binary probit model is fit, the model has been misspecified. The estimates obtained by fitting a logit model cannot be maximum likelihood estimates because an incorrect likelihood function is being used (that is, a logistic probability density is used instead of the correct normal density). When a model is misspecified in this way, the usual standard errors are incorrect (White 1982). <strong>For this reason, Arminger (1995) argues that robust standard errors should be broadly used. He writes: “If one keeps in mind that most researchers misspecify the model &hellip;, it is obvious that their estimated parameters can usually be interpreted only as minimum ignorance estimators and that the standard errors and test statistics may be far away from the correct asymptotic values, depending on the discrepancy between the assumed density and the actual density that generated the data.”</strong></p>
+<p>In some cases, robust standard errors are likely to work quite well. <strong>If violations of the underlying model are minor, as we would argue is the case if the true model is logit and you fit a probit model, then the robust standard errors are preferred, but the differences are likely to be quite small.</strong> In our informal simulations, they are trivially different. On the other hand, <strong>if you fit a Poisson regression model (see chapter 9) in the presence of overdispersion, Cameron and Trivedi (2013, 72 80) provide convincing evidence that robust standard errors provide a more accurate assessment of statistical significance.</strong>  If there is clustering in the data, robust standard errors should be used, ideally by specifying vce(cluster cluster-variablc) or by using svy estimation.</p>
+<p>Arguments for robust standard errors are compelling. Some argue they should be used nearly always in practice. At the same time, robust standard errors are not a general solution to problems of misspecification, and they have important limitations. Kauermann and Carroll (2001) show that even when the model is correct, robust standard errors have more sampling variability, and sometimes far more, than the usual standard errors. This is “the price that one pays to obtain consistency”. These theoretical results are consistent with simulations by Long and Ervin (2000), who found that <strong>in the linear regression model robust standard errors often did worse than the usual standard errors in samples smaller than 500.</strong> They recommended using small-sample versions that can be computed in Stata for regress with the options hc2 or hc3. Among nonlinear models, Kauermann and Carroll (2001) consider the Poisson regression model and the logit model. They showed that the loss of efficiency when using robust standard errors can be worse than th at occurring in normal models. However, we are unaware of small-sample versions of robust standard errors for nonlinear models</p>
+<p>There is a second and potentially very serious problem. <strong>If robust standard errors are used because a model is misspecified, it is im portant to consider what other implications misspecification may have.</strong> Freedman (2006) is dismissive of robust standard errors for many of the models discussed in this book for this reason, writing pointedly: &ldquo;It remains unclear why applied workers should care about the variance of an estimator for the wrong parameter.” Cameron and Trivedi (2010, 334) note that if a model is misspecified, the inconsistency of the parameter estimate is a far more serious problem than the consistency of the standard error.</p>
+<p>King and Roberts (2014) argue that differences between robust and classical errors are “like canaries in the coal mine, providing clear indications th at your model is misspecified and your inferences are likely biased”. They suggest that a comparison of robust and nonrobust standard errors should be used as an informal test of model misspecification. <strong>Researchers should try to address the specification problems that cause robust and classical standard errors to differ, instead of considering robust standard errors to have solved the problematic implications of misspecification.</strong></p>
+<h3 id="110-reading-the-estimation-output">1.10 Reading the estimation output</h3>
+<p>Because we have already discussed the iteration log, in the following example we suppress it with the nolog option and consider other parts of the output from estimation commands. Although the sample output is from logit, our discussion applies generally to other regression models fit by maximum likelihood. We comment briefly below on changes to the estimation output for svy estimation. The following output from logit illustrates <strong>how Stata displays results from regression commands</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =    753
+                                                            LR chi2(8)    = 124.30
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -452.72367                             Pseudo R2     = 0.1207
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+              k5 |      -1.39       0.19    -7.25   0.000        -1.77       -1.02
+            k618 |      -0.07       0.07    -0.96   0.336        -0.20        0.07
+                 |
+          agecat |
+          40-49  |      -0.63       0.21    -3.00   0.003        -1.04       -0.22
+            50+  |      -1.28       0.26    -4.92   0.000        -1.79       -0.77
+                 |
+              wc |
+        college  |       0.80       0.23     3.48   0.001         0.35        1.25
+                 |
+              hc |
+        college  |       0.14       0.21     0.66   0.508        -0.27        0.54
+             lwg |       0.61       0.15     4.04   0.000         0.31        0.91
+             inc |      -0.04       0.01    -4.24   0.000        -0.05       -0.02
+           _cons |       1.01       0.29     3.54   0.000         0.45        1.57
+    ------------------------------------------------------------------------------
+</code></pre>
+<h4 id="1101-header">1.10.1 Header</h4>
+<ol>
+<li><strong>Log likelihood = -452.72367</strong> is the value of the log likelihood at convergence.</li>
+<li><strong>Number of obs</strong> is the number of observations, excluding those with missing values and those excluded with if and in conditions.</li>
+<li><strong>LR chi2(8)</strong> is the value of a likelihood-ratio chi-squared for the test of the null hypothesis that all the coefficients associated with independent variables are simultaneously equal to 0 (see page 119 for details). The number in parentheses is the degrees of freedom for the test. When robust standard errors or probability weights are used, results from a Wald test of the same null hypothesis are shown instead.</li>
+<li><strong>Prob &gt; chi2</strong> indicates the p-value.</li>
+<li><strong>Pseudo R2</strong> is the measure of fit also known as McFadden’s (1974) R^2. Details on how this measure is computed are given on page 126.</li>
+</ol>
+<h4 id="1102-estimates-and-standard-errors">1.10.2 Estimates and standard errors</h4>
+<ol>
+<li>The leftmost column lists the variables in the model, with the dependent variable at the top. The independent variables are in the same order as they were typed on the command line. The constant, labeled <strong>_cons</strong>, is last. With Stata 13 and later, factor variables are labeled with their value labels. For example, the indicator variable for <strong>agecat==2</strong> is labeled as <strong>agecat</strong> followed by 40-49, which is the value label for category 2. In Stata 11 and 12, or with the nofvlabel option in Stata 13 and later, the indicator variable for agecat==2 is labeled as agecat followed on the next line by 2. Retyping the estim ation command followed by coef legend will list the symbolic names of each regression parameter.</li>
+<li>Column Coef . contains estimates of the regression coefficients</li>
+<li>Column Std. Err . contains the standard errors of the estimates. With the vce(robust) option, these are labeled Robust Std . Err.</li>
+<li>Column z contains the $z$ test equal to the estimate divided by its standard error.</li>
+<li>Column <strong>P&gt;|z|</strong> is the two-tailed significance level. A significance level listed as 0.000 means that p &lt; 0.001. For example, p = 0.00049 is rounded to 0.000.</li>
+<li>Column [95% Conf. Interval] contains the confidence interval for each estimate. Instead of testing a specific hypothesis (for example, $H_0: (\beta = 0$), we can use a confidence interval that contains the true parameter with a chosen probability, known as the confidence level. For a given confidence level, the estimated upper and lower bounds define the confidence interval.</li>
+</ol>
+<h4 id="1103-differences-in-output-for-svy-estimation">1.10.3 Differences in output for svy estimation</h4>
+<p>With svy estimation, the output differs, reflecting that the estimates are no longer ML estimates.</p>
+<ol>
+<li>In addition to the sample size, an estim ate of the population size is shown.</li>
+<li>The likelihood-ratio test that all coefficients are 0 is replaced by an $F$ test.</li>
+<li>The pseudo-$R^2$ is not shown because it is based on the log likelihood.</li>
+<li>$t$-values are shown instead of $z$-values</li>
+</ol>
+<h3 id="111-storing-estimation-results">1.11 Storing estimation results</h3>
+<p>Stata considers the results of a model that has just been fit to be the active estimates.After fitting a model, you can typee return list to see a summary of the informationth at Stata stores about the active estimates. Postestimation commands are based onth e active estimates. When a new model is fit, its results become the active estimates,replacing the previous model’s estimates.</p>
+<p>The <strong>estimates store</strong> and <strong>estimates save</strong> commands preserve the active estimation results so that they can be retrieved and used even after a new model is fit.<strong>estimates store saves the active estimates to memory, while estimates save savesthem to a file. Storing estimation results is extremely useful for several reasons.</strong> For one,commands like lrtest and estimates table use results from more than one model.Because only one set of estimates can be active at a time, stored estimates are the way we can refer to multiple sets of estimates. Additionally, the margins command, usedextensively in later chapters, makes predictions based on estimates from a model thathas already been fit, meaning the active estimates. For some applications, however, we will need to overwrite the active estimates from our regression model with estimatesfrom margins by using the post option. Once this is done, the estimates from the regression model are no longer active and need to be restored (discussed below) as theactive estimates if you want to do additional postestimation analysis of the model.</p>
+<p>After running any estimation command, the syntax is</p>
+<p><strong>est</strong>imates <strong>sto</strong>re <em>name</em></p>
+<p>For example, to store the estimation results with the name logit 1. type</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">estimates store logit1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>After running estimates restore , the estimation results in memory are the same as if we had just fit the model, even though we may have fit other models in the interim. Of course, we need to be careful about changes made to the data after fitting the model, but the same caveat about not changing the data between fitting a model and postestimation analysis applies even when estimates store and estimates restore
+are not used.</p>
+<h4 id="1111-advanced-saving-estimates-to-a-file">1.11.1 (Advanced) Saving estimates to a file</h4>
+<p>if you are fitting a model that takes hours to estimate, you may want to save the result to a file so you can use them later without refitting the model.</p>
+<p>Because <strong>estimates store</strong> holds the estimates in memory, estimates stored in one Statasession are not available in the next. Even within a S tata session, the command <strong>clear all</strong> erases stored estimates. To use estimates in a later session or after clearing memory,you can use <strong>estimates save</strong> to save results to a disk file:</p>
+<p><strong>est</strong>imates save filename, replace</p>
+<p>For example, estimates save model1, replace will create the file model1.ster.</p>
+<p>We can load previously saved estimation results with estim ates use:</p>
+<p>estimates use filename</p>
+<p>estimates use restores the estimates almost as if we had just fit the model, and the“almost” here is very important. **As described earlier, when we fit a model, Stata creates the variable e(sample) to indicate which observations were used when fitting the model. Some postestimation commands need e (sample) to produce proper results.However, estimates use does not require that the data in memory are the data used to estimate the saved results. You can even run estimates use without data in memory.**Accordingly, estima tes use does not restore the e(sample) variable. Although this prevents some postestimation commands from working, this is better than having them give wrong answers because the wrong dataset is in memory.</p>
+<p>To deal with this issue, you can reset <strong>e(sample)</strong>. When doing this, you are responsible for making sure that the data loaded to memory are the same as the data when the model was originally fit. Assuming the proper data are in memory, you use the <strong>estimates esample</strong> command to respecify the outcome and independent variables, thei <strong>if</strong> and <strong>in</strong> conditions, and the weights that were used when the model was originally fit. e(sample) is then set accordingly. The syntax is</p>
+<p>estimates esample varlist [if] [ in ] [ weight ]</p>
+<p>To show how this works, we present an example that uses a command we have notyet introduced, <strong>estat summarize</strong>, which provides summary statistics on the estimation sample that was used to compute the active estimates. First, we fit a model and show the summary statistics for the estimation sample. Then, we save the estimates as model1:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 if wc==1, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =    212
+                                                            LR chi2(1)    =  17.91
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -124.06386                             Pseudo R2     = 0.0673
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+              k5 |      -0.93       0.23    -3.98   0.000        -1.40       -0.47
+           _cons |       1.09       0.18     6.19   0.000         0.75        1.44
+    ------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">estimates save model1, replace
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>(Because of the i f wc==l condition specified with logit, the estimates are based on 212 cases, not the 753 cases in the entire sample.) Next, we simulate restarting Statawith the <strong>clear all</strong> command. We then bring the estimates we saved to a file back asthe active estimates with estim ates use, and we replay the estimates:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">clear all
+</span></span><span class="line"><span class="cl">estimates use model1
+</span></span><span class="line"><span class="cl">estimates replay
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =    212
+                                                            LR chi2(1)    =  17.91
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -124.06386                             Pseudo R2     = 0.0673
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+              k5 |      -0.93       0.23    -3.98   0.000        -1.40       -0.47
+           _cons |       1.09       0.18     6.19   0.000         0.75        1.44
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>We can see that the old estimates are now active because the estimates <strong>replay</strong> command displayed the same results for our model that we had before. We also ran <strong>estimates describe</strong> , which displays the command used to fit the model. All of thisw orks even though we do not have any data in memory.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">estimates describe
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>. logit lfp k5 if wc==1, nolog</p>
+<p>Even if there are data in memory when estimates use is run, Stata is cautious and does not presume they are the same data used to fit the model: if you load the data with use and type estat summarize, yon get an error. To avoid this error, after loading the same data, we run the estimates esample command:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">estimates esample: lfp k5 if wc==1
+</span></span><span class="line"><span class="cl">estat summarize
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Estimation sample logit                  Number of obs =        212
+    
+      -------------------------------------------------------------------
+          Variable |         Mean      Std. dev.         Min          Max
+      -------------+-----------------------------------------------------
+               lfp |     .6792453      .4678714            0            1
+                k5 |     .3301887      .6634921            0            3
+      -------------------------------------------------------------------
+</code></pre>
+<p>With <strong>estimates esample</strong>, we must specify the same variables and conditions as when we fit the model. Then <strong>estat summarize</strong> will produce the same results it did after we fit the model initially.</p>
+<h3 id="112-reformatting-output-with-estimates-table">1.12 Reformatting output with estimates table</h3>
+<p><strong>estimates table reformats the results from an estimation command to look more like the tables that are seen in articles and books. estimates table also makes it easier to move estimation results into a word processor or spreadsheet to make presentation-quality tables.</strong> We strongly recommend using this command or some other automated procedure rather than retyping results to make tables. <strong>Not only is this less tedious, but it diminishes the possibility of errors. Also, if you revise your model and used estimates table in your do-file, then you automatically have the corrected tables.</strong></p>
+<p>The syntax is</p>
+<p>estimates table [ model-name1 [model-name2 &hellip; ] ] [ , options ]</p>
+<p>where model-name# is the name of a model whose results were stored using estim ates store . If model-name# is not specified, the estim ation results in memory are used.</p>
+<p>Here is a simple example that lets us compare estimates from similarly specified logit and probit models, a topic considered in detail in chapter 5. We start by fitting the two models and using <strong>estimates store</strong> to save the estimates:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 i.agecat i.wc, nolog
+</span></span><span class="line"><span class="cl">estimates store logit_model
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =    753
+                                                            LR chi2(4)    =  85.93
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -471.9082                              Pseudo R2     = 0.0834
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+              k5 |      -1.35       0.19    -7.27   0.000        -1.72       -0.99
+                 |
+          agecat |
+          40-49  |      -0.62       0.20    -3.18   0.001        -1.01       -0.24
+            50+  |      -1.19       0.23    -5.27   0.000        -1.63       -0.75
+                 |
+              wc |
+        college  |       0.83       0.18     4.53   0.000         0.47        1.19
+           _cons |       0.89       0.16     5.40   0.000         0.57        1.21
+    ------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">probit lfp k5 i.agecat i.wc, nolog
+</span></span><span class="line"><span class="cl">estimates store probit_model
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Probit regression                                       Number of obs =    753
+                                                            LR chi2(4)    =  85.57
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -472.08881                             Pseudo R2     = 0.0831
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+              k5 |      -0.82       0.11    -7.56   0.000        -1.03       -0.61
+                 |
+          agecat |
+          40-49  |      -0.37       0.12    -3.17   0.001        -0.61       -0.14
+            50+  |      -0.72       0.14    -5.29   0.000        -0.99       -0.46
+                 |
+              wc |
+        college  |       0.50       0.11     4.57   0.000         0.29        0.71
+           _cons |       0.54       0.10     5.50   0.000         0.35        0.73
+    ------------------------------------------------------------------------------
+</code></pre>
+<p>We combine the estimates by using estimates table :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">estimates table logit_model probit_model, b(%12.3f) t varlabel 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>--------------------------------------------------------
+                Variable | logit_model    probit_model  
+-------------------------+------------------------------
+              # kids &lt; 6 |       -1.351         -0.820  
+                         |        -7.27          -7.56  
+                         |                              
+        Wife's age group |                              
+                  40-49  |       -0.624         -0.374  
+                         |        -3.18          -3.17  
+                    50+  |       -1.190         -0.723  
+                         |        -5.27          -5.29  
+                         |                              
+  Wife attended college? |                              
+                college  |        0.832          0.500  
+                         |         4.53           4.57  
+                Constant |        0.889          0.540  
+                         |         5.40           5.50  
+--------------------------------------------------------
+                                             Legend: b/t
+</code></pre>
+<p>estimates table provides great flexibility for what you include in your table. Although you should check the Stata Base Reference Manual or type help estimates table for complete information, here are some of the most basic and helpful options:</p>
+<ol>
+<li>b(format) specifies the format used to print the coefficients. For example, <strong>b(%9.3f) indicates the estimates are to be in a column nine characters wide with three decimal places.</strong> For more information on formats, see help format or the Stata User&rsquo;s Guide.</li>
+<li>varwidth (#) specifies the width of the column th at includes variable names and labels on the left side of the table. This is often needed when variable labels are used.</li>
+<li>keep (varlist) or drop (varlist) specify which of the independent variables to include in or exclude from the table.</li>
+<li>se[(format)], t[(format)], and p[C(format)] request standard errors, t or z statistics, and p-values, respectively. By specifying the format, you can have a different number of decimal places for each statistic. For example, b(%9.3f) and t(%9.2f) indicate the desired formats for coefficients and t-statistics, respectively.</li>
+<li>star tells Stata to print one star by a coefficient if the p-value is less than 0.05, two stars if less than 0.01, and three stars if less than 0.001. The star option cannot be used in conjunction with the se, t, or p options.</li>
+<li>varlabel requests that variable labels be used instead of variable names in the rows of the table. Prior to Stata 13, this option was named label.</li>
+<li>stats(statlist) indicates that the scalar statistics in statlist should be included in the base of the table. In statlist, N requests the sample size, aic requests Akaike&rsquo;s information criterion, and bic requests the Bayesian information criterion. To determine which other statistics can be included, after you fit a model, run <strong>ereturn list</strong>, for example.</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">ereturn list
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="2-testing">2 Testing</h2>
+<p>If the assumptions of the model hold, ML estim ators are distributed asymptotically normally:</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <msub>
+    <mrow>
+      <mover>
+        <mi>β</mi>
+        <mo>^</mo>
+      </mover>
+    </mrow>
+    <mi>k</mi>
+  </msub>
+  <mrow data-mjx-texclass="REL">
+    <mover>
+      <mrow data-mjx-texclass="OP">
+        <mo>∼</mo>
+      </mrow>
+      <mrow>
+        <mi>a</mi>
+      </mrow>
+    </mover>
+  </mrow>
+  <mrow>
+    <mi data-mjx-variant="-tex-calligraphic" mathvariant="script">N</mi>
+  </mrow>
+  <mrow data-mjx-texclass="INNER">
+    <mo data-mjx-texclass="OPEN">(</mo>
+    <msub>
+      <mi>β</mi>
+      <mi>k</mi>
+    </msub>
+    <mo>,</mo>
+    <msubsup>
+      <mi>σ</mi>
+      <mrow>
+        <msub>
+          <mrow>
+            <mover>
+              <mi>β</mi>
+              <mo stretchy="false">^</mo>
+            </mover>
+          </mrow>
+          <mi>k</mi>
+        </msub>
+      </mrow>
+      <mn>2</mn>
+    </msubsup>
+    <mo data-mjx-texclass="CLOSE">)</mo>
+  </mrow>
+</math>
+<p>The hypothesis $H_0 :{\beta}_k = \beta^*$ can be tested with the $ z $  statistic:</p>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mi>z</mi>
+  <mo>=</mo>
+  <mfrac>
+    <mrow>
+      <msub>
+        <mrow>
+          <mover>
+            <mi>β</mi>
+            <mo>^</mo>
+          </mover>
+        </mrow>
+        <mi>k</mi>
+      </msub>
+      <mo>−</mo>
+      <msup>
+        <mi>β</mi>
+        <mo>∗</mo>
+      </msup>
+    </mrow>
+    <msub>
+      <mrow>
+        <mover>
+          <mi>σ</mi>
+          <mo>^</mo>
+        </mover>
+      </mrow>
+      <mrow>
+        <msub>
+          <mrow>
+            <mover>
+              <mi>β</mi>
+              <mo stretchy="false">^</mo>
+            </mover>
+          </mrow>
+          <mi>k</mi>
+        </msub>
+      </mrow>
+    </msub>
+  </mfrac>
+</math>
+<p>If Ho is true, then 2: is distributed approximately normally with a mean of 0 and a variance of 1 for large samples. The sampling distribution is shown in the following figure, where the shading shows the rejection region for a two-tailed test at the 0.05 level</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.20.1.png" style="width:650px;height:450px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
+<p>For some estimators, such as linear regression implemented by <strong>regress</strong> and with survey estimation, the estimators have at distribution rather than a normal distribution. The general principles of testing are, however, the same.</p>
+<h2 id="21-one-tailed-and-two-tailed-tests">2.1 One-tailed and two-tailed tests</h2>
+<p>The probability levels in the Stata output for estim ation commands are for two-tailed tests. When past research or theory suggests the sign of the coefficient, a one-tailed test might be used, and $H_0$ is rejected only when $t$ or $z$ is in the expected tail.
+You should divide P &gt; |t| (or P&gt;|z| ) by 2 only when the estimated coefficient is in the expected direction.</p>
+<p>Disciplines vary in their preferences for using one-tailed or two-tailed tests. Consequently, it is im portant to be explicit about whether p-values are for one-tailed or two-tailed tests. Unless stated otherwise, all the p-values we report in this book are for two-tailed tests.</p>
+<h2 id="22-wald-and-likelihood-ratio-tests">2.2 Wald and likelihood-ratio tests</h2>
+<p><strong>For models fit by ML, hypotheses can be tested with Wald tests by using test and with likelihood-ratio (LR) tests by using lrtest. Only Wald tests are available for coefficients estimated using survey estimation.</strong> For both types of tests, there is a null hypothesis $H_0$ that implies constraints on the model’s parameters. For example, $H_0: \beta_vc — \beta_hc = 0$ hypothesizes that two of the parameters are 0 in the population.</p>
+<p>The Wald test assesses $H_0$ by considering two pieces of information. First, <strong>all else being equal, the greater the distance between the estimated coefficients and the hypothesized values, the less support we have for $H_0$</strong>. Second, <strong>the greater the curvature of the log-likelihood function, the more certainty we have about our estimates. This means that smaller differences between the estimates and hypothesized values are required to reject $H_0$.</strong></p>
+<p>The LR test assesses $H_0$ by comparing the log likelihood from th e full model that does not include the constraints implied by $H_0$ with a restricted model th at does impose those constraints. If the constraints significantly reduce the log likelihood, then $H_0$ is rejected. Thus the LR test requires fitting two models.</p>
+<p>Although the LR and Wald tests are asymptotically equivalent, they have different values in finite samples, particularly in small samples. In general, it is unclear which test is to be preferred. Cameron and Trivedi (2005, 238) review the literature and conclude that neither test is uniformly superior. Nonetheless, many statisticians prefer the LR when both are suitable. We do recommend com puting only one test or the other; that is, we see no reason why you would want to compute or report both tests for a given hypothesis</p>
+<h2 id="23-wald-tests-with-test-and-testparm">2.3 Wald tests with test and testparm</h2>
+<p>test computes Wald tests for linear hypotheses about parameters from the last model that was fit. Here we consider the most useful features of this powerful command. Features for multiple-equation models, such as mlogit, zip, and zinb, are discussed in chapters 8 and 9. Use help test for more features and help testnl for Wald tests of nonlinear hypotheses.&rdquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">test varlist [ , accumulate ]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The first syntax for test allows you to <strong>test that one or more coefficients from the last model are simultaneously equal to 0</strong>:</p>
+<p>where varlist contains names of independent variables from the last estimation.</p>
+<p>Some examples of test after fitting the model logit lfp k5 k618 i.agecat i.wc i.hclwg inc should make this first syntax clear. With one variable listed—here, <strong>k5</strong>—we are testing $H0: \beta_k5 = 0$.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>    Logistic regression                                     Number of obs =    753
+                                                            LR chi2(8)    = 124.30
+                                                            Prob &gt; chi2   = 0.0000
+    Log likelihood = -452.72367                             Pseudo R2     = 0.1207
+    
+    ------------------------------------------------------------------------------
+             lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+    -------------+----------------------------------------------------------------
+              k5 |      -1.39       0.19    -7.25   0.000        -1.77       -1.02
+            k618 |      -0.07       0.07    -0.96   0.336        -0.20        0.07
+                 |
+          agecat |
+          40-49  |      -0.63       0.21    -3.00   0.003        -1.04       -0.22
+            50+  |      -1.28       0.26    -4.92   0.000        -1.79       -0.77
+                 |
+              wc |
+        college  |       0.80       0.23     3.48   0.001         0.35        1.25
+                 |
+              hc |
+        college  |       0.14       0.21     0.66   0.508        -0.27        0.54
+             lwg |       0.61       0.15     4.04   0.000         0.31        0.91
+             inc |      -0.04       0.01    -4.24   0.000        -0.05       -0.02
+           _cons |       1.01       0.29     3.54   0.000         0.45        1.57
+    ------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">* Wald tests
+</span></span><span class="line"><span class="cl">test k5
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> ( 1)  [lfp]k5 = 0
+
+           chi2(  1) =   52.57
+         Prob &gt; chi2 =    0.0000
+</code></pre>
+<p>The resulting chi-squared test with 1 degree of freedom equals the square of the $z$ test statistic in the <strong>logit</strong> output. The results indicate that we can reject the null hypothesis.</p>
+<p>If we list all the regressors in the model, we can test that all the coefficients except the constant are simultaneously equal to 0. <strong>When factor-variable notation is used, variables must be specified with the value.variable-name syntax, such as 2.agecat. Recall that if you are not sure what name to use, you can replay the results by using the coef legend option (for example, logit, coef legend).</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">test k5 k618 2.agecat 3.agecat 1.wc 1.hc lwg inc
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>     ( 1)  [lfp]k5 = 0
+     ( 2)  [lfp]k618 = 0
+     ( 3)  [lfp]2.agecat = 0
+     ( 4)  [lfp]3.agecat = 0
+     ( 5)  [lfp]1.wc = 0
+     ( 6)  [lfp]1.hc = 0
+     ( 7)  [lfp]lwg = 0
+     ( 8)  [lfp]inc = 0
+    
+               chi2(  8) =   95.90
+             Prob &gt; chi2 =    0.0000
+</code></pre>
+<p>As noted above, an <strong>LR</strong> test of the same hypothesis is part of the standard output ol estim ation commands, labeled as <strong>LR chi2</strong> in the header ot the estimation output.</p>
+<p>To test all the coefficients associated with a factor variable with more than two categories, you can use testparm . For example, to test that all the coefficients for agecat are 0, we can use test:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">test 2.agecat 3.agecat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> ( 1)  [lfp]2.agecat = 0
+ ( 2)  [lfp]3.agecat = 0
+
+           chi2(  2) =   24.27
+         Prob &gt; chi2 =    0.0000
+</code></pre>
+<p>The same results are obtained with testparm :</p>
+<pre><code> ( 1)  [lfp]2.agecat = 0
+ ( 2)  [lfp]3.agecat = 0
+
+           chi2(  2) =   24.27
+         Prob &gt; chi2 =    0.0000
+</code></pre>
+<p>Because agecat has only two categories, the advantage of testpaxm is not great. But when there are many categories, it is much simpler to use.</p>
+<p>The second syntax for test allows you to test hypotheses about linear combinations of coefficients:</p>
+<p>test  [exp = exp] [ , accumulate ]</p>
+<p>For example, to test th at two coefficients are equal— say, $H_0:\beta = \beta_k618$:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">test k5=k618
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>     ( 1)  [lfp]k5 - [lfp]k618 = 0
+    
+               chi2(  1) =   45.07
+             Prob &gt; chi2 =    0.0000
+</code></pre>
+<p>Because the test statistic is significant, we reject the null hypothesis that the effect of having young children on labor force participation is equal to the effect of having older children.</p>
+<p>As before, testing hypotheses involving indicator variables requires us to specify both the value and the variable. For example, to test that the coefficients for ages 4049 versus 30-39 and for ages 50+ versus 30-39 are equal, we would use the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">test 2.agecat=3.agecat
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>     ( 1)  [lfp]2.agecat - [lfp]3.agecat = 0
+    
+               chi2(  1) =    8.86
+             Prob &gt; chi2 =    0.0029
+</code></pre>
+<h3 id="231-the-accumulate-option">2.3.1 The accumulate option</h3>
+<p>The accumulate option allows you to build more complex hypotheses based 011 the prior test command. For example, we begin with a test of $H_0:\beta_k5 = \beta_k618$:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">test k5=k618
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> ( 1)  [lfp]k5 - [lfp]k618 = 0
+
+           chi2(  1) =   45.07
+         Prob &gt; chi2 =    0.0000
+</code></pre>
+<p>Next, add the constraint that $\beta_wc = \beta_hc$</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">test 1.wc=1.hc, accumulate
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code> ( 1)  [lfp]k5 - [lfp]k618 = 0
+ ( 2)  [lfp]1.wc - [lfp]1.hc = 0
+
+           chi2(  2) =   47.63
+         Prob &gt; chi2 =    0.0000
+</code></pre>
+<p>This results in a test of $H_0:\beta_k5 = \beta_k618$, $\beta_wc = \beta_hc$. Instead of using the <strong>accumulate</strong> option, we could have used a single <strong>test</strong> command with multiple restrictions: test (k5=k618) ( 1.wc = 1.hc ).</p>
+<h2 id="24-lr-tests-with-irtest">2.4 LR tests with Irtest</h2>
+<p>lrtest compares <strong>nested models</strong> by using an LR test. The syntax is where model-one and model-two are the names of estimation results stored by estimates store. When model-two is not specified, the most recent estimation results are used in its place. Typically, we begin by fitting the full or unconstrained model, and then we store the results. For example,</p>
+<p><strong>Irtest model-one [ model-two]</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">estimates store full
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    753
+                                                        LR chi2(8)    = 124.30
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -452.72367                             Pseudo R2     = 0.1207
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          k5 |      -1.39       0.19    -7.25   0.000        -1.77       -1.02
+        k618 |      -0.07       0.07    -0.96   0.336        -0.20        0.07
+             |
+      agecat |
+      40-49  |      -0.63       0.21    -3.00   0.003        -1.04       -0.22
+        50+  |      -1.28       0.26    -4.92   0.000        -1.79       -0.77
+             |
+          wc |
+    college  |       0.80       0.23     3.48   0.001         0.35        1.25
+             |
+          hc |
+    college  |       0.14       0.21     0.66   0.508        -0.27        0.54
+         lwg |       0.61       0.15     4.04   0.000         0.31        0.91
+         inc |      -0.04       0.01    -4.24   0.000        -0.05       -0.02
+       _cons |       1.01       0.29     3.54   0.000         0.45        1.57
+------------------------------------------------------------------------------
+</code></pre>
+<p>where full is the name we chose for the estimation results from the full model.9 After we store the results, we fit a model that is nested in the full model. A nested model is one that can be created by imposing constraints on the coefficients in the prior model. Most commonly, some of the variables from the full model are excluded, which in effect constrains the coefficients for these variables to be 0. For example, if we drop k5 and k618 from the last model, this produces</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">estimates store nokidvars
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    753
+                                                        LR chi2(6)    =  61.59
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -484.07589                             Pseudo R2     = 0.0598
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+      agecat |
+      40-49  |      -0.02       0.18    -0.10   0.922        -0.36        0.33
+        50+  |      -0.48       0.21    -2.36   0.018        -0.89       -0.08
+             |
+          wc |
+    college  |       0.66       0.22     3.06   0.002         0.24        1.09
+             |
+          hc |
+    college  |       0.03       0.20     0.18   0.859        -0.35        0.42
+         lwg |       0.61       0.15     4.18   0.000         0.32        0.89
+         inc |      -0.03       0.01    -4.37   0.000        -0.05       -0.02
+       _cons |       0.22       0.22     1.01   0.312        -0.21        0.65
+------------------------------------------------------------------------------
+</code></pre>
+<p>We stored the results for the nested models as nokidvars. Next, we com pute the test:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">lrtest full nokidvars
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Likelihood-ratio test
+Assumption: nokidvars nested within full
+
+ LR chi2(2) =  62.70
+Prob &gt; chi2 = 0.0000
+</code></pre>
+<p>The output indicates that the LR test assumes that <strong>nokidvars</strong> is nested in full. It is up to the user to ensure that the models are nested. Because our models are nested, the result is an LR test of the hypothesis Ho: $H_0:\beta_k5 = \beta_k618 = 0$. <strong>The significant chi-squared statistic means that we reject the null hypothesis that these two coefficients are simultaneously equal to 0. Although we fit the full model first followed by the constrained model, lrtest allows the constrained model to be fit first followed by the full model.</strong></p>
+<p>The output for all models fit by maximum likelihood includes an LR test that all the coefficients except the intercept(s) are 0. For our full model above, this is listed as LR chi2(8) = 124.30. The results can be computed with lrtest as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    753
+                                                        LR chi2(0)    =   0.00
+                                                        Prob &gt; chi2   =      .
+Log likelihood = -514.8732                              Pseudo R2     = 0.0000
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       _cons |       0.28       0.07     3.74   0.000         0.13        0.42
+------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">lrtest full .
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Likelihood-ratio test
+Assumption: . nested within full
+
+ LR chi2(8) = 124.30
+Prob &gt; chi2 = 0.0000
+</code></pre>
+<h3 id="241-avoiding-invalid-lr-tests">2.4.1 Avoiding invalid LR tests</h3>
+<p>lrtest does not always prevent you from computing an invalid test. There are two things that you must check: that <strong>the two models are nested and that the two models were fit using the same sample. In general, if either of these conditions is violated, the results of lrtest are meaningless.</strong> Although lrtest exits with an error message if the number of observations differs in the two models, this check does not catch those cases in which the number of observations is the same but the samples are different. One exception to the requirement of equal sample sizes is when perfect prediction removes some observations. In such a case, the apparent sample sizes for nested models differ, but an LR test is still appropriate (see section 5.2.3 for details). When this occurs, the force option can be used to force lrtest to compute the seemingly invalid test. For details on ensuring the same sample size, see our discussion of mark and markout in section 3.1.6.</p>
+<h2 id="3-measures-of-fit">3 Measures of fit</h2>
+<p>Assessing fit involves both the analysis of the fit of individual observations and the evaluation of scalar measures of fit for the model as a whole.</p>
+<p>Many scalar measures have been developed to summarize the overall goodness of fit of regression models. A scalar measure can in some cases be useful in comparing competing models and. ultimately, in selecting a final model. W ithin a substantive area, measures of fit might provide a rough index of whether a model is adequate. However, there is no convincing evidence that selecting a model th a t maximizes the value of a given measure results in a model th at is optimal in any sense other than the m odel’s having a larger (or, in some instances, smaller) value of th a t measure. Measures of fit provide some information, but it is partial information th at must be assessed within the context of the theory motivating the analysis, past research, and the estim ated parameters of the model being considered.</p>
+<h3 id="31-syntax-of-fitstat">3.1 Syntax of fitstat</h3>
+<p>The SPost fitstat command calculates many fit statistics for the estimation commands in this book. We should mention again that <strong>we often find these measures of limited utility in our own research, with the exception of the information criteria BIC and AIC.</strong> When we do use these measures, we find it helpful to compare multiple measures, <strong>fitstat</strong> makes this simple. The options <strong>diff, saving (), and using ()</strong> facilitate the comparison of measures across two models. Although fitstat duplicates some measures computed by other Stata commands (for example, the pseudo-R² in standard Stata output and the information criteria from <strong>estat ic</strong>), fitstat adds many more measures and makes it convenient to compare measures across models.</p>
+<p>The syntax is</p>
+<p>fitstat[, saving(name) using(name) ic force diff]</p>
+<p>fitstat terminates with an error if the last estimation command does not return a value for the log-likelihood function for a model with only an intercept (that is, if e(ll_0) is missing). This occurs, for example, if the noconstant option is used to fit a model. Although fitstat can be used when models are fit with weighted data, there are two limitations.</p>
+<p>First, some measures cannot be computed with some types of weights and none can be computed after svy estimation.</p>
+<p>Second, when pweights or robust standard errors are used to fit the model, fitstat uses the &ldquo;pseudolikelihood&rdquo; rather than the likelihood to compute measures of fit. Given the heuristic nature of the various measures of fit, we see no reason why the resulting measures would be inappropriate.</p>
+<p><strong>Options</strong></p>
+<ul>
+<li>fitstat[, saving(name)] saves the computed measures in a matrix, <strong>_fitstat_name</strong>, for later comparisons. When the <strong>saving()</strong> option is not used, <strong>fitstat</strong> saves results to the matrix <strong>_fitstat_0</strong>.</li>
+<li>using (name) compares the measures for the model in memory, referred to in the output as the current model, with those of the model saved as name.</li>
+<li><strong>diff</strong> compares the current model to the prior model.</li>
+<li><strong>ic</strong> presents only the Bayesian information criterion (BIC) and Akaike’s information criterion (AlC). When comparing two models, fitstat reports Raftery’s (1995) guidelines for assessing the strength of one model over another with BIC.</li>
+<li>force is required to compare information criteria when the number of observations or the estimation m ethod varies between the two models, or to conduct a likelihood ratio test under circumstances in which Stata’s <strong>lrtest</strong> command would require the force option.</li>
+</ul>
+<h3 id="32-methods-and-formulas-used-by-fitstat">3.2 Methods and formulas used by fitstat</h3>
+<p>In this section, we provide brief descriptions of each measure computed by fitstat. Full details for most measures along with citations to original sources are in Long (1997). We begin with formulas for several quantities that are used in the computation of other measures. We then consider the information criteria BIC and AIC. Again, these are the measures that we find most useful in practice. We then review the coefficient of determination $R^2$ for the linear regression model followed by numerous pseudo-R²s.</p>
+<h4 id="321-quantities-used-in-other-measures">3.2.1 Quantities used in other measures</h4>
+<p><strong>Log-likelihood based measures</strong>. Stata begins maximum likelihood iterations by computing the log likelihood of the model with all parameters but the intercept constrained to 0, referred to as $\ln L\left(M_{\text {Intercept }}\right)$ The log likelihood upon convergence, referred to as $\ln L\left(M_{\text {Full }}\right)$, is also listed. This information is presented in the iteration log and in the head er for the estim ation results.</p>
+<p><strong>LR chi-square test of all coefficients</strong>. An LR test of the hypothesis that all coefficients except the intercepts are 0 can be computed by comparing the log likelihoods:  $LR = 2 \ln L\left(M_{\text {Full }}\right)-2 \ln L\left(M_{\text {Intercept }}\right)$LR is reported by Stata as $ LR chi2 (df) = #$, where the degrees of freedom in parentheses are the number of constrained parameters. For the <strong>zip</strong> and <strong>zinb</strong> models discussed in chapter 9, LR tests that the coefficients in the count portion (not the binary portion) of the model are 0.</p>
+<p>Deviance. The deviance compares the given model with a model that has one parameter for each observation so th at the model reproduces the observed d ata perfectly. The deviance is defined as $D=-2 \ln L\left(M_{\text {Full }}\right)$, where the degrees of freedom equals $N$ m inus the number of param eters. $D$ does not have a. chi-squared distribution.</p>
+<h4 id="322-information-criteria">3.2.2 Information criteria</h4>
+<p><strong>Information measures can be used to compare both nested and nonnested models.</strong></p>
+<p>AIC. The formula for Akaike’s information criterion (1973) used by fitstat and Stata’s <strong>estat ic</strong> command is</p>
+<p>$$
+\mathrm{AIC}=-2 \ln \widehat{L}\left(M_k\right)+2 P_k
+$$</p>
+<p>where $\widehat{L}\left(M_k\right)$ is the likelihood of model $ M_k$ and $P_k$ is the number of parameters in the model (for example, $K$ + 1 in the binary regression model, where $K$ is the number of regressors). All else being equal, the model with the smaller AIC is considered the better-fitting model. Another definition of AIC is equal to the value in (3.1) divided by $N$ . We include this quantity in the $fitstat$ output as <strong>AIC divided by N</strong>.</p>
+<p><strong>BIC</strong>. The Bayesian information criterion (BIC) was proposed by Raftery (1995) and others as a means to compare nested and nonnested models. <strong>Because BIC imposes a greater penalty for the number of parameters in a model, it favors a simpler mode, compared with the AIC measure.</strong></p>
+<p>The BIC statistic is defined in at least three ways. Although this can be confusing the choice of which version to use is not important, as we show after presenting thvarious definitions. Stata defines the BIC for model $M_k$ as</p>
+<p>$$\mathrm{BlC_k} = -2:\ln\hat{L}(M_{k})+\mathrm{df}_{k}\ \ln N$$</p>
+<p>where $df_{k}$ is the number of param eters in $M_k$, including auxiliary parameters such as a in the negative binomial regression model. As with AIC, the smaller or more negativ the BIC, the better the fit. A second definition of BIC is computed using the deviance</p>
+<p>$$\mathrm{BIC_k}^{D}=D(M_{k})+\mathrm{df}_{k}^{D}\ \ln N$$</p>
+<p>where $df_{k}$ is the degrees of freedom associated with the deviance, <strong>fitstat</strong> labels this as BIC (based on deviance). The third version, sometimes denoted as BIC&rsquo;, uses the LR chi-squared with  $df_{k}  equal to the number of regressors (not parameters) in the model.</p>
+<p>$$\mathrm{BIC_k}^{\prime}=-G^{2}(M_{k})+\mathrm{df}_{k}^{\prime}\ \ln N$$</p>
+<p>The difference in the BICs from two models indicates which model is preferred. Because $\mathrm{BIC_1}-\mathrm{BIC_2}=\mathrm{BIC_1}^{\prime}-\mathrm{BIC_2}^{\prime}=\mathrm{BIC_1}^{D}-\mathrm{BIC_2}^{D}$, the choice of which version of BIC to use is a m atter of convenience. When$ BIC_1 &lt; BIC_2$ , the first model is preferred, and accordingly, when $ BIC_1 &gt; BIC_2$, the second model is preferred. Raftery (1995) suggested these guidelines for the strength of evidence favoring $M_2$ against $M_1$ base on a difference in BIC:</p>
+<p>By default, <strong>firststat</strong> shows you $BIC_k$, which is also computed by Stata’s estat ic. If you specify <strong>fiststat, ic</strong>, then all versions of AIC and BIC are reported but non-1&rsquo; measures of fit are not shown.</p>
+<h4 id="322-example-of-information-criteria">3.2.2 Example of information criteria.</h4>
+<p>To compute information criteria for a single model, we fit the model and then run <strong>fitstat</strong> , saving our results with the name <strong>basemodel</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">fitstat, ic saving(basemodel)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    753
+                                                        LR chi2(8)    = 124.30
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -452.72367                             Pseudo R2     = 0.1207
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          k5 |      -1.39       0.19    -7.25   0.000        -1.77       -1.02
+        k618 |      -0.07       0.07    -0.96   0.336        -0.20        0.07
+             |
+      agecat |
+      40-49  |      -0.63       0.21    -3.00   0.003        -1.04       -0.22
+        50+  |      -1.28       0.26    -4.92   0.000        -1.79       -0.77
+             |
+          wc |
+    college  |       0.80       0.23     3.48   0.001         0.35        1.25
+             |
+          hc |
+    college  |       0.14       0.21     0.66   0.508        -0.27        0.54
+         lwg |       0.61       0.15     4.04   0.000         0.31        0.91
+         inc |      -0.04       0.01    -4.24   0.000        -0.05       -0.02
+       _cons |       1.01       0.29     3.54   0.000         0.45        1.57
+------------------------------------------------------------------------------
+
+                         |       logit 
+-------------------------+------------
+AIC                      |            
+                     AIC |     923.447 
+          (divided by N) |       1.226 
+-------------------------+------------
+BIC                      |            
+               BIC(df=9) |     965.064 
+ BIC (based on deviance) |   -4022.857 
+    BIC' (based on LRX2) |     -71.307 
+</code></pre>
+<p>Information criteria for a single model are not very useful. Their value comes when comparing models. Suppose we generate the variable kids, which is the sum of k5 and k618. Our new model drops k5 and k618 and adds kids. In other words, instead of a model in which the effect of an additional child age 5 or under is allowed to differ from the effect of an additional child age 6 to 18, we fit a model in which the effect of each additional child regardless of age is presumed equal. After fitting the new model, fitstat compares it with the saved model:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">generate kids = k5 + k618
+</span></span><span class="line"><span class="cl">label var kids &#34;Number of kids 18 or younger&#34;
+</span></span><span class="line"><span class="cl">logit lfp kids i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">fitstat, ic using(basemodel)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                         |     Current        Saved   Difference 
+-------------------------+--------------------------------------
+AIC                      |                                      
+                     AIC |     973.368      923.447       49.921 
+          (divided by N) |       1.293        1.226        0.066 
+-------------------------+--------------------------------------
+BIC                      |                                      
+          BIC(df=8/9/-1) |    1010.361      965.064       45.297 
+ BIC (based on deviance) |   -3977.561    -4022.857       45.297 
+    BIC' (based on LRX2) |     -26.010      -71.307       45.297 
+
+Difference of   45.297 in BIC provides very strong support for saved model.
+</code></pre>
+<p>All AIC and Bic measures are smaller for the base model (listed as Saved). At the bottom of the table, it indicates that based on Raftery’s criterion, there is very strong support for the saved model over the current model.</p>
+<h4 id="323-r2-in-the-linear-regression-model">3.2.3 $R^2$ in the linear regression model</h4>
+<p>For regress, fitstat reports the coefficient of determination, which can be defined variously as</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src=""
+        data-srcset=",  1.5x,  2x"
+        data-sizes="auto"
+        alt=""
+        title="" /></p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.20.2.png" style="width:750px;height:150px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
+<p>The adjusted $R^2$ is defined as</p>
+<p>$$\overline{R^2}=\left(R^{2}-\frac{K}{N-1}\right)\left(\frac{N-1}{N-K-1}\right)$$</p>
+<h4 id="324-pseudo-r2primes">3.2.4 $Pseudo-R2^{\prime}s$</h4>
+<p>Although each definition of $R^2$ gives the same numeric value in the linear regression model, each gives different values and thus provides different measures of fit when applied to other models. <strong>There are also other ways of computing measures th at have some resemblance to the $R^2$ in the LR model. These are known as $Pseudo-R2^{\prime}s$. Because different $Pseudo-R2$ measures can yield substantially different results and different software packages use different measures as their default $Pseudo-R2$, when presenting results it is important to report exactly which measure is being used rather than simply saying $Pseudo-R2^{\prime}s$”</strong></p>
+<p><strong>Pseudo-R2 is a metric used to measure the goodness of fit of a statistical model. Unlike the traditional R2 (coefficient of determination) that represents the actual proportion of explained variance, Pseudo-R2 is an approximate method used in certain situations, especially in Generalized Linear Models (GLM) where the assumptions of normality and constant variance may not hold, making traditional R2 inapplicable.</strong></p>
+<p><strong>In GLM, the response variable may not follow a normal distribution, and the variance might be complex, making the traditional R2 less straightforward. Therefore, Pseudo-R2 is introduced to gauge the model&rsquo;s fit to the data.</strong></p>
+<p><strong>Different types of models may have different formulations for Pseudo-R2.</strong></p>
+<p><strong>McFadden’s R2.</strong></p>
+<p>McFadden’s (1974) R2, also known as the LR index, <strong>compares a model with just the intercept to a model with all parameters.</strong> It is defined as</p>
+<p>$$\begin{aligned}R_{\mathrm{McF}}^2&amp;=1-\frac{\ln\widehat{L}(M_{\mathrm{Full}})}{\ln\widehat{L}(M_{\mathrm{Intercept}})}\end{aligned}$$</p>
+<p>If model $M_intercept$ = $M_Full$, then $\overline R_\mathrm{McF}^{2} = 0$, but $\overline R_\mathrm{McF}^{2}$ can never exactly equal 1. This measure is reported by Stata in the header of estimation results as Pseudo $R^2$ and is listed in the fitstat output as R2 McFadden. Because $\overline R_\mathrm{McF}^{2}$ always increases as variables are added to a model, an adjusted version is also available:</p>
+<p>$$\overline R_\mathrm{McF}^{2}=1-\frac{\ln\widehat{L}(M_{\mathrm{Full}})-K^{*}}{\ln\widehat{L}(M_{\mathrm{Intercept}})}$$</p>
+<p>where $K^*$ is the number of parameters, not independent variables</p>
+<p><strong>Maximum likelihood R2</strong></p>
+<p>Another analogy to R2 was suggested by Maddala (1983):</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.20.3.png" style="width:450px;height:150px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
+<p>This R2 is also called the Cox-Snell (1989) R2.</p>
+<p><strong>Cragg and Uhler’s R2.</strong>
+Because $R_\mathrm{ML}^2$ reaches a maximum of $1-L\left(M_{\mathrm{Intercept}}\right)^{2/N}.$ , Cragg and Uhler (1970) suggested a normed measure:</p>
+<p>$$R_{\mathrm{CkU}}^{2}=\frac{R_{\mathrm{ML}}^{2}}{\max R_{\mathrm{ML}}^{2}}=\frac{1-{L(M_{\mathrm{Intercept}})/L(M_{\mathrm{Full}})}^{2/N}}{1-L(M_{\mathrm{Interospt}})^{2/N}}$$</p>
+<p>This R2 is also known as Nagelkerke’s (1991) R2</p>
+<p><strong>Efron’s R2</strong>
+For binary outcomes, Efron’s (1978) pseudo-R2 defines $\widehat\pi=\widehat\Pr(y=1\mid\mathbf{x})$ and equals</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.20.4.png" style="width:450px;height:150px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
+<p><strong>Tjur’s coefficient of discrimination.</strong></p>
+<p>For binary outcomes, Tjur (2009) motivates a goodness-of-fit measure ranging from 0 to 1 that he calls the coefficient of discrimination. D simply compares the average predicted probability when the outcome is observed as 1 to the average when the outcome is observed as 0:</p>
+<p>$$D=\text{mean }\widehat{\Pr}(y=1|y=1)-\text{mean }\widehat{\Pr}(y=1|y=0)$$</p>
+<p>The measure is a simple expression of the principle that as binary models fit better, the predicted probability of a positive outcome will increase for cases with a positive outcome and decrease for cases with a negative outcome.</p>
+<p><strong>V$(y^*)$, V (e), and McKelvey and Zavoina&rsquo;s R2.</strong></p>
+<p>Some models can be defined in terms of a latent variable y*. These include the models for binary or ordinal outcomes, such as logit, probit, ologit, and oprobit, as well as some models with censoring, such as to bit and intreg . Each model is defined in terms of a regression on a latent variable y*</p>
+<p>$$y^{*}=\mathbf{x}\boldsymbol{\beta}+\varepsilon $$</p>
+<p>Using $\widehat{\mathrm{Var}}(\widehat{y}^{*})=\widehat{\hat{\boldsymbol{\beta}}}^{\prime}\widehat{\mathrm{Var}}(\mathbf{x})\widehat{\boldsymbol{\beta}}$,McKelvey and Zavoina (1975) proposed</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.20.5.png" style="width:450px;height:150px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
+<p>In models for categorical outcomes,$\operatorname{Var}(\varepsilon)$ is assumed to identify the model</p>
+<p><strong>Count and adjusted count R2.</strong></p>
+<p>Observed and predicted values can be used in models with categorical outcomes to compute what is known as the count R2. Consider the binary case where the observed $y$ is 0 or 1 and $\widehat{\pi}_i=\widehat{\Pr}(y=1\mid\mathbf{x}_i)$. Define the expected outcome as</p>
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.20.6.png" style="width:450px;height:150px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
+<p>This allows us to construct a table of observed and predicted values, such as that produced for the logit model by the command <strong>estat classification</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">logit lfp kids i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">estat classification
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>              -------- True --------
+Classified |         D            ~D  |      Total
+-----------+--------------------------+-----------
+     +     |       334           182  |        516
+     -     |        94           143  |        237
+-----------+--------------------------+-----------
+   Total   |       428           325  |        753
+
+Classified + if predicted Pr(D) &gt;= .5
+True D defined as lfp != 0
+--------------------------------------------------
+Sensitivity                     Pr( +| D)   78.04%
+Specificity                     Pr( -|~D)   44.00%
+Positive predictive value       Pr( D| +)   64.73%
+Negative predictive value       Pr(~D| -)   60.34%
+--------------------------------------------------
+False + rate for true ~D        Pr( +|~D)   56.00%
+False - rate for true D         Pr( -| D)   21.96%
+False + rate for classified +   Pr(~D| +)   35.27%
+False - rate for classified -   Pr( D| -)   39.66%
+--------------------------------------------------
+Correctly classified                        63.35%
+--------------------------------------------------
+</code></pre>
+<p>We see that positive responses were predicted for 516 observations, of which 334 were correctly classified because the observed response was positive (y = 1), whereas the other 182 were incorrectly classified because the observed response was negative (y = 0). Likewise, of the 237 observations for which a negative response was predicted, 143 were correctly classified and 94 were incorrectly classified</p>
+<p>A seemingly appealing measure is the proportion of correct predictions, referred to as the count R2,
+$$R_{\mathrm{Count}}^{2}=\frac{1}{N}\sum_{j}n_{jj}$$</p>
+<p>where the $n_{jj}&rsquo;\text{s}$ are the number of correct predictions for outcome $j$. The count R 2
+can give a faulty impression that the model is predicting very well. In a binary model,
+without knowledge about the independent variables, it is possible to correctly predict
+at least 50% of the cases by choosing the outcome category with the largest percentage
+of observed cases. To adjust for the largest row marginal,</p>
+<p>$$R_{\mathrm{AdjCount}}^{2}=\frac{\left(\sum_{j}n_{jj}\right)-\max_{r}\left(n_{r+}\right)}{N-\max_{r}\left(n_{r+}\right)}$$</p>
+<p>where $n_r+$ is the marginal for row r. The adjusted count $R2$ is the proportion of correct guesses beyond the number that would be correctly guessed by choosing the largest marginal.</p>
+<h3 id="33-example-of-fitstat">3.3 Example of fitstat</h3>
+<p>To examine all the measures of fit, we repeat our example for information criteria, but this time we use <strong>fitstat</strong> without the <strong>ic</strong> option. We fit our base model and save the <strong>fitstat</strong> results with the name <strong>basemodel</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">fitstat, ic saving(basemodel)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Next, we fit a model that includes the variable kid s, which is the sum of k5 and k618. and drops k5 and k618. <strong>fitstat</strong> compares this model with the saved model:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">generate kids = k5 + k618
+</span></span><span class="line"><span class="cl">label var kids &#34;Number of kids 18 or younger&#34;
+</span></span><span class="line"><span class="cl">logit lfp kids i.agecat i.wc i.hc lwg inc, nolog
+</span></span><span class="line"><span class="cl">fitstat,using(basemodel)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>                         |     Current        Saved   Difference 
+-------------------------+--------------------------------------
+Log-likelihood           |                                      
+                   Model |    -478.684     -452.724      -25.960 
+          Intercept-only |    -514.873     -514.873        0.000 
+-------------------------+--------------------------------------
+Chi-square               |                                      
+         D(df=745/744/1) |     957.368      905.447       51.921 
+           LR(df=7/8/-1) |      72.378      124.299      -51.921 
+                 p-value |       0.000        0.000        0.000 
+-------------------------+--------------------------------------
+R2                       |                                      
+                McFadden |       0.070        0.121       -0.050 
+      McFadden(adjusted) |       0.055        0.103       -0.048 
+      McKelvey &amp; Zavoina |       0.125        0.215       -0.090 
+            Cox-Snell/ML |       0.092        0.152       -0.061 
+  Cragg-Uhler/Nagelkerke |       0.123        0.204       -0.081 
+                   Efron |       0.090        0.153       -0.063 
+                Tjur's D |       0.091        0.153       -0.063 
+                   Count |       0.633        0.676       -0.042 
+         Count(adjusted) |       0.151        0.249       -0.098 
+-------------------------+--------------------------------------
+IC                       |                                      
+                     AIC |     973.368      923.447       49.921 
+        AIC divided by N |       1.293        1.226        0.066 
+          BIC(df=8/9/-1) |    1010.361      965.064       45.297 
+-------------------------+--------------------------------------
+Variance of              |                                      
+                       e |       3.290        3.290        0.000 
+                  y-star |       3.761        4.192       -0.431 
+
+Note: Likelihood-ratio test assumes current model nested in saved model.
+
+Difference of   45.297 in BIC provides very strong support for saved model.
+</code></pre>
+<p>In this example, the two models are nested because the second model is in effect imposing
+the constraint $\mathrm{t~}\beta_{\mathrm{k5}}=\beta_{\mathrm{k618}}$ on the first model.</p>
+<h2 id="4-estat-postestimation-commands">4 estat postestimation commands</h2>
+<p><strong>estat</strong> is a set of subcommands that provide different statistics about the model whose estimates are active. Each is invoked using <strong>estat</strong> subcommand. Here we provide an overview of some of the most useful subcommands, which we use in later chapters</p>
+<p><strong>estat summarize</strong></p>
+<p>estat summarize provides descriptive statistics for the variables in the model by using
+the estimation sample. For example,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">use binlfp4, clear
+</span></span><span class="line"><span class="cl">logit lfp k5 k618 i.agecat i.wc i.hc lwg inc, nolog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>Logistic regression                                     Number of obs =    753
+                                                        LR chi2(8)    = 124.30
+                                                        Prob &gt; chi2   = 0.0000
+Log likelihood = -452.72367                             Pseudo R2     = 0.1207
+
+------------------------------------------------------------------------------
+         lfp | Coefficient  Std. err.      z    P&gt;|z|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+          k5 |      -1.39       0.19    -7.25   0.000        -1.77       -1.02
+        k618 |      -0.07       0.07    -0.96   0.336        -0.20        0.07
+             |
+      agecat |
+      40-49  |      -0.63       0.21    -3.00   0.003        -1.04       -0.22
+        50+  |      -1.28       0.26    -4.92   0.000        -1.79       -0.77
+             |
+          wc |
+    college  |       0.80       0.23     3.48   0.001         0.35        1.25
+             |
+          hc |
+    college  |       0.14       0.21     0.66   0.508        -0.27        0.54
+         lwg |       0.61       0.15     4.04   0.000         0.31        0.91
+         inc |      -0.04       0.01    -4.24   0.000        -0.05       -0.02
+       _cons |       1.01       0.29     3.54   0.000         0.45        1.57
+------------------------------------------------------------------------------
+</code></pre>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">estat summarize
+</span></span></code></pre></td></tr></table>
+</div>
+</div><pre><code>  Estimation sample logit                  Number of obs =        753
+
+  -------------------------------------------------------------------
+      Variable |         Mean      Std. dev.         Min          Max
+  -------------+-----------------------------------------------------
+           lfp |     .5683931      .4956295            0            1
+            k5 |     .2377158       .523959            0            3
+          k618 |     1.353254      1.319874            0            8
+               |
+        agecat |
+        40-49  |     .3851262      .4869486            0            1
+          50+  |     .2191235      .4139274            0            1
+               |
+            wc |
+      college  |     .2815405      .4500494            0            1
+               |
+            hc |
+      college  |     .3917663      .4884694            0            1
+           lwg |     1.097115      .5875564    -2.054124     3.218876
+           inc |     20.12897       11.6348    -.0290001           96
+  -------------------------------------------------------------------
+</code></pre>
+<p>The output is equivalent to the results from <strong>summarize</strong> modelvars <strong>if e(sample) == 1</strong>, where modelvars is the list of variables in your model. Several options are useful:</p>
+<ul>
+<li><strong>labels</strong> displays variable labels rather than the names of the variables.</li>
+<li><strong>noheader</strong> suppresses the header.</li>
+<li><strong>noweights</strong> ignores the weights if they have been used in estimation.</li>
+</ul>
+<p><strong>estat ic</strong>
+<strong>estat ic</strong> lists the inform ation criteria AIC and BIC for the last model. See page 123 for details</p>
+<p><strong>estat vce</strong>
+<strong>estat vce</strong> lists the variance-covariance matrix for the coefficient estimates. For further details, see  <strong>help estat vce</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-01-16</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/chapter_3-estimation-testing-and-fit/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/categorical-dependent-variables/">Categorical dependent variables</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/19.chapter19complex-survey-data/" class="prev" rel="prev" title="Chapter19 ：Complex survey data"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Chapter19 ：Complex survey data</a>
+            <a href="/chapter_4-methods-of-interpretation/" class="next" rel="next" title="[Categorical Dependent Var] Chapter_4 ：Methods of interpretation">[Categorical Dependent Var] Chapter_4 ：Methods of interpretation<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
