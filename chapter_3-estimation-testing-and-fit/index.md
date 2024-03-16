@@ -1000,58 +1000,46 @@ ereturn list
 
 ## 2 Testing
 
-If the assumptions of the model hold, ML estim ators are distributed asymptotically normally:
+If the assumptions of the model hold, ML estimators are distributed asymptotically normally:
 
-<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
-  <msub>
-    <mrow>
-      <mover>
-        <mi>β</mi>
-        <mo>^</mo>
-      </mover>
-    </mrow>
-    <mi>k</mi>
-  </msub>
-  <mrow data-mjx-texclass="REL">
-    <mover>
-      <mrow data-mjx-texclass="OP">
-        <mo>∼</mo>
-      </mrow>
-      <mrow>
-        <mi>a</mi>
-      </mrow>
-    </mover>
-  </mrow>
-  <mrow>
-    <mi data-mjx-variant="-tex-calligraphic" mathvariant="script">N</mi>
-  </mrow>
-  <mrow data-mjx-texclass="INNER">
-    <mo data-mjx-texclass="OPEN">(</mo>
-    <msub>
-      <mi>β</mi>
-      <mi>k</mi>
-    </msub>
-    <mo>,</mo>
-    <msubsup>
-      <mi>σ</mi>
-      <mrow>
-        <msub>
-          <mrow>
-            <mover>
-              <mi>β</mi>
-              <mo stretchy="false">^</mo>
-            </mover>
-          </mrow>
-          <mi>k</mi>
-        </msub>
-      </mrow>
-      <mn>2</mn>
-    </msubsup>
-    <mo data-mjx-texclass="CLOSE">)</mo>
-  </mrow>
-</math>
+$$\hat{\beta_k}\stackrel{a}{\sim}N\left(\beta_{k},\sigma_{\stackrel{\lambda}{\beta_{k}}}^{2}\right)$$
+
+
+当我们谈论最大似然估计（MLE）时，我们实际上是在说一种通过观察到的数据来猜测模型参数的方法。最大似然估计的目标是找到一组参数值，使得观察到的数据在这组参数下出现的可能性最大。
+
+让我们用一个更具体的例子来解释：
+
+想象你有一个魔术硬币，但你不知道它是如何工作的。你想知道抛一次硬币，它正面朝上的概率是多少。我们用一个字母 \(p\) 来表示这个概率。现在，你开始做实验，抛硬币多次，记录每次是正面还是反面。
+
+我们把所有实验的结果称为观察到的数据，比如说你连续抛了10次硬币，结果是 7 次正面（H）和 3 次反面（T）。这组数据就是 \(D\)。
+
+现在，MLE 的核心思想是：我们要找到一个 \(p\) 的值，使得在这个 \(p\) 下，观察到这组数据的概率最大。
+
+在硬币的例子中，我们可以用二项分布来表示抛硬币的概率。假设硬币正面朝上的概率是 \(p\)，那么观察到 7 次正面和 3 次反面的概率可以用下面的公式表示：
+
+$ P(D|p) = p^7 \cdot (1-p)^3 $
+
+这里，\(P(D|p)\) 表示在给定 \(p\) 的情况下，观察到数据 \(D\) 的概率。
+
+然后，MLE 就是要找到使这个概率最大的 \(p\)。你可以把它想象成在 \(p\) 的可能取值范围内找到一个使得实验结果最有可能出现的 \(p\)。
+
+数学上，我们可以通过求解导数为零的方程或者使用计算工具找到最大值。最终，我们得到了一个估计值 $ \hat{p} $，它是使得观察到这组数据的概率最大的 \(p\)。
+
+简而言之，MLE 就是通过数学方法找到一个最有可能解释观察到的数据的参数值。在硬币的例子中，它告诉我们硬币正面朝上的概率可能是多少，以最好地解释我们实验的结果。
+
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.30.4.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
+
+
+<figure style="text-align:center;">
+  <img src="https://cdn.jsdelivr.net/gh/forest293/Hugo-image/2024.1.30.5.png" style="width:750px;height:450px;" alt="图片描述">
+  <figcaption><strong></strong></figcaption>
+</figure>
 
 The hypothesis $H_0 :{\beta}_k = \beta^*$ can be tested with the $ z $  statistic:
+
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mi>z</mi>

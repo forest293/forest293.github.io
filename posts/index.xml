@@ -4,7 +4,31 @@
         <link>https://forest293.github.io/posts/</link>
         <description>所有文章 | Alex_Wang</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 21 Jan 2024 16:29:41 &#43;0800</lastBuildDate><atom:link href="https://forest293.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 25 Feb 2024 16:29:41 &#43;0800</lastBuildDate><atom:link href="https://forest293.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>[Categorical Dependent Var] Chapter_7 ：Models for ordinal outcomes</title>
+    <link>https://forest293.github.io/chapter_7-models-for-binary-outcomes-estimation-testing-and-fit/</link>
+    <pubDate>Sun, 25 Feb 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter_7-models-for-binary-outcomes-estimation-testing-and-fit/</guid>
+    <description><![CDATA[Ordinal variables are often coded as consecutive integers from 1 to the number of categories. Perhaps because of this coding, it is tempting to analyze ordinal outcomes with the linear regression model (LRM). However, an ordinal dependent variable violates the assumptions of the LRM, which can lead to incorrect conclusions, as demonstrated strikingly by McKelvey and Zavoina (1975, 117) and Winship and Mare (1984, 521-523). With ordinal outcomes, it is]]></description>
+</item>
+<item>
+    <title>[Categorical Dependent Var] Chapter_6 ：Models for binary outcomes——Interpretation</title>
+    <link>https://forest293.github.io/chapter_6-models-for-binary-outcomesinterpretation-and-fit/</link>
+    <pubDate>Tue, 30 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter_6-models-for-binary-outcomesinterpretation-and-fit/</guid>
+    <description><![CDATA[The challenge of interpreting results, then, is to find a summary of how changes in the independent variables are associated with changes in the outcome that best reflects critical substantive processes without overwhelming yourself or your readers with distracting detail. **Using odds ratios to interpret the logit model is very common but rarely is it sufficient for understanding the results of the model. Nonetheless, it is important to understand what]]></description>
+</item>
+<item>
+    <title>[Categorical Dependent Var] Chapter_5 ：Models for binary outcomes Estimation, testing, and fit</title>
+    <link>https://forest293.github.io/chapter_5-models-for-binary-outcomes-estimation-testing-and-fit/</link>
+    <pubDate>Thu, 25 Jan 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter_5-models-for-binary-outcomes-estimation-testing-and-fit/</guid>
+    <description><![CDATA[This chapter focuses on the two most often used models for binary outcomes, the binary logit and binary probit models, referred to jointly as the binary regression model (BRM). The BRM allows a researcher to explore how each explanatory variable affects the probability of the event occurring. The BRM is also the foundation from which more complex models for ordinal, nominal, and count models are derived. Ordinal and nominal regression]]></description>
+</item>
+<item>
     <title>[Categorical Dependent Var] Chapter_4 ：Methods of interpretation</title>
     <link>https://forest293.github.io/chapter_4-methods-of-interpretation/</link>
     <pubDate>Sun, 21 Jan 2024 16:29:41 &#43;0800</pubDate>
@@ -59,30 +83,6 @@
     <author>Alex_Wang</author>
     <guid>https://forest293.github.io/15.chapter15multilevel-models/</guid>
     <description><![CDATA[One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable. 1 Chapter overview This chapter contains four examples, all]]></description>
-</item>
-<item>
-    <title>Chapter16 ：Time as a continuous predictor</title>
-    <link>https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/</link>
-    <pubDate>Sat, 13 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/16.chapter16time-as-a-continuous-predictor/</guid>
-    <description><![CDATA[This chapter considers models involving the analysis of longitudinal data. Such designs involve participants that are observed at more than one time point and time is generally treated as one of the important predictors in the model. Like any predictor, we need to ask ourselves how we want to model the relationship between time and the outcome. A key distinction is whether time will be treated as a continuous variable]]></description>
-</item>
-<item>
-    <title>Chapter12 ：Piecewise by categorical interactions</title>
-    <link>https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/</link>
-    <pubDate>Thu, 11 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/12.chapter12piecewise-by-categorical-interactions/</guid>
-    <description><![CDATA[This chapter illustrates how to fit models in which a continuous variable, fit in a piecewise manner, is interacted with a categorical variable. 1 One knot and one jump For example, education was modeled in a piecewise manner including one knot at 12 years of education. This knot signifies both a change of slope and change in intercept (jump). The model also includes gender as a categorical variable and estimates]]></description>
-</item>
-<item>
-    <title>Chapter13 ：Continuous by continuous by categorical interactions</title>
-    <link>https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/</link>
-    <pubDate>Thu, 11 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/13.chapter13continuous-by-continuous-by-categorical-interactions/</guid>
-    <description><![CDATA[This chapter explores models that include a categorical variable interacted with two continuous variables. 1 Linear by linear by categorical interactions In this section, we will explore whether the size of the c.age##c.educ interaction depends on gender. 1.1 Fitting separate models for males and females To get a general sense of the size of the c.age#c.educ interaction separately for males and females, let’s fit separate models]]></description>
 </item>
 </channel>
 </rss>
