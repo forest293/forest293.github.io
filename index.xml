@@ -4,9 +4,25 @@
         <link>https://forest293.github.io/</link>
         <description>Hugo theme - LoveIt</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 25 Feb 2024 16:29:41 &#43;0800</lastBuildDate>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 01 Apr 2024 16:29:41 &#43;0800</lastBuildDate>
             <atom:link href="https://forest293.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>[Categorical Dependent Var] Chapter_9 ：Models for count outcomes</title>
+    <link>https://forest293.github.io/chapter_9-models-for-count-outcomes/</link>
+    <pubDate>Mon, 01 Apr 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter_9-models-for-count-outcomes/</guid>
+    <description><![CDATA[Count variables record how many times something has happened. Examples include the number of patients, hospitalizations, daily homicides, theater visits, international conflicts, beverages consumed, industrial injuries, soccer goals scored, new companies, and arrests by police. Although the linear regression model has often been applied to count outcomes, these estimates can be inconsistent or inefficient. In some cases, the linear regression model can provide reasonable results; however, it is much safer]]></description>
+</item>
+<item>
+    <title>[Categorical Dependent Var] Chapter_8 ：Models for nominal outcomes</title>
+    <link>https://forest293.github.io/chapter_8-models-for-nominal-outcomes/</link>
+    <pubDate>Sat, 16 Mar 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter_8-models-for-nominal-outcomes/</guid>
+    <description><![CDATA[An outcome is nominal when the categories are assumed to be unordered. For example, marital status can be grouped nominally into the categories of divorced, never married, married, or widowed. Occupations might be organized as professional, white collar, blue collar, craft, and menial. Other examples include reasons for leaving the parents&rsquo; home, the organizational context of scientific work such as industry, government, and academia, and the choice of language in]]></description>
+</item>
+<item>
     <title>[Categorical Dependent Var] Chapter_7 ：Models for ordinal outcomes</title>
     <link>https://forest293.github.io/chapter_7-models-for-binary-outcomes-estimation-testing-and-fit/</link>
     <pubDate>Sun, 25 Feb 2024 16:29:41 &#43;0800</pubDate>
@@ -69,22 +85,6 @@
     <author>Alex_Wang</author>
     <guid>https://forest293.github.io/17.chapter17time-as-a-categorical-predictor/</guid>
     <description><![CDATA[This chapter considers models where time is treated as a categorical variable The models presented in this chapter will use the mixed command to fit a model that is a hybrid of a traditional repeated-measures analysis of variance (ANOVA) and a mixed model. Like the repeated-measures ANOVA, there will be one fixed intercept (rather than having random intercepts that we commonly see when using the mixed command). By specifying the]]></description>
-</item>
-<item>
-    <title>Chapter14 ：Continuous by continuous by categorical interactions</title>
-    <link>https://forest293.github.io/14.chapter14continuous-by-categorical-by-categorical-interactions/</link>
-    <pubDate>Sat, 13 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/14.chapter14continuous-by-categorical-by-categorical-interactions/</guid>
-    <description><![CDATA[This chapter considers models that involve the interaction of two categorical predictors with a linear continuous predictor. 1 Chapter overview This chapter blends these two modeling techniques by exploring how the slope of the continuous variable varies as a function of the interaction of the two categorical variables. Let’s consider a hypothetical example of a model with income as the outcome variable. The predictors include gender]]></description>
-</item>
-<item>
-    <title>Chapter15 ：Multilevel models</title>
-    <link>https://forest293.github.io/15.chapter15multilevel-models/</link>
-    <pubDate>Sat, 13 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/15.chapter15multilevel-models/</guid>
-    <description><![CDATA[One of the unique features of multilevel models is the ability to study cross-level interactions—the interactions of a level-1 variable with a level-2 variable. Such interactions allow you to explore the extent to which the effect of a level-1 variable is moderated by a level-2 variable. 1 Chapter overview This chapter contains four examples, all]]></description>
 </item>
 </channel>
 </rss>
