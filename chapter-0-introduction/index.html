@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Multilevel  Longitudinal Models] Introduction - Alex_Wang</title><meta name="Description" content="Multilevel &amp; Longitudinal Models : When and why?"><meta property="og:title" content="[Multilevel  Longitudinal Models] Introduction" />
+<meta property="og:description" content="Multilevel &amp; Longitudinal Models : When and why?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://forest293.github.io/chapter-0-introduction/" /><meta property="og:image" content="https://forest293.github.io/logo.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-04-30T16:29:41+08:00" />
+<meta property="article:modified_time" content="2024-04-30T23:45:40+08:00" /><meta property="og:site_name" content="Alex_Wang" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://forest293.github.io/logo.png"/>
+
+<meta name="twitter:title" content="[Multilevel  Longitudinal Models] Introduction"/>
+<meta name="twitter:description" content="Multilevel &amp; Longitudinal Models : When and why?"/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://forest293.github.io/chapter-0-introduction/" /><link rel="prev" href="https://forest293.github.io/chapter_9-models-for-count-outcomes/" /><link rel="next" href="https://forest293.github.io/chapter-1-review-of-linear-regression/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Multilevel  Longitudinal Models] Introduction",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/forest293.github.io\/chapter-0-introduction\/"
+        },"image": ["https:\/\/forest293.github.io\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "Multilevel \u0026 Longitudinal Models, stata","wordcount":  2002 ,
+        "url": "https:\/\/forest293.github.io\/chapter-0-introduction\/","datePublished": "2024-04-30T16:29:41+08:00","dateModified": "2024-04-30T23:45:40+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/forest293.github.io\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Alex_Wang"
+            },"description": "Multilevel \u0026 Longitudinal Models : When and why?"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Alex_Wang">Alex Wang</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/categories/documentation/"> 文档 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
+                    <i class="fa fa-globe" aria-hidden="true"></i>                      
+                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/chapter-0-introduction/" selected>简体中文</option></select>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Alex_Wang">Alex Wang</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/categories/documentation/" title="">文档</a><a class="menu-item" href="/about/" title="">关于</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
+                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/chapter-0-introduction/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Multilevel  Longitudinal Models] Introduction</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Alex_Wang</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/multilevel-longitudinal-models-using-stata/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Multilevel & Longitudinal Models Using stata</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-04-30">2024-04-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2002 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/chapter-0-introduction/" class="leancloud_visitors" data-flag-title="[Multilevel  Longitudinal Models] Introduction">
+                        <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#第一步理解集群数据和多层次结构">第一步：理解集群数据和多层次结构</a></li>
+        <li><a href="#第二步集群内部相似性的原因">第二步：集群内部相似性的原因</a></li>
+        <li><a href="#第三步违反普通回归模型的假设">第三步：违反普通回归模型的假设</a></li>
+        <li><a href="#第四步多层次模型的应用">第四步：多层次模型的应用</a></li>
+        <li><a href="#第五步区分集群内外效应">第五步：区分集群内外效应</a></li>
+        <li><a href="#第六步政策干预和高阶层级变量的影响">第六步：政策干预和高阶层级变量的影响</a></li>
+        <li><a href="#第七步量化未解释的变异">第七步：量化未解释的变异</a></li>
+        <li><a href="#第八步重复观测和纵向数据">第八步：重复观测和纵向数据</a></li>
+        <li><a href="#第九步因果推断和政策评估">第九步：因果推断和政策评估</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>Level-1 units within the same level-2 unit or cluster tend to be more similar to each other than to units in other clusters. One reason for this is that units do not end up in the same cluster by chance but through some mechanism that may be related to their characteristics. For instance, which schools children go to is influenced by their family background through place of residence or parental choice, so children within a school already have something in common from the first day of school. Perhaps more importantly, children within a school are subsequently affected by their peers, teachers, and school policies, making them even more similar. Such within-school similarity or dependence will be particularly apparent if there are large between-school differences in terms of children’s backgrounds, school environments, and school policies. In the same vein, siblings are similar at birth because they have the same parents and therefore share genes, and they subsequently become even more similar by being raised in the same family, where they share a common environment and experiences.</p>
+<p><strong>Within-cluster dependence violates the assumption of ordinary regression models that responses are conditionally independent given the covariates (the residuals are independent). Consequently, ordinary regression produces incorrect standard errors, a problem that can be overcome by using multilevel models.</strong></p>
+<p>More importantly, <strong>multilevel modeling allows us to disentangle processes operating at different levels, both by including explanatory variables at the different levels and by attributing unexplained variability to the different levels.</strong></p>
+<p><strong>One important challenge in multilevel modeling is to distinguish within- and between-cluster effects of lower-level covariates.</strong> For instance, for students nested in schools, an important student-level explanatory variable for achievement is socioeconomic status (SES). In addition to the effect of own SES, the school-average SES can be strongly associated with achievement, both through peer effects and because low-SES children tend to end up in worse schools.</p>
+<p>Policy interventions often occur at the level of institutions, and it is important to understand how such higher-level variables affect the response variable. In the school setting, typical examples would be new curricula or different kinds of teacher professional development. The effect of such interventions on achievement is usually the primary concern, but it is also important to investigate the differential effects for different student subpopulations. For instance, a new science curriculum may be particularly beneficial for girls and hence reduce the gender gap in science achievement. If it does, then there is a cross-level interaction between the level-1 variable gender and the level-2 variable curriculum.</p>
+<p>It will generally not be possible to explain all within-school and between-school variability in achievement. Quantifying the amount of unexplained variability at the different levels can be of interest in its own right, and sometimes multilevel models without explanatory variables are used to see how much the higher-level membership matters. For instance, achievement may vary less between schools in Scandinavia than in the U.S., and this tells us something about the societies and schooling systems.</p>
+<p><strong>Repeated observations on the same units are also clustered data</strong>, for instance, longitudinal or panel data on children’s weight, mothers’ postnatal depression, taxpayers’ tax liability, employees’ wages and union membership, and the investments or number of patents of firms. <strong>Although longitudinal data are quite different from clustered cross-sectional data, the same kinds of questions arise and the same kinds of models can be used to address them.</strong> An example is data on children’s weight, where interest is in growth, the relationship between weight and the level-1 variable time. Level-2 explanatory variables include gender and ethnicity. Cross-level interactions between these variables and time represent differences in growth rates between groups. Clearly, not all differences in initial weight and growth rate can be explained by gender and ethnicity, and multilevel models can quantify how much variability remains between children within gender and ethnic groups.</p>
+<p><strong>Disentangling the within- and between-effects of level-1 (or time-varying) covariates can be important for causal inference.</strong> For instance, evaluation of policies, such as bans of smoking in public places, typically rely on observational data where policies were implemented for some of the clusters, such as states, at different times during the longitudinal study. When considering the effect of the legislation on cigarette consumption, it is important to estimate the within-state effects, to control for any state-level variables that affect legislation as well as cigarette consumption. Within-state effects could of course be due to general time trends, which can be controlled by considering the mean difference in within-state differences for states that did and did not implement the policy.</p>
+<p>这段话讨论了多层次模型（multilevel models）在统计分析中的应用，特别是在处理集群数据（clustered data）时的重要性。我们将分几个步骤来讲解：</p>
+<h3 id="第一步理解集群数据和多层次结构">第一步：理解集群数据和多层次结构</h3>
+<ul>
+<li><strong>集群数据</strong>：指的是数据点按照某种自然方式被分成不同的组或集群。例如，学生（level-1 units）被分在不同的学校（level-2 units）中。</li>
+<li><strong>多层次结构</strong>：数据存在嵌套关系，即较低层级单位（如学生）位于较高层级单位（如学校）之内。</li>
+</ul>
+<h3 id="第二步集群内部相似性的原因">第二步：集群内部相似性的原因</h3>
+<ul>
+<li><strong>非随机分配</strong>：单元（如学生）不是随机分配到集群（如学校）的，而是通过与他们特征相关的机制。</li>
+<li><strong>家庭背景和选择</strong>：学生的居住地或家长选择影响他们上哪所学校，导致同一学校的学生从一开始就有共同点。</li>
+<li><strong>学校环境的影响</strong>：学生在学校内受同学、老师和学校政策的影响，进一步增加了他们的相似性。</li>
+</ul>
+<h3 id="第三步违反普通回归模型的假设">第三步：违反普通回归模型的假设</h3>
+<ul>
+<li><strong>条件独立性</strong>：普通回归模型假设给定协变量后，响应是条件独立的，即残差是独立的。</li>
+<li><strong>集群内部依赖性</strong>：集群内部的相似性或依赖性违反了这一假设，导致普通回归模型产生不正确的标准误。</li>
+</ul>
+<h3 id="第四步多层次模型的应用">第四步：多层次模型的应用</h3>
+<ul>
+<li><strong>解决依赖性问题</strong>：多层次模型可以克服普通回归模型的局限性，适用于处理集群数据。</li>
+<li><strong>不同层级的过程分离</strong>：多层次模型允许我们通过在不同层级包含解释变量，并将未解释的变异归因于不同层级，来分离在不同层级上起作用的过程。</li>
+</ul>
+<h3 id="第五步区分集群内外效应">第五步：区分集群内外效应</h3>
+<ul>
+<li><strong>学生成就的例子</strong>：学生的经济社会地位（SES）是影响其成就的重要学生层级解释变量。除了自身的SES，学校平均SES也与成就强烈相关，这是通过同伴效应以及低SES儿童倾向于进入较差学校实现的。</li>
+</ul>
+<h3 id="第六步政策干预和高阶层级变量的影响">第六步：政策干预和高阶层级变量的影响</h3>
+<ul>
+<li><strong>机构层面的干预</strong>：政策干预通常发生在机构层面，理解这些高阶层级变量如何影响响应变量（如学生成就）是很重要的。</li>
+<li><strong>不同学生亚群体的效应差异</strong>：例如，新的科学课程可能对女孩特别有益，从而减少科学成就中的性别差距。</li>
+</ul>
+<h3 id="第七步量化未解释的变异">第七步：量化未解释的变异</h3>
+<ul>
+<li><strong>多层次模型的应用</strong>：即使没有解释变量，也可以使用多层次模型来量化不同层级上未解释变异的数量，这有助于我们了解社会和教育系统的特点。</li>
+</ul>
+<h3 id="第八步重复观测和纵向数据">第八步：重复观测和纵向数据</h3>
+<ul>
+<li><strong>纵向数据的集群特性</strong>：例如，对儿童体重、母亲的产后抑郁、纳税人的税收责任等的重复观测也是集群数据。</li>
+<li><strong>多层次模型的应用</strong>：尽管纵向数据与集群横截面数据非常不同，但可以应用相同类型的模型来解决类似问题。</li>
+</ul>
+<h3 id="第九步因果推断和政策评估">第九步：因果推断和政策评估</h3>
+<ul>
+<li><strong>政策效果的评估</strong>：在评估如公共场所禁烟政策这类通常依赖于观察数据的政策时，重要的是估计集群内部效应，并控制影响立法和香烟消费的集群层级变量。</li>
+</ul>
+<h3 id="总结">总结</h3>
+<p>多层次模型为我们提供了一种强大的工具，用于分析和理解嵌套数据结构中的复杂关系，允许我们考虑和解释不同层级上的变量对响应变量的影响，以及这些变量之间可能存在的交互作用。通过这种方式，我们可以更准确地评估政策的影响，理解不同群体间的差异，并为决策提供更深入的洞见。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-04-30</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/chapter-0-introduction/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/multilevel-longitudinal-models/">Multilevel &amp; Longitudinal Models</a>,&nbsp;<a href="/tags/stata/">stata</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/chapter_9-models-for-count-outcomes/" class="prev" rel="prev" title="[Categorical Dependent Var] Chapter_9 ：Models for count outcomes"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>[Categorical Dependent Var] Chapter_9 ：Models for count outcomes</a>
+            <a href="/chapter-1-review-of-linear-regression/" class="next" rel="next" title="[Multilevel  Longitudinal Models] Chapter 1 ：Review of linear regression">[Multilevel  Longitudinal Models] Chapter 1 ：Review of linear regression<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Alex_Wang</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/valine@1.5.0/dist/Valine.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@14.0.0/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-CN","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"lightgallery":true,"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

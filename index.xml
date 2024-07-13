@@ -4,9 +4,41 @@
         <link>https://forest293.github.io/</link>
         <description>Hugo theme - LoveIt</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 01 Apr 2024 16:29:41 &#43;0800</lastBuildDate>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 11 Jul 2024 16:29:41 &#43;0800</lastBuildDate>
             <atom:link href="https://forest293.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>[Multilevel  Longitudinal Models] Chapter 2 ：Random-intercept models with covariates</title>
+    <link>https://forest293.github.io/chapter-3-random-intercept-models-with-covariates/</link>
+    <pubDate>Thu, 11 Jul 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter-3-random-intercept-models-with-covariates/</guid>
+    <description><![CDATA[In this chapter, we extend the variance-components models introduced in the previous chapter by including observed explanatory variables or covariates $x$ .]]></description>
+</item>
+<item>
+    <title>[Multilevel  Longitudinal Models] Chapter 2 ：Variance-components models</title>
+    <link>https://forest293.github.io/chapter-2-variance-components-models/</link>
+    <pubDate>Mon, 03 Jun 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter-2-variance-components-models/</guid>
+    <description><![CDATA[1 Introduction In this chapter, we consider the simple situation of clustered data without covariates or explanatory variables. For this setting, we introduce a two-level linear model which we refer to as a variance-components model. Other names for this model include one-way random-effects ANOVA or unconditional hierarchical linear model (where “unconditional” refers to not including and]]></description>
+</item>
+<item>
+    <title>[Multilevel  Longitudinal Models] Chapter 1 ：Review of linear regression</title>
+    <link>https://forest293.github.io/chapter-1-review-of-linear-regression/</link>
+    <pubDate>Sat, 25 May 2024 23:45:40 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter-1-review-of-linear-regression/</guid>
+    <description><![CDATA[1 Introduction The regression models considered here are essential building blocks for multilevel models. Although linear multilevel or mixed models for continuous responses are sometimes viewed from an ANOVA perspective, the regression perspective is beneficial because it is easily generalizable to binary and other types of responses. Furthermore, the Stata commands for multilevel modeling follow a regression syntax. Even experienced regression modelers are likely to benefit from reading this chapter]]></description>
+</item>
+<item>
+    <title>[Multilevel  Longitudinal Models] Introduction</title>
+    <link>https://forest293.github.io/chapter-0-introduction/</link>
+    <pubDate>Tue, 30 Apr 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/chapter-0-introduction/</guid>
+    <description><![CDATA[Level-1 units within the same level-2 unit or cluster tend to be more similar to each other than to units in other clusters. One reason for this is that units do not end up in the same cluster by chance but through some mechanism that may be related to their characteristics. For instance, which schools children go to is influenced by their family background through place of residence or parental]]></description>
+</item>
+<item>
     <title>[Categorical Dependent Var] Chapter_9 ：Models for count outcomes</title>
     <link>https://forest293.github.io/chapter_9-models-for-count-outcomes/</link>
     <pubDate>Mon, 01 Apr 2024 16:29:41 &#43;0800</pubDate>
@@ -53,38 +85,6 @@
     <author>Alex_Wang</author>
     <guid>https://forest293.github.io/chapter_4-methods-of-interpretation/</guid>
     <description><![CDATA[introduce methods of interpretation that will be used throughout the rest of the book. Models for categorical outcomes are nonlinear, and this nonlinearity is th e fundamental challenge th at must be addressed for effective interpretation. Most simply, this means th at you cannot effectively interpret your model by presenting a list of the estimated parameters. Instead, we believe that the most effective way to interpret these models is by]]></description>
-</item>
-<item>
-    <title>[Categorical Dependent Var] Chapter_3 ：Estimation, testing, and fit</title>
-    <link>https://forest293.github.io/chapter_3-estimation-testing-and-fit/</link>
-    <pubDate>Tue, 16 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/chapter_3-estimation-testing-and-fit/</guid>
-    <description><![CDATA[Reviews Stata commands for fitting models,testing hypotheses,and computing measures of model fit* Our book deals with what we think are the most fundamental and useful cross-sectional regression models for categorical and count outcomes: binary logit and probit, ordinal logit and probit, multinomial logit, Poisson regression, and negative binomial regression. We also explore several less common models, such as the stereotype logistic regression model and the zero-inflated and zero-truncated count models.]]></description>
-</item>
-<item>
-    <title>Chapter19 ：Complex survey data</title>
-    <link>https://forest293.github.io/19.chapter19complex-survey-data/</link>
-    <pubDate>Tue, 16 Jan 2024 06:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/19.chapter19complex-survey-data/</guid>
-    <description><![CDATA[The chapter briefly illustrates the mechanics of using these commands in the context of a complex survey The example dataset used in this chapter is the nhanes2.dta dataset. This is one of the Stata example datasets and is used via the Internet with the webuse command, shown below. 1 2 webuse nhanes2 svyset The svyset command has already been used to declare the design for this survey, naming the primary]]></description>
-</item>
-<item>
-    <title>Chapter18 ：Nonlinear models</title>
-    <link>https://forest293.github.io/18.chapter18nonlinear-models/</link>
-    <pubDate>Mon, 15 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/18.chapter18nonlinear-models/</guid>
-    <description><![CDATA[The chapter begins with a discussion of logistic regression models(most detailed) 1 Binary logistic regression 1.1 A logistic model with one categorical predictor Let’s consider a simple logistic regression model that predicts whether a person smokes (smoke) by the person’s self-reported social class (class). The variable class is a categorical variable that is coded: 1 = lower class, 2]]></description>
-</item>
-<item>
-    <title>Chapter17 ：Time as a categorical predictor</title>
-    <link>https://forest293.github.io/17.chapter17time-as-a-categorical-predictor/</link>
-    <pubDate>Sun, 14 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/17.chapter17time-as-a-categorical-predictor/</guid>
-    <description><![CDATA[This chapter considers models where time is treated as a categorical variable The models presented in this chapter will use the mixed command to fit a model that is a hybrid of a traditional repeated-measures analysis of variance (ANOVA) and a mixed model. Like the repeated-measures ANOVA, there will be one fixed intercept (rather than having random intercepts that we commonly see when using the mixed command). By specifying the]]></description>
 </item>
 </channel>
 </rss>
