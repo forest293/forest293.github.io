@@ -4,15 +4,23 @@
         <link>https://forest293.github.io/</link>
         <description>Hugo theme - LoveIt</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wcl934420513@163.com (Alex_Wang)</managingEditor>
-            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 11 Jul 2024 16:29:41 &#43;0800</lastBuildDate>
+            <webMaster>wcl934420513@163.com (Alex_Wang)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 01 Oct 2024 16:29:41 &#43;0800</lastBuildDate>
             <atom:link href="https://forest293.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>[Multilevel  Longitudinal Models] Chapter 2 ：Random-intercept models with covariates</title>
+    <title>[Multilevel  Longitudinal Models] Chapter 4 - Random-coefficient models</title>
+    <link>https://forest293.github.io/4.chapter-4-random-coefficient-models/</link>
+    <pubDate>Tue, 01 Oct 2024 16:29:41 &#43;0800</pubDate>
+    <author>Alex_Wang</author>
+    <guid>https://forest293.github.io/4.chapter-4-random-coefficient-models/</guid>
+    <description><![CDATA[1 Introduction In the previous chapter, we considered linear random-intercept models where the overall level of the response was allowed to vary between clusters after controlling for covariates. In this chapter, we include random coefficients or random slopes in addition to random intercepts, thus also allowing the effects of covariates to vary between clusters. Such models involving both random intercepts and random slopes are often called random-coefficient models. In longitudinal]]></description>
+</item>
+<item>
+    <title>[Multilevel  Longitudinal Models] Chapter 3 ：Random-intercept models with covariates</title>
     <link>https://forest293.github.io/chapter-3-random-intercept-models-with-covariates/</link>
-    <pubDate>Thu, 11 Jul 2024 16:29:41 &#43;0800</pubDate>
+    <pubDate>Thu, 19 Sep 2024 16:29:41 &#43;0800</pubDate>
     <author>Alex_Wang</author>
     <guid>https://forest293.github.io/chapter-3-random-intercept-models-with-covariates/</guid>
-    <description><![CDATA[In this chapter, we extend the variance-components models introduced in the previous chapter by including observed explanatory variables or covariates $x$ .]]></description>
+    <description><![CDATA[2 Does smoking during pregnancy affect birthweight? Abrevaya (2006) investigates the effect of smoking on birth outcomes with the Natality datasets derived from birth certificates by the U.S. National Center for Health Statistics. This is of considerable public health interest because many pregnant women in the U.S. continue to smoke during pregnancy. Indeed, around the time of the study, it was estimated that only 18% to 25% of smokers quit]]></description>
 </item>
 <item>
     <title>[Multilevel  Longitudinal Models] Chapter 2 ：Variance-components models</title>
@@ -77,14 +85,6 @@
     <author>Alex_Wang</author>
     <guid>https://forest293.github.io/chapter_5-models-for-binary-outcomes-estimation-testing-and-fit/</guid>
     <description><![CDATA[This chapter focuses on the two most often used models for binary outcomes, the binary logit and binary probit models, referred to jointly as the binary regression model (BRM). The BRM allows a researcher to explore how each explanatory variable affects the probability of the event occurring. The BRM is also the foundation from which more complex models for ordinal, nominal, and count models are derived. Ordinal and nominal regression]]></description>
-</item>
-<item>
-    <title>[Categorical Dependent Var] Chapter_4 ：Methods of interpretation</title>
-    <link>https://forest293.github.io/chapter_4-methods-of-interpretation/</link>
-    <pubDate>Sun, 21 Jan 2024 16:29:41 &#43;0800</pubDate>
-    <author>Alex_Wang</author>
-    <guid>https://forest293.github.io/chapter_4-methods-of-interpretation/</guid>
-    <description><![CDATA[introduce methods of interpretation that will be used throughout the rest of the book. Models for categorical outcomes are nonlinear, and this nonlinearity is th e fundamental challenge th at must be addressed for effective interpretation. Most simply, this means th at you cannot effectively interpret your model by presenting a list of the estimated parameters. Instead, we believe that the most effective way to interpret these models is by]]></description>
 </item>
 </channel>
 </rss>
